@@ -1,9 +1,11 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-require("./config/database");
+const connection = require("./config/database");
 const session = require("express-session");
 const MySQLStore = require("express-mysql-session")(session);
+const generatePassword = require("./lib/password").generatePassword;
+const isValid = require("./lib/password").isValid;
 
 var options = {
     host: 'localhost',
@@ -34,18 +36,98 @@ const isAuth = (req, res, next) => {
     }
 }
 
-app.get("/login", (req, res) => {
-    // const { email, password } = req.body;
-    req.session.user = "salih";
-    req.session.save();
+app.post("/register", async (req, res) => {
+    const { username, password } = req.body;
 
-    res.send("Added");
+    let response = {
+        result: true,
+    }
+
+    if (username && password) {
+        const { salt: salt, hash: hash } = await generatePassword(password);
+
+        connection.query(`INSERT INTO Kullanicilar (KullaniciAdi , ŞifreHash, ŞifreSalt, KullaniciRolü) VALUES ("${username}", "${hash}", "${salt}", 'Yönetici')`,
+            function (err, result) {
+                if (err) {
+                    console.log(err);
+                    response = { result: false, message: "Kayıt olurken bir hata oluştu. Hata mesajı : " + err.message }
+                    res.json(response);
+                }
+                else {
+                    req.session.user = {
+                        username: username,
+                        role: 'Yönetici'
+                    }
+                    req.session.save();
+
+                    response = {
+                        result: true,
+                        user: req.session.user,
+                    }
+
+                    res.json(response);
+                }
+            });
+    }
 });
 
-app.get("/sa", isAuth, (req, res) => {
-    res.send("Success");
+app.post("/login", (req, res) => {
+    const { username, password } = req.body;
+
+    let response = {
+        result: true
+    }
+
+    if (username, password) {
+        connection.query(`SELECT * FROM Kullanicilar WHERE KullaniciAdi = "${username}"`, async function (err, result) {
+            if (err) {
+                console.log(err);
+                response = { result: false, message: "Giriş yaparken bir hata oluştu. Hata mesajı : " + err.message }
+                res.json(response);
+            } else {
+                if (result.length > 0) {
+                    const user = result[0];
+                    // is_password_valid Şifreyi oluştururken uyguladığımız methodu şuan girilen şifreye uygulayıp, sonucu kontrol eder.
+                    const is_password_valid = await isValid(user["ŞifreHash"], user["ŞifreSalt"], password);
+
+                    if (is_password_valid) {
+                        req.session.user = user;
+                        req.session.save();
+                        response = {
+                            result: true,
+                            user: user,
+                        }
+                        res.json(response);
+                    } else {
+                        response = {
+                            result: false,
+                            message: "Şifreyi yanlış girdiniz!",
+                        }
+                    }
+                }
+                else {
+                    // Return result false, not user found
+                    response = {
+                        result: false,
+                        message: "Kullanıcı adına sahip bir kullanıcı bulunamadı!",
+                    }
+                    res.json(response);
+                }
+            }
+        });
+    }
+});
+
+app.get("/logout", (req, res) => {
+    req.session.destroy();
+    req.session.save();
+
+    res.json({
+        result: true
+    });
 });
 
 app.listen(3000, function () {
     console.log("Server has started at port 3000");
 });
+// connection.end();

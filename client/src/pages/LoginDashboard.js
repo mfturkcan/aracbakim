@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const LoginDashboard = props => {
     const [errorMessage, setErrorMessage] = useState("");
@@ -20,8 +21,9 @@ const LoginDashboard = props => {
         if (!includes_uppercase) setErrorMessage("Şifre harf en az bir büyük harf içermelidir.");
         if (!username || !password) setErrorMessage("Lütfen formu doldurunuz.");
 
-        console.log(errorMessage == "")
-        console.log({ username, password });
+        if (!errorMessage) {
+
+        }
     }
 
     return (

@@ -36,7 +36,7 @@ const personel_query = "CREATE TABLE IF NOT EXISTS Personel(KullaniciAdi VARCHAR
     " Cep VARCHAR(15) NOT NULL, EvAdresi VARCHAR(255) NOT NULL, IlKodu int NOT NULL," +
     " IlceKodu int NOT NULL, PostaKodu smallint NOT NULL, UstKullaniciAdi VARCHAR(150)," +
     " CalistigiBirimKodu int NOT NULL, FOREIGN KEY(IlKodu) REFERENCES Iller(IlKodu), " +
-    "FOREIGN KEY(IlceKodu) REFERENCES Ilceler(IlceKodu))";
+    "FOREIGN KEY(IlceKodu) REFERENCES Ilceler(IlceKodu), UNIQUE(Email), UNIQUE(SicilNo))";
 
 const birim_query = "CREATE TABLE IF NOT EXISTS Birimler(BirimKodu int PRIMARY KEY NOT NULL, " +
     "BirimAdi VARCHAR(255) NOT NULL, UstBirimKodu int NOT NULL, BulunduguAdres VARCHAR(255) NOT NULL," +
@@ -56,21 +56,18 @@ connection.query(birim_query,
         console.log(result);
     });
 
-connection.query("ALTER TABLE Personel ADD CONSTRAINT birim_fk FOREIGN KEY(CalistigiBirimKodu) REFERENCES Birimler(BirimKodu)")
-
+// Add şifrehash, şifresalt | remove foreign keys
 connection.query("CREATE TABLE IF NOT EXISTS Kullanicilar (KullaniciAdi VARCHAR(150) PRIMARY KEY NOT NULL," +
-    " Şifre VARCHAR(50) NOT NULL, KullaniciRolü VARCHAR(20) NOT NULL, FOREIGN KEY(KullaniciAdi) REFERENCES Personel(KullaniciAdi))",
+    " ŞifreHash VARCHAR(255) NOT NULL, ŞifreSalt VARCHAR(255) NOT NULL, KullaniciRolü VARCHAR(20) NOT NULL )",
     function (err, result) {
         if (err) throw err;
         console.log(result);
     });
 
-
-// connection.query("ALTER TABLE Personel FOREIGN KEY(CalistigiBirimKodu) REFERENCES Birimler(BirimKodu)",
+// connection.query("ALTER TABLE Personel ADD CONSTRAINT birim_fk FOREIGN KEY(CalistigiBirimKodu) REFERENCES Birimler(BirimKodu)",
 //     function (err, result) {
 //         if (err) throw err;
 //         console.log(result);
 //     })
 
-
-connection.end();
+module.exports = connection;
