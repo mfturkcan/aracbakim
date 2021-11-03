@@ -4,8 +4,9 @@ const cors = require("cors");
 const connection = require("./config/database");
 const session = require("express-session");
 const MySQLStore = require("express-mysql-session")(session);
-const generatePassword = require("./lib/password").generatePassword;
+const encryptPassword = require("./lib/password").encryptPassword;
 const isValid = require("./lib/password").isValid;
+const kullanicilar_routes = require("./routes/kullanicilar");
 
 var options = {
     host: 'localhost',
@@ -25,7 +26,11 @@ app.use(session({
     saveUninitialized: false,
 }));
 
-app.use(cors());
+app.use(cors({
+    credentials: true,
+    origin: ['http://localhost:3000']
+}
+));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -44,9 +49,9 @@ app.post("/register", async (req, res) => {
     }
 
     if (username && password) {
-        const { salt: salt, hash: hash } = await generatePassword(password);
-
-        connection.query(`INSERT INTO Kullanicilar (KullaniciAdi , ŞifreHash, ŞifreSalt, KullaniciRolü) VALUES ("${username}", "${hash}", "${salt}", 'Yönetici')`,
+        const encryptedPassword = await encryptPassword(password);
+        encryptPassword
+        connection.query(`INSERT INTO Kullanicilar (KullaniciAdi , Şifre, KullaniciRolu) VALUES ("${username}", "${encryptedPassword}", 0)`,
             function (err, result) {
                 if (err) {
                     console.log(err);
@@ -77,7 +82,6 @@ app.post("/login", (req, res) => {
     let response = {
         result: true
     }
-
     if (username, password) {
         connection.query(`SELECT * FROM Kullanicilar WHERE KullaniciAdi = "${username}"`, async function (err, result) {
             if (err) {
@@ -88,7 +92,7 @@ app.post("/login", (req, res) => {
                 if (result.length > 0) {
                     const user = result[0];
                     // is_password_valid Şifreyi oluştururken uyguladığımız methodu şuan girilen şifreye uygulayıp, sonucu kontrol eder.
-                    const is_password_valid = await isValid(user["ŞifreHash"], user["ŞifreSalt"], password);
+                    const is_password_valid = await encryptPassword(password) == user["Şifre"];
 
                     if (is_password_valid) {
                         req.session.user = user;
@@ -127,7 +131,11 @@ app.get("/logout", (req, res) => {
     });
 });
 
-app.listen(3000, function () {
-    console.log("Server has started at port 3000");
+
+app.use(kullanicilar_routes);
+
+
+app.listen(5000, function () {
+    console.log("Server has started at port 5000");
 });
 // connection.end();

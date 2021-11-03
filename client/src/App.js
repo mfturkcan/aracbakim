@@ -1,20 +1,24 @@
 import { Switch, Route } from 'react-router';
-import LoginDashboard from './pages/LoginDashboard';
-import RegisterDashboard from './pages/RegisterDashboard';
+import Giris from './pages/Giris';
+import Kayit from './pages/Kayit';
 import './App.css';
+import AdminPanel from './admin/AdminPanel';
 
 function App() {
   return (
     <div className="App">
       <Switch>
         <Route exact path="/">
-          <LoginDashboard />
+          <Giris />
         </Route>
         <Route path="/login">
-          <LoginDashboard />
+          <Giris />
         </Route>
         <Route path="/register">
-          <RegisterDashboard />
+          <Kayit />
+        </Route>
+        <Route path="/admin">
+          <AdminPanel />
         </Route>
       </Switch>
     </div>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-const RegisterDashboard = props => {
+const Kayit = props => {
     const [errorMessage, setErrorMessage] = useState("");
     var regex_punch = new RegExp(/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/);
     const [username, setUsername] = useState("");
@@ -45,4 +45,4 @@ const RegisterDashboard = props => {
         </div>
     );
 }
-export default RegisterDashboard;
+export default Kayit;

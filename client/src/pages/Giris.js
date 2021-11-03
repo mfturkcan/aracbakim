@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-const LoginDashboard = props => {
+const Giris = props => {
     const [errorMessage, setErrorMessage] = useState("");
     var regex_punch = new RegExp(/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/);
     const [username, setUsername] = useState("");
@@ -45,4 +45,4 @@ const LoginDashboard = props => {
         </div>
     );
 }
-export default LoginDashboard;
+export default Giris;
