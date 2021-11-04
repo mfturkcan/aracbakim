@@ -1,4 +1,4 @@
-import { Datagrid, List, TextField } from "ra-ui-materialui";
+import { Datagrid, List, SelectField, TextField } from "ra-ui-materialui";
 
 const KullaniciListe = props => {
     return (
@@ -6,7 +6,7 @@ const KullaniciListe = props => {
             <Datagrid rowClick="edit">
                 <TextField source="KullaniciAdi" />
                 <TextField source="Şifre" />
-                <TextField source="KullaniciRolu" />
+                <SelectField source="KullaniciRolu" optionText="name" choices={[{ id: 0, name: "Yönetici" }, { id: 1, name: "Birim Müdürü" }]} />
             </Datagrid>
         </List>
     );

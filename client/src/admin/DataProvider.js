@@ -16,17 +16,39 @@ const DataProvider = {
         const url = `${apiUrl}/${resource}?${stringify(query)}`;
 
         return httpClient(url).then(({ headers, json }) => ({
-            data: json.map(field => { return { id: field["KullaniciAdi"], ...field } }),
+            data: json.map(field => {
+                switch (resource) {
+                    case "kullanicilar":
+                        return { id: field["KullaniciAdi"], ...field }
+                        break;
+                    case "iller":
+                        return { id: field["IlKodu"], ...field }
+                        break;
+                    case "ilceler":
+                        return { id: field["IlceKodu"], ...field }
+                        break;
+                }
+            }),
             total: parseInt(headers.get('content-range').split('/').pop(), 10),
-        }));
+        }));;
     },
 
     getOne: (resource, params) => {
 
         console.log(params);
-        return httpClient(`${apiUrl}/${resource}/${params.id}`).then(({ json }) => ({
-            data: { id: json["KullaniciAdi"], ...json },
-        }));
+        return httpClient(`${apiUrl}/${resource}/${params.id}`).then(({ json }) => {
+            switch (resource) {
+                case "kullanicilar":
+                    return { data: { ...json, id: json["KullaniciAdi"] }, }
+                    break;
+                case "iller":
+                    return { data: { ...json, id: json["IlKodu"] }, }
+                    break;
+                case "ilceler":
+                    return { data: { ...json, id: json["IlceKodu"] }, }
+                    break;
+            }
+        });
     },
 
     getMany: (resource, params) => {
@@ -34,7 +56,21 @@ const DataProvider = {
             filter: JSON.stringify({ ids: params.ids }),
         };
         const url = `${apiUrl}/${resource}?${stringify(query)}`;
-        return httpClient(url).then(({ json }) => ({ data: json }));
+        return httpClient(url).then(({ json }) => ({
+            data: json.map(field => {
+                switch (resource) {
+                    case "kullanicilar":
+                        return { id: field["KullaniciAdi"], ...field }
+                        break;
+                    case "iller":
+                        return { id: field["IlKodu"], ...field }
+                        break;
+                    case "ilceler":
+                        return { id: field["IlceKodu"], ...field }
+                        break;
+                }
+            }),
+        }));
     },
 
     getManyReference: (resource, params) => {
@@ -51,7 +87,19 @@ const DataProvider = {
         const url = `${apiUrl}/${resource}?${stringify(query)}`;
 
         return httpClient(url).then(({ headers, json }) => ({
-            data: json,
+            data: json.map(field => {
+                switch (resource) {
+                    case "kullanicilar":
+                        return { id: field["KullaniciAdi"], ...field }
+                        break;
+                    case "iller":
+                        return { id: field["IlKodu"], ...field }
+                        break;
+                    case "ilceler":
+                        return { id: field["IlceKodu"], ...field }
+                        break;
+                }
+            }),
             total: parseInt(headers.get('content-range').split('/').pop(), 10),
         }));
     },
@@ -60,39 +108,101 @@ const DataProvider = {
         httpClient(`${apiUrl}/${resource}/${params.id}`, {
             method: 'PUT',
             body: JSON.stringify(params.data),
-        }).then(({ json }) => ({ data: { id: json["KullaniciAdi"], ...json } })),
+        }).then(({ json }) => {
+            switch (resource) {
+                case "kullanicilar":
+                    return { data: { ...json, id: json["KullaniciAdi"] }, }
+                    break;
+                case "iller":
+                    return { data: { ...json, id: json["IlKodu"] }, }
+                    break;
+                case "ilceler":
+                    return { data: { ...json, id: json["IlceKodu"] }, }
+                    break;
+            }
+        }),
 
     updateMany: (resource, params) => {
         const query = {
-            filter: JSON.stringify({ id: params.ids }),
+            filter: JSON.stringify({ ids: params.ids }),
         };
         return httpClient(`${apiUrl}/${resource}?${stringify(query)}`, {
             method: 'PUT',
             body: JSON.stringify(params.data),
-        }).then(({ json }) => ({ data: json }));
+        }).then(({ json }) => ({
+            data: json.map(field => {
+                switch (resource) {
+                    case "kullanicilar":
+                        return { id: field["KullaniciAdi"], ...field }
+                        break;
+                    case "iller":
+                        return { id: field["IlKodu"], ...field }
+                        break;
+                    case "ilceler":
+                        return { id: field["IlceKodu"], ...field }
+                        break;
+                }
+            }),
+        }));
     },
 
     create: (resource, params) =>
         httpClient(`${apiUrl}/${resource}`, {
             method: 'POST',
             body: JSON.stringify(params.data),
-        }).then(({ json }) => ({
-            data: { ...params.data, id: json["KullaniciAdi"] },
-        })),
+        }).then(({ json }) => {
+            switch (resource) {
+                case "kullanicilar":
+                    return { data: { ...json, id: json["KullaniciAdi"] }, }
+                    break;
+                case "iller":
+                    return { data: { ...json, id: json["IlKodu"] }, }
+                    break;
+                case "ilceler":
+                    return { data: { ...json, id: json["IlceKodu"] }, }
+                    break;
+            }
+        }),
 
     delete: (resource, params) =>
         httpClient(`${apiUrl}/${resource}/${params.id}`, {
             method: 'DELETE',
-        }).then(({ json }) => ({ data: json })),
+        }).then(({ json }) => {
+            switch (resource) {
+                case "kullanicilar":
+                    return { data: { ...json, id: json["KullaniciAdi"] }, }
+                    break;
+                case "iller":
+                    return { data: { ...json, id: json["IlKodu"] }, }
+                    break;
+                case "ilceler":
+                    return { data: { ...json, id: json["IlceKodu"] }, }
+                    break;
+            }
+        }),
 
     deleteMany: (resource, params) => {
         const query = {
-            filter: JSON.stringify({ id: params.ids }),
+            filter: JSON.stringify({ ids: params.ids }),
         };
         return httpClient(`${apiUrl}/${resource}?${stringify(query)}`, {
             method: 'DELETE',
             body: JSON.stringify(params.data),
-        }).then(({ json }) => ({ data: json }));
+        }).then(({ json }) => ({
+            data: json.map(field => {
+                switch (resource) {
+                    case "kullanicilar":
+                        return { id: field["KullaniciAdi"], ...field }
+                        break;
+                    case "iller":
+                        return { id: field["IlKodu"], ...field }
+                        break;
+                    case "ilceler":
+                        return { id: field["IlceKodu"], ...field }
+                        break;
+                }
+            }),
+        }));
     },
 }
 

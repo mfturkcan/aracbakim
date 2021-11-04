@@ -18,24 +18,24 @@ connection.connect(function (err) {
 });
 
 
-// connection.query("CREATE TABLE IF NOT EXISTS Iller(IlKodu int PRIMARY KEY NOT NULL," +
-//     " IlAdi VARCHAR(100) NOT NULL)", function (err, result) {
-//         if (err) throw err;
-//         console.log(result);
-//     });
+connection.query("CREATE TABLE IF NOT EXISTS Iller(IlKodu int PRIMARY KEY NOT NULL," +
+    " IlAdi VARCHAR(100) NOT NULL)", function (err, result) {
+        if (err) throw err;
+        console.log(result);
+    });
 
-// connection.query("CREATE TABLE IF NOT EXISTS Ilceler(IlceKodu int PRIMARY KEY NOT NULL," +
-//     " IlceAdi VARCHAR(100) NOT NULL, IlKodu int NOT NULL, FOREIGN KEY (IlKodu) REFERENCES Iller(IlKodu))",
-//     function (err, result) {
-//         if (err) throw err;
-//         console.log(result);
-//     });
+connection.query("CREATE TABLE IF NOT EXISTS Ilceler(IlceKodu int PRIMARY KEY NOT NULL," +
+    " IlceAdi VARCHAR(100) NOT NULL, IlKodu int NOT NULL, FOREIGN KEY (IlKodu) REFERENCES Iller(IlKodu))",
+    function (err, result) {
+        if (err) throw err;
+        console.log(result);
+    });
 
 // const personel_query = "CREATE TABLE IF NOT EXISTS Personel(KullaniciAdi VARCHAR(150) PRIMARY KEY NOT NULL, Email VARCHAR(255) NOT NULL" +
 //     ", Ad VARCHAR(255) NOT NULL, Soyad VARCHAR(255) NOT NULL, SicilNo VARCHAR(50) NOT NULL," +
 //     " Cep VARCHAR(15) NOT NULL, EvAdresi VARCHAR(255) NOT NULL, IlKodu int NOT NULL," +
 //     " IlceKodu int NOT NULL, PostaKodu smallint NOT NULL, UstKullaniciAdi VARCHAR(150)," +
-//     " CalistigiBirimKodu int NOT NULL, FOREIGN KEY(IlKodu) REFERENCES Iller(IlKodu), " +
+//     " CalistigiBirimKodu int, FOREIGN KEY(IlKodu) REFERENCES Iller(IlKodu), " +
 //     "FOREIGN KEY(IlceKodu) REFERENCES Ilceler(IlceKodu), UNIQUE(Email), UNIQUE(SicilNo))";
 
 // const birim_query = "CREATE TABLE IF NOT EXISTS Birimler(BirimKodu int PRIMARY KEY NOT NULL, " +
@@ -56,7 +56,7 @@ connection.connect(function (err) {
 //         console.log(result);
 //     });
 
-// KullaniciRolu 0-yönetici, 1- birim müdürü, 2-personel
+// KullaniciRolu 0-yönetici, 1- birim müdürü
 connection.query("CREATE TABLE IF NOT EXISTS Kullanicilar (KullaniciAdi VARCHAR(150) PRIMARY KEY NOT NULL," +
     " Şifre VARCHAR(255) NOT NULL, KullaniciRolu tinyint NOT NULL )",
     function (err, result) {

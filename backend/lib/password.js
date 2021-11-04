@@ -33,12 +33,7 @@ const isValid = (encryptedData) => {
 
     decryptedData += decipher.final("utf8");
 
-    console.log({
-        encryptedData, decryptedData
-    })
-
-    return encryptedData == decryptedData;
-    // return hash == crypto.pbkdf2Sync(password, salt, 10, 12, 'sha256').toString("hex");
+    return decryptedData;
 }
 
 module.exports.encryptPassword = encryptPassword;

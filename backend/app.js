@@ -7,6 +7,8 @@ const MySQLStore = require("express-mysql-session")(session);
 const encryptPassword = require("./lib/password").encryptPassword;
 const isValid = require("./lib/password").isValid;
 const kullanicilar_routes = require("./routes/kullanicilar");
+const iller_routes = require("./routes/iller");
+const ilceler_routes = require("./routes/ilceler");
 
 var options = {
     host: 'localhost',
@@ -133,6 +135,8 @@ app.get("/logout", (req, res) => {
 
 
 app.use(kullanicilar_routes);
+app.use(iller_routes);
+app.use(ilceler_routes);
 
 
 app.listen(5000, function () {
