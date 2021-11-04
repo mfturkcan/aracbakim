@@ -6,7 +6,7 @@ const connection = require("../config/database");
 // update - updatemany : put /iller/id -ids -ok
 // delete - deletemany /id /ids -ok
 
-router.get("/personeller", function (req, res) {
+router.get("/personel", function (req, res) {
     console.log("personel get");
     connection.query(`SELECT * FROM Personel`,
         function (err, result) {
@@ -24,12 +24,12 @@ router.get("/personeller", function (req, res) {
         });
 });
 
-router.post("/personeller", async function (req, res) {
+router.post("/personel", async function (req, res) {
     const yeni_personel = req.body;
 
-    connection.query(`INSERT INTO Personel (KullaniciAdi, Email, Ad, Soyad, SicilNo, Cep, EvAdresi, IlKodu, IlceKodu, PostaKodu, UstKullaniciAdi, CalistigiBirimKodu)` +
+    connection.query(`INSERT INTO Personel (KullaniciAdi, Email, Ad, Soyad, SicilNo, Cep, EvAdresi, IlKodu, IlceKodu, PostaKodu ${yeni_personel["UstKullaniciAdi"] == undefined ? "" : ", UstKullaniciAdi,"} ${yeni_personel["CalistigiBirimKodu"] == undefined ? "" : "CalistigiBirimKodu"})` +
         ` VALUES ("${yeni_personel["KullaniciAdi"]}", "${yeni_personel["Email"]}", "${yeni_personel["Ad"]}","${yeni_personel["Soyad"]}", "${yeni_personel["SicilNo"]}", "${yeni_personel["Cep"]}","${yeni_personel["EvAdresi"]}", ${yeni_personel["IlKodu"]}, ${yeni_personel["IlceKodu"]}` +
-        `,${yeni_personel["PostaKodu"]}, "${yeni_personel["UstKullaniciAdi"]}", ${yeni_personel["CalistigiBirimKodu"]} )`,
+        `,${yeni_personel["PostaKodu"]} ${yeni_personel["UstKullaniciAdi"] == undefined ? "" : ", ${yeni_personel[\"UstKullaniciAdi\"]},"} ${yeni_personel["CalistigiBirimKodu"] ?? ""} )`,
         function (err, result) {
             if (err) {
                 console.log(err);
@@ -42,17 +42,15 @@ router.post("/personeller", async function (req, res) {
     );
 });
 
-router.route("/personeller/:kullanici_adi")
+router.route("/personel/:kullanici_adi")
     .get(function (req, res) {
         const kullanici_adi = req.params.kullanici_adi;
 
         connection.query(`SELECT * FROM Personel WHERE KullaniciAdi = "${kullanici_adi}"`,
             function (err, result) {
-                if (result.length > 0) {
-                    if (err) console.log(err);
-                    const personel = result[0];
-                    res.send(personel);
-                }
+                if (err) console.log(err);
+                const personel = result[0];
+                res.send(personel);
             });
     })
     .put(function (req, res) {
@@ -60,14 +58,12 @@ router.route("/personeller/:kullanici_adi")
         const kullanici_adi = req.params.kullanici_adi;
 
         connection.query(`UPDATE Personel SET KullaniciAdi = "${yeni_personel["KullaniciAdi"]}", Email = "${yeni_personel["Email"]}", Ad = "${yeni_personel["Ad"]}",Soyad = "${yeni_personel["Soyad"]}", SicilNo = "${yeni_personel["SicilNo"]}", Cep = "${yeni_personel["Cep"]}", EvAdresi ="${yeni_personel["EvAdresi"]}", IlKodu = ${yeni_personel["IlKodu"]}, IlceKodu = ${yeni_personel["IlceKodu"]}` +
-            `,PostaKodu = ${yeni_personel["PostaKodu"]}, UstKullaniciAdi = "${yeni_personel["UstKullaniciAdi"] ?? ""}", CalistigiBirimKodu = ${yeni_personel["CalistigiBirimKodu"]} ` +
+            `,PostaKodu = ${yeni_personel["PostaKodu"]}, UstKullaniciAdi = "${yeni_personel["UstKullaniciAdi"] ?? ""}", CalistigiBirimKodu = ${yeni_personel["CalistigiBirimKodu"] ?? 0} ` +
             ` WHERE KullaniciAdi = "${kullanici_adi}"`,
             function (err, result) {
-                if (result.length > 0) {
-                    if (err) console.log(err);
-                    const ilce = result[0];
-                    res.send(ilce);
-                }
+                if (err) console.log(err);
+                const ilce = result[0];
+                res.send(ilce);
             });
     })
     .delete(function (req, res) {
@@ -75,16 +71,14 @@ router.route("/personeller/:kullanici_adi")
 
         connection.query(`DELETE FROM Personel WHERE KullaniciAdi = "${kullanici_adi}"`,
             function (err, result) {
-                if (result.length > 0) {
-                    const personel = result[0];
-                    res.send(personel);
-                    if (err) console.log(err);
-                }
+                const personel = result[0];
+                res.send(personel);
+                if (err) console.log(err);
             });
     });
 
 
-router.route("/ilceler")
+router.route("/personel")
     .delete(function (req, res) {
         console.log("delete many");
         const kullanici_adlari = JSON.parse(req.query.filter).ids;

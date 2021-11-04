@@ -27,8 +27,8 @@ router.get("/birimler", function (req, res) {
 router.post("/birimler", async function (req, res) {
     const yeni_birim = req.body;
 
-    connection.query(`INSERT INTO Birimler (BirimKodu, BirimAdi, UstBirimKodu, BulunduguAdres, IlKodu, IlceKodu, PostaKodu, BirimMudurKullaniciAdi)` +
-        ` VALUES (${yeni_birim["BirimKodu"]}, "${yeni_birim["BirimAdi"]}", ${yeni_birim["UstBirimKodu"]}, "${yeni_birim["BulunduguAdres"]}", ${yeni_birim["IlKodu"]}` +
+    connection.query(`INSERT INTO Birimler (BirimKodu, BirimAdi,  ${yeni_birim["UstBirimKodu"] == undefined ? "" : "UstBirimKodu,"} BulunduguAdres, IlKodu, IlceKodu, PostaKodu, BirimMudurKullaniciAdi)` +
+        ` VALUES (${yeni_birim["BirimKodu"]}, "${yeni_birim["BirimAdi"]}", ${yeni_birim["UstBirimKodu"] == undefined ? "" : "${ yeni_birim[\"UstBirimKodu\"]},"} "${yeni_birim["BulunduguAdres"]}", ${yeni_birim["IlKodu"]}` +
         `, ${yeni_birim["IlceKodu"]}, ${yeni_birim["PostaKodu"]}, "${yeni_birim["BirimMudurKullaniciAdi"]}" )`,
         function (err, result) {
             if (err) {
@@ -48,26 +48,22 @@ router.route("/birimler/:birim_kodu")
 
         connection.query(`SELECT * FROM Birimler WHERE BirimKodu = ${birim_kodu}`,
             function (err, result) {
-                if (result.length > 0) {
-                    if (err) console.log(err);
-                    const birim = result[0];
-                    res.send(birim);
-                }
+                if (err) console.log(err);
+                const birim = result[0];
+                res.send(birim);
             });
     })
     .put(function (req, res) {
         const yeni_birim = req.body;
         const birim_kodu = req.params.birim_kodu;
 
-        connection.query(`UPDATE Birimler SET BirimKodu = ${yeni_birim["BirimKodu"]}, BirimAdi = "${yeni_birim["BirimAdi"]}", UstBirimKodu = ${yeni_birim["UstBirimKodu"]}, BulunduguAdres = "${yeni_birim["BulunduguAdres"]}", IlKodu = ${yeni_birim["IlKodu"]} ` +
+        connection.query(`UPDATE Birimler SET BirimKodu = ${yeni_birim["BirimKodu"]}, BirimAdi = "${yeni_birim["BirimAdi"]}", UstBirimKodu = ${yeni_birim["UstBirimKodu"] ?? 0}, BulunduguAdres = "${yeni_birim["BulunduguAdres"]}", IlKodu = ${yeni_birim["IlKodu"]} ` +
             `IlceKodu = ${yeni_birim["IlceKodu"]}, PostaKodu = ${yeni_birim["PostaKodu"]}, BirimMudurKullaniciAdi = "${yeni_birim["BirimMudurKullaniciAdi"]}" ` +
             ` WHERE BirimKodu = ${birim_kodu}`,
             function (err, result) {
-                if (result.length > 0) {
-                    if (err) console.log(err);
-                    const birim = result[0];
-                    res.send(birim);
-                }
+                if (err) console.log(err);
+                const birim = result[0];
+                res.send(birim);
             });
     })
     .delete(function (req, res) {
@@ -75,11 +71,9 @@ router.route("/birimler/:birim_kodu")
 
         connection.query(`DELETE FROM Birimler WHERE BirimKodu = "${birim_kodu}"`,
             function (err, result) {
-                if (result.length > 0) {
-                    const birim = result[0];
-                    res.send(birim);
-                    if (err) console.log(err);
-                }
+                const birim = result[0];
+                res.send(birim);
+                if (err) console.log(err);
             });
     });
 

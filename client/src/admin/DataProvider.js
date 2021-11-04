@@ -21,6 +21,12 @@ const DataProvider = {
                     case "kullanicilar":
                         return { id: field["KullaniciAdi"], ...field }
                         break;
+                    case "personel":
+                        return { id: field["KullaniciAdi"], ...field }
+                        break;
+                    case "birimler":
+                        return { id: field["BirimKodu"], ...field }
+                        break;
                     case "iller":
                         return { id: field["IlKodu"], ...field }
                         break;
@@ -40,6 +46,12 @@ const DataProvider = {
             switch (resource) {
                 case "kullanicilar":
                     return { data: { ...json, id: json["KullaniciAdi"] }, }
+                    break;
+                case "personel":
+                    return { data: { ...json, id: json["KullaniciAdi"] }, }
+                    break;
+                case "birimler":
+                    return { data: { ...json, id: json["BirimKodu"] }, }
                     break;
                 case "iller":
                     return { data: { ...json, id: json["IlKodu"] }, }
@@ -61,6 +73,12 @@ const DataProvider = {
                 switch (resource) {
                     case "kullanicilar":
                         return { id: field["KullaniciAdi"], ...field }
+                        break;
+                    case "personel":
+                        return { id: field["KullaniciAdi"], ...field }
+                        break;
+                    case "birimler":
+                        return { id: field["BirimKodu"], ...field }
                         break;
                     case "iller":
                         return { id: field["IlKodu"], ...field }
@@ -92,6 +110,12 @@ const DataProvider = {
                     case "kullanicilar":
                         return { id: field["KullaniciAdi"], ...field }
                         break;
+                    case "personel":
+                        return { id: field["KullaniciAdi"], ...field }
+                        break;
+                    case "birimler":
+                        return { id: field["BirimKodu"], ...field }
+                        break;
                     case "iller":
                         return { id: field["IlKodu"], ...field }
                         break;
@@ -112,6 +136,12 @@ const DataProvider = {
             switch (resource) {
                 case "kullanicilar":
                     return { data: { ...json, id: json["KullaniciAdi"] }, }
+                    break;
+                case "personel":
+                    return { data: { ...json, id: json["KullaniciAdi"] }, }
+                    break;
+                case "birimler":
+                    return { data: { ...json, id: json["BirimKodu"] }, }
                     break;
                 case "iller":
                     return { data: { ...json, id: json["IlKodu"] }, }
@@ -135,6 +165,12 @@ const DataProvider = {
                     case "kullanicilar":
                         return { id: field["KullaniciAdi"], ...field }
                         break;
+                    case "personel":
+                        return { id: field["KullaniciAdi"], ...field }
+                        break;
+                    case "birimler":
+                        return { id: field["BirimKodu"], ...field }
+                        break;
                     case "iller":
                         return { id: field["IlKodu"], ...field }
                         break;
@@ -155,6 +191,12 @@ const DataProvider = {
                 case "kullanicilar":
                     return { data: { ...json, id: json["KullaniciAdi"] }, }
                     break;
+                case "personel":
+                    return { data: { ...json, id: json["KullaniciAdi"] }, }
+                    break;
+                case "birimler":
+                    return { data: { ...json, id: json["BirimKodu"] }, }
+                    break;
                 case "iller":
                     return { data: { ...json, id: json["IlKodu"] }, }
                     break;
@@ -171,6 +213,12 @@ const DataProvider = {
             switch (resource) {
                 case "kullanicilar":
                     return { data: { ...json, id: json["KullaniciAdi"] }, }
+                    break;
+                case "personel":
+                    return { data: { ...json, id: json["KullaniciAdi"] }, }
+                    break;
+                case "birimler":
+                    return { data: { ...json, id: json["BirimKodu"] }, }
                     break;
                 case "iller":
                     return { data: { ...json, id: json["IlKodu"] }, }
@@ -193,6 +241,12 @@ const DataProvider = {
                 switch (resource) {
                     case "kullanicilar":
                         return { id: field["KullaniciAdi"], ...field }
+                        break;
+                    case "personel":
+                        return { id: field["KullaniciAdi"], ...field }
+                        break;
+                    case "birimler":
+                        return { id: field["BirimKodu"], ...field }
                         break;
                     case "iller":
                         return { id: field["IlKodu"], ...field }

@@ -9,6 +9,8 @@ const isValid = require("./lib/password").isValid;
 const kullanicilar_routes = require("./routes/kullanicilar");
 const iller_routes = require("./routes/iller");
 const ilceler_routes = require("./routes/ilceler");
+const birimler_routes = require("./routes/birimler");
+const personel_routes = require("./routes/personel");
 
 var options = {
     host: 'localhost',
@@ -137,6 +139,8 @@ app.get("/logout", (req, res) => {
 app.use(kullanicilar_routes);
 app.use(iller_routes);
 app.use(ilceler_routes);
+app.use(birimler_routes);
+app.use(personel_routes);
 
 
 app.listen(5000, function () {

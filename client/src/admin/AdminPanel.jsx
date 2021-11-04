@@ -12,11 +12,19 @@ import KullaniciDuzenle from "./Kullanıcılar/KullaniciDuzenle";
 import KullaniciEkle from "./Kullanıcılar/KullaniciEkle";
 import KullaniciShow from "./Kullanıcılar/KullaniciGöster";
 import KullaniciListe from "./Kullanıcılar/KullaniciListe";
+import PersonelListe from "./Personel/PersonelListe";
+import BirimlerListe from "./Birimler/BirimlerListe";
+import PersonelEkle from "./Personel/PersonelEkle";
+import PersonelDuzenle from "./Personel/PersonelDuzenle";
+import BirimlerEkle from "./Birimler/BirimlerEkle";
+import BirimlerDüzenle from "./Birimler/BirimlerDüzenle";
 
 const AdminPanel = props => {
     return (
-        <Admin dataProvider={DataProvider}>
+        <Admin dataProvider={DataProvider} >
             <Resource name="kullanicilar" options={{ label: "Kullanıcılar" }} show={KullaniciShow} list={KullaniciListe} edit={KullaniciDuzenle} create={KullaniciEkle} />
+            <Resource name="personel" options={{ label: "Personel" }} list={PersonelListe} create={PersonelEkle} edit={PersonelDuzenle} />
+            <Resource name="birimler" options={{ label: "Birimler" }} list={BirimlerListe} create={BirimlerEkle} edit={BirimlerDüzenle} />
             <Resource name="iller" options={{ label: "İller" }} show={IllerShow} list={IllerListe} edit={IllerDuzenle} create={IllerEkle} />
             <Resource name="ilceler" options={{ label: "İlçeler" }} show={IlcelerShow} list={IlcelerListe} edit={IlcelerDuzenle} create={IlcelerEkle} />
         </Admin>
