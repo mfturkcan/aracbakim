@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const connection = require("../config/database");
 const encryptPassword = require("../lib/password").encryptPassword;
-
+const decryptPassword = require("../lib/password").decryptPassword;
 
 router.get("/kullanicilar", function (req, res) {
     console.log("get kullanicilar");
@@ -23,43 +23,78 @@ router.get("/kullanicilar", function (req, res) {
 router.post("/kullanicilar", async function (req, res) {
     const yeni_kullanici = req.body;
     const encrypted_sifre = await encryptPassword(yeni_kullanici["Şifre"]);
+    console.log("----")
+    console.log(yeni_kullanici)
+    let error;
 
-    connection.query(`INSERT INTO Kullanicilar (KullaniciAdi, Şifre, KullaniciRolu) VALUES ("${yeni_kullanici["KullaniciAdi"]}", "${encrypted_sifre}", ${yeni_kullanici["KullaniciRolu"]} )`,
-        function (err, result) {
-            if (err) {
-                console.log(err);
-            } else {
-                console.log(result);
-                res.send(yeni_kullanici);
-            }
-        }
-    );
+    // connection.query(`INSERT INTO Kullanicilar (KullaniciAdi, Şifre) VALUES ("${yeni_kullanici["KullaniciAdi"]}", "${encrypted_sifre}" )`,
+    //     function (err, result) {
+    //         if (err) {
+    //             console.log(err);
+    //             error = err;
+    //         }
+    //     }
+    // );
+
+    // connection.query(`INSERT INTO Birimler (BirimKodu, BirimAdi,  ${yeni_kullanici["UstBirimKodu"] == undefined ? "" : "UstBirimKodu,"} BulunduguAdres, IlKodu, IlceKodu, PostaKodu, BirimMudurKullaniciAdi)` +
+    //     ` VALUES (${yeni_kullanici["BirimKodu"]}, "${yeni_kullanici["BirimAdi"]}", ${yeni_kullanici["UstBirimKodu"] == undefined ? "" : "${ yeni_kullanici[\"UstBirimKodu\"]},"} "${yeni_kullanici["BulunduguAdres"]}", ${yeni_kullanici["IlKodu"]}` +
+    //     `, ${yeni_kullanici["IlceKodu"]}, ${yeni_kullanici["PostaKodu"]}, "${yeni_kullanici["BirimMudurKullaniciAdi"]}" )`,
+    //     function (err, result) {
+    //         if (err) {
+    //             console.log(err);
+    //             error = err;
+    //         }
+    //     }
+    // );
+
+    // connection.query(`INSERT INTO Personel (KullaniciAdi, Email, Ad, Soyad, SicilNo, Cep, EvAdresi, IlKodu, IlceKodu, PostaKodu ${yeni_kullanici["UstKullaniciAdi"] == undefined ? "" : ", UstKullaniciAdi,"} ${yeni_kullanici["CalistigiBirimKodu"] == undefined ? "" : "CalistigiBirimKodu"})` +
+    //     ` VALUES ("${yeni_kullanici["KullaniciAdi"]}", "${yeni_kullanici["Email"]}", "${yeni_kullanici["Ad"]}","${yeni_kullanici["Soyad"]}", "${yeni_kullanici["SicilNo"]}", "${yeni_kullanici["Cep"]}","${yeni_kullanici["EvAdresi"]}", ${yeni_kullanici["IlKodu"]}, ${yeni_kullanici["IlceKodu"]}` +
+    //     `,${yeni_kullanici["PostaKodu"]} ${yeni_kullanici["UstKullaniciAdi"] == undefined ? "" : ", ${yeni_kullanici[\"UstKullaniciAdi\"]},"} ${yeni_kullanici["CalistigiBirimKodu"]} )`,
+    //     function (err, result) {
+    //         if (err) {
+    //             console.log(err);
+    //             error = err;
+    //         }
+    //     }
+    // );
+
+    res.send(yeni_kullanici);
 })
 
 router.route("/kullanicilar/:kullanici_adi")
     .get(function (req, res) {
-        console.log(req.params);
         const kullanici_adi = req.params.kullanici_adi;
 
         connection.query(`SELECT * FROM Kullanicilar WHERE KullaniciAdi = "${kullanici_adi}"`,
-            function (err, result) {
+            async function (err, result) {
                 if (result.length > 0) {
                     if (err) console.log(err);
-                    const kullanici = result[0];
-                    res.send(kullanici);
+                    let kullanici = result[0];
+                    let sifre = kullanici["Şifre"];
+                    let cozumlu_sifre = await decryptPassword(sifre);
+                    console.log("şifre" + cozumlu_sifre)
+
+                    kullanici = { "Şifre": cozumlu_sifre, "Encrypted Şifre": sifre, ...kullanici }
+                    console.log(kullanici);
+                    res.json(kullanici);
                 }
             });
     })
     .put(function (req, res) {
         const yeni_kullanici = req.body;
+        console.log(yeni_kullanici);
         const kullanici_adi = req.params.kullanici_adi;
 
-        connection.query(`UPDATE Kullanicilar SET KullaniciAdi = "${yeni_kullanici.KullaniciAdi}", KullaniciRolu = "${yeni_kullanici.kullanici_rolu}" ` +
+        connection.query(`UPDATE Kullanicilar SET KullaniciAdi = "${yeni_kullanici.KullaniciAdi}" ` +
             ` WHERE KullaniciAdi = "${kullanici_adi}"`,
-            function (err, result) {
+            async function (err, result) {
                 if (result.length > 0) {
                     if (err) console.log(err);
-                    const kullanici = result[0];
+                    let kullanici = result[0];
+                    let sifre = kullanici["Şifre"];
+                    let cozumlu_sifre = await decryptPassword(sifre);
+
+                    kullanici = { "Şifre": cozumlu_sifre, "Encrypted Şifre": sifre, ...kullanici }
                     res.send(kullanici);
                 }
             });

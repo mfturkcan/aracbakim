@@ -5,12 +5,13 @@ const connection = require("./config/database");
 const session = require("express-session");
 const MySQLStore = require("express-mysql-session")(session);
 const encryptPassword = require("./lib/password").encryptPassword;
-const isValid = require("./lib/password").isValid;
 const kullanicilar_routes = require("./routes/kullanicilar");
 const iller_routes = require("./routes/iller");
 const ilceler_routes = require("./routes/ilceler");
 const birimler_routes = require("./routes/birimler");
 const personel_routes = require("./routes/personel");
+const decryptPassword = require("./lib/password").decryptPassword;
+
 
 var options = {
     host: 'localhost',
@@ -55,7 +56,7 @@ app.post("/register", async (req, res) => {
     if (username && password) {
         const encryptedPassword = await encryptPassword(password);
         encryptPassword
-        connection.query(`INSERT INTO Kullanicilar (KullaniciAdi , Şifre, KullaniciRolu) VALUES ("${username}", "${encryptedPassword}", 0)`,
+        connection.query(`INSERT INTO Kullanicilar (KullaniciAdi , Şifre) VALUES ("${username}", "${encryptedPassword}")`,
             function (err, result) {
                 if (err) {
                     console.log(err);
@@ -73,7 +74,6 @@ app.post("/register", async (req, res) => {
                         result: true,
                         user: req.session.user,
                     }
-
                     res.json(response);
                 }
             });
@@ -135,6 +135,17 @@ app.get("/logout", (req, res) => {
     });
 });
 
+app.get("/decrypt", async (req, res) => {
+    //714d4eabdb2c07d019efb037f9d2b037
+    // U2FsdGVkX19HINQFycuL6+6AwgwPLQt/OgnaMn6itWU=
+
+    // U2FsdGVkX1+vGRcKFnEBdtSMI67e4dZMJVldTRmM/ss=
+    const encrypted = 'U2FsdGVkX19HINQFycuL6+6AwgwPLQt/OgnaMn6itWU=';
+
+    const password = await decryptPassword(encrypted);
+
+    res.send(password);
+})
 
 app.use(kullanicilar_routes);
 app.use(iller_routes);

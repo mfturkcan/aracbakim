@@ -18,10 +18,19 @@ import PersonelEkle from "./Personel/PersonelEkle";
 import PersonelDuzenle from "./Personel/PersonelDuzenle";
 import BirimlerEkle from "./Birimler/BirimlerEkle";
 import BirimlerDüzenle from "./Birimler/BirimlerDüzenle";
+import { createMuiTheme } from "ra-ui-materialui";
+import { defaultTheme } from 'react-admin';
+import merge from 'lodash/merge';
+import indigo from '@material-ui/core/colors/indigo';
+import pink from '@material-ui/core/colors/pink';
+import red from '@material-ui/core/colors/red';
+import MyLayout from "./Layout";
+
+const theme = {}
 
 const AdminPanel = props => {
     return (
-        <Admin dataProvider={DataProvider} >
+        <Admin dataProvider={DataProvider} layout={MyLayout} theme={theme}>
             <Resource name="kullanicilar" options={{ label: "Kullanıcılar" }} show={KullaniciShow} list={KullaniciListe} edit={KullaniciDuzenle} create={KullaniciEkle} />
             <Resource name="personel" options={{ label: "Personel" }} list={PersonelListe} create={PersonelEkle} edit={PersonelDuzenle} />
             <Resource name="birimler" options={{ label: "Birimler" }} list={BirimlerListe} create={BirimlerEkle} edit={BirimlerDüzenle} />

@@ -56,15 +56,25 @@ router.route("/iller/:il_kodu")
         const yeni_il = req.body;
         const il_kodu = req.params.il_kodu;
 
-        connection.query(`UPDATE Iller SET IlKodu = "${yeni_il.IlKodu}", IlAdi = "${yeni_il.IlAdi}" ` +
-            ` WHERE IlKodu = "${il_kodu}"`,
-            function (err, result) {
-                if (result.length > 0) {
+        const columns = ["IlKodu", "IlAdi"];
+        let update_values = [];
+
+        for (var i = 0; i < columns.length; i++) {
+            update_values.push({
+                value: yeni_il[columns[i]],
+                column: columns[i],
+            })
+        }
+
+        for (var j = 0; j < update_values.length; j++) {
+            connection.query(`UPDATE Iller SET ${update_values[j].column} = "${update_values[j].value}" ` +
+                ` WHERE IlKodu = "${il_kodu}"`,
+                function (err, result) {
                     if (err) console.log(err);
-                    const il = result[0];
-                    res.send(il);
-                }
-            });
+                });
+        }
+
+        res.send(yeni_il);
     })
     .delete(function (req, res) {
         const il_kodu = req.params.il_kodu;

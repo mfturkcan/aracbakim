@@ -1,4 +1,4 @@
-import { Show, SimpleShowLayout, TextField, SelectField } from 'react-admin';
+import { Show, SimpleShowLayout, TextField, SelectField, FunctionField } from 'react-admin';
 import { DeleteButton } from 'ra-ui-materialui';
 
 const KullaniciShow = (props) => (

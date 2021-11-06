@@ -1,9 +1,13 @@
-import { Edit, SimpleForm, SelectInput, TextInput, ReferenceInput } from "ra-ui-materialui";
+import { SimpleForm, SelectInput, TextInput, ReferenceInput } from "ra-ui-materialui";
 import { required } from "ra-core";
+import CustomEdit from "../CustomEdit";
+import { FormDataConsumer } from 'react-admin';
 
 const PersonelDuzenle = props => {
+    console.log(props)
+
     return (
-        <Edit title="Personel" {...props}>
+        <CustomEdit title="Personel" {...props}>
             <SimpleForm rowClick="edit">
                 <TextInput source="KullaniciAdi" validate={required()} />
                 <TextInput source="Email" validate={required()} type="email" />
@@ -22,17 +26,32 @@ const PersonelDuzenle = props => {
 
                 <TextInput source="PostaKodu" validate={required()} />
 
-                <ReferenceInput source="UstKullaniciAdi" reference="personel" label="Ust Kullanici Adi"
-                >
-                    <SelectInput optionText="KullaniciAdi" />
-                </ReferenceInput>
+                <FormDataConsumer>
+                    {
+                        ({ formData, ...rest }) => {
+                            console.log(rest);
+                            console.log(formData);
+
+                            return <div>
+                                <ReferenceInput source="UstKullaniciAdi" reference="personel" label="Ust Kullanici Adi"
+                                    allowEmpty={true}>
+                                    <SelectInput optionText="KullaniciAdi" disable_value="123123" />
+                                </ReferenceInput>
+
+                                {formData.id == formData.UstKullaniciAdi &&
+                                    <p style={{ color: "red" }}>Üst Kullanıcı Adı ile Kullanıcı Adı aynı olmamalı!</p>
+                                }
+                            </div>
+                        }
+                    }
+                </FormDataConsumer>
 
                 <ReferenceInput source="CalistigiBirimKodu" reference="birimler" label="Birim Adı">
                     <SelectInput optionText="BirimAdi" />
                 </ReferenceInput>
 
             </SimpleForm>
-        </Edit>
+        </CustomEdit>
     );
 }
 export default PersonelDuzenle;
