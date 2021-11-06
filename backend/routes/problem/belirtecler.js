@@ -1,14 +1,14 @@
 const router = require("express").Router();
 const connection = require("../config/database");
-// getList : /iller 
-// getOne : /iller/id -ok
-// getmany : /iller/ids - ok
-// update - updatemany : put /iller/id -ids -ok
+// getList : /belirtecler 
+// getOne : /belirtecler/id -ok
+// getmany : /belirtecler/ids - ok
+// update - updatemany : put /belirtecler/id -ids -ok
 // delete - deletemany /id /ids -ok
 
-router.get("/iller", function (req, res) {
-    console.log("iller get");
-    connection.query(`SELECT * FROM Iller`,
+router.get("/belirtecler", function (req, res) {
+    console.log("belirtecler get");
+    connection.query(`SELECT * FROM Belirtecler`,
         function (err, result) {
             if (err) {
                 console.log(err);
@@ -24,26 +24,26 @@ router.get("/iller", function (req, res) {
         });
 });
 
-router.post("/iller", async function (req, res) {
-    const yeni_il = req.body;
+router.post("/belirtecler", async function (req, res) {
+    const yeni_belirtec = req.body;
 
-    connection.query(`INSERT INTO Iller (IlKodu, IlAdi) VALUES (${yeni_il})`,
+    connection.query(`INSERT INTO Belirtecler (BelirtecID, IlAdi) VALUES (${yeni_belirtec})`,
         function (err, result) {
             if (err) {
                 console.log(err);
             } else {
                 console.log(result);
-                res.send(yeni_il);
+                res.send(yeni_belirtec);
             }
         }
     );
 });
 
-router.route("/iller/:il_kodu")
+router.route("/belirtecler/:belirtec_id")
     .get(function (req, res) {
-        const il_kodu = req.params.il_kodu;
+        const belirtec_id = req.params.belirtec_id;
 
-        connection.query(`SELECT * FROM Iller WHERE IlKodu = "${il_kodu}"`,
+        connection.query(`SELECT * FROM Belirtecler WHERE BelirtecID = "${belirtec_id}"`,
             function (err, result) {
                 if (result.length > 0) {
                     if (err) console.log(err);
@@ -53,33 +53,33 @@ router.route("/iller/:il_kodu")
             });
     })
     .put(function (req, res) {
-        const yeni_il = req.body;
-        const il_kodu = req.params.il_kodu;
+        const yeni_belirtec = req.body;
+        const belirtec_id = req.params.belirtec_id;
 
-        const columns = ["IlKodu", "IlAdi"];
+        const columns = ["BelirtecID", "BelirtecTanimi"];
         let update_values = [];
 
         for (var i = 0; i < columns.length; i++) {
             update_values.push({
-                value: yeni_il[columns[i]],
+                value: yeni_belirtec[columns[i]],
                 column: columns[i],
             })
         }
 
         for (var j = 0; j < update_values.length; j++) {
-            connection.query(`UPDATE Iller SET ${update_values[j].column} = "${update_values[j].value}" ` +
-                ` WHERE IlKodu = "${il_kodu}"`,
+            connection.query(`UPDATE Belirtecler SET ${update_values[j].column} = "${update_values[j].value}" ` +
+                ` WHERE BelirtecID = "${belirtec_id}"`,
                 function (err, result) {
                     if (err) console.log(err);
                 });
         }
 
-        res.send(yeni_il);
+        res.send(yeni_belirtec);
     })
     .delete(function (req, res) {
-        const il_kodu = req.params.il_kodu;
+        const belirtec_id = req.params.belirtec_id;
 
-        connection.query(`DELETE FROM Iller WHERE IlKodu = "${il_kodu}"`,
+        connection.query(`DELETE FROM Belirtecler WHERE BelirtecID = "${belirtec_id}"`,
             function (err, result) {
                 if (result.length > 0) {
                     const il = result[0];
@@ -90,18 +90,18 @@ router.route("/iller/:il_kodu")
     });
 
 
-router.route("/iller")
+router.route("/belirtecler")
     .delete(function (req, res) {
         console.log("delete many");
-        const il_kodlari = JSON.parse(req.query.filter).ids;
+        const belirtec_ids = JSON.parse(req.query.filter).ids;
 
         for (var i = 0; i < il_kodlari.length; i++) {
-            connection.query(`DELETE FROM Iller WHERE IlKodu = "${il_kodlari[i]}"`,
+            connection.query(`DELETE FROM Belirtecler WHERE BelirtecID = "${belirtec_ids[i]}"`,
                 function (err, result) {
                     if (err) console.log(err);
                 });
         }
-        res.send(il_kodlari);
+        res.send(belirtec_ids);
     });
 
 

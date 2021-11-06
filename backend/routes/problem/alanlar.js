@@ -6,9 +6,8 @@ const connection = require("../config/database");
 // update - updatemany : put /iller/id -ids -ok
 // delete - deletemany /id /ids -ok
 
-router.get("/iller", function (req, res) {
-    console.log("iller get");
-    connection.query(`SELECT * FROM Iller`,
+router.get("/alanlar", function (req, res) {
+    connection.query(`SELECT * FROM Alanlar`,
         function (err, result) {
             if (err) {
                 console.log(err);
@@ -24,84 +23,84 @@ router.get("/iller", function (req, res) {
         });
 });
 
-router.post("/iller", async function (req, res) {
-    const yeni_il = req.body;
+router.post("/alanlar", async function (req, res) {
+    const yeni_alan = req.body;
 
-    connection.query(`INSERT INTO Iller (IlKodu, IlAdi) VALUES (${yeni_il})`,
+    connection.query(`INSERT INTO Alanlar (AlanID, AlanAdi, AlanTipi) VALUES (${yeni_alan})`,
         function (err, result) {
             if (err) {
                 console.log(err);
             } else {
                 console.log(result);
-                res.send(yeni_il);
+                res.send(yeni_alan);
             }
         }
     );
 });
 
-router.route("/iller/:il_kodu")
+router.route("/alanlar/:alan_id")
     .get(function (req, res) {
-        const il_kodu = req.params.il_kodu;
+        const alan_id = req.params.alan_id;
 
-        connection.query(`SELECT * FROM Iller WHERE IlKodu = "${il_kodu}"`,
+        connection.query(`SELECT * FROM Alanlar WHERE AlanID = "${alan_id}"`,
             function (err, result) {
                 if (result.length > 0) {
                     if (err) console.log(err);
-                    const il = result[0];
-                    res.send(il);
+                    const alan = result[0];
+                    res.send(alan);
                 }
             });
     })
     .put(function (req, res) {
-        const yeni_il = req.body;
-        const il_kodu = req.params.il_kodu;
+        const yeni_alan = req.body;
+        const alan_id = req.params.alan_id;
 
-        const columns = ["IlKodu", "IlAdi"];
+        const columns = ["AlanID", "AlanAdi", "AlanTipi"];
         let update_values = [];
 
         for (var i = 0; i < columns.length; i++) {
             update_values.push({
-                value: yeni_il[columns[i]],
+                value: yeni_alan[columns[i]],
                 column: columns[i],
             })
         }
 
         for (var j = 0; j < update_values.length; j++) {
-            connection.query(`UPDATE Iller SET ${update_values[j].column} = "${update_values[j].value}" ` +
-                ` WHERE IlKodu = "${il_kodu}"`,
+            connection.query(`UPDATE Alan SET ${update_values[j].column} = "${update_values[j].value}" ` +
+                ` WHERE AlanID = "${alan_id}"`,
                 function (err, result) {
                     if (err) console.log(err);
                 });
         }
 
-        res.send(yeni_il);
+        res.send(yeni_alan);
     })
     .delete(function (req, res) {
-        const il_kodu = req.params.il_kodu;
+        const alan_id = req.params.alan_id;
 
-        connection.query(`DELETE FROM Iller WHERE IlKodu = "${il_kodu}"`,
+        connection.query(`DELETE FROM Alanlar WHERE AlanID = "${alan_id}"`,
             function (err, result) {
                 if (result.length > 0) {
-                    const il = result[0];
-                    res.send(il);
+                    const alan = result[0];
+                    res.send(alan);
                     if (err) console.log(err);
                 }
             });
     });
 
 
-router.route("/iller")
+router.route("/alanlar")
     .delete(function (req, res) {
         console.log("delete many");
-        const il_kodlari = JSON.parse(req.query.filter).ids;
+        const alan_ids = JSON.parse(req.query.filter).ids;
 
         for (var i = 0; i < il_kodlari.length; i++) {
-            connection.query(`DELETE FROM Iller WHERE IlKodu = "${il_kodlari[i]}"`,
+            connection.query(`DELETE FROM Alanlar WHERE AlanID = "${alan_ids[i]}"`,
                 function (err, result) {
                     if (err) console.log(err);
                 });
         }
-        res.send(il_kodlari);
+        res.send(alan_ids);
     });
 
 

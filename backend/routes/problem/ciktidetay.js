@@ -1,14 +1,14 @@
 const router = require("express").Router();
 const connection = require("../config/database");
-// getList : /iller 
-// getOne : /iller/id -ok
-// getmany : /iller/ids - ok
-// update - updatemany : put /iller/id -ids -ok
+// getList : /ciktidetay 
+// getOne : /ciktidetay/id -ok
+// getmany : /ciktidetay/ids - ok
+// update - updatemany : put /ciktidetay/id -ids -ok
 // delete - deletemany /id /ids -ok
 
-router.get("/iller", function (req, res) {
-    console.log("iller get");
-    connection.query(`SELECT * FROM Iller`,
+router.get("/ciktidetay", function (req, res) {
+    console.log("ciktidetay get");
+    connection.query(`SELECT * FROM CiktiDetay`,
         function (err, result) {
             if (err) {
                 console.log(err);
@@ -24,26 +24,26 @@ router.get("/iller", function (req, res) {
         });
 });
 
-router.post("/iller", async function (req, res) {
-    const yeni_il = req.body;
+router.post("/ciktidetay", async function (req, res) {
+    const yeni_cikti = req.body;
 
-    connection.query(`INSERT INTO Iller (IlKodu, IlAdi) VALUES (${yeni_il})`,
+    connection.query(`INSERT INTO CiktiDetay (CiktiID, IlAdi) VALUES (${yeni_cikti})`,
         function (err, result) {
             if (err) {
                 console.log(err);
             } else {
                 console.log(result);
-                res.send(yeni_il);
+                res.send(yeni_cikti);
             }
         }
     );
 });
 
-router.route("/iller/:il_kodu")
+router.route("/ciktidetay/:cikti_id")
     .get(function (req, res) {
-        const il_kodu = req.params.il_kodu;
+        const cikti_id = req.params.cikti_id;
 
-        connection.query(`SELECT * FROM Iller WHERE IlKodu = "${il_kodu}"`,
+        connection.query(`SELECT * FROM CiktiDetay WHERE CiktiID = "${cikti_id}"`,
             function (err, result) {
                 if (result.length > 0) {
                     if (err) console.log(err);
@@ -53,33 +53,33 @@ router.route("/iller/:il_kodu")
             });
     })
     .put(function (req, res) {
-        const yeni_il = req.body;
-        const il_kodu = req.params.il_kodu;
+        const yeni_cikti = req.body;
+        const cikti_id = req.params.cikti_id;
 
-        const columns = ["IlKodu", "IlAdi"];
+        const columns = ["AlanID", "SinifID", "CiktiID", "BelirtecID", "Sira"];
         let update_values = [];
 
         for (var i = 0; i < columns.length; i++) {
             update_values.push({
-                value: yeni_il[columns[i]],
+                value: yeni_cikti[columns[i]],
                 column: columns[i],
             })
         }
 
         for (var j = 0; j < update_values.length; j++) {
-            connection.query(`UPDATE Iller SET ${update_values[j].column} = "${update_values[j].value}" ` +
-                ` WHERE IlKodu = "${il_kodu}"`,
+            connection.query(`UPDATE CiktiDetay SET ${update_values[j].column} = "${update_values[j].value}" ` +
+                ` WHERE CiktiID = "${cikti_id}"`,
                 function (err, result) {
                     if (err) console.log(err);
                 });
         }
 
-        res.send(yeni_il);
+        res.send(yeni_cikti);
     })
     .delete(function (req, res) {
-        const il_kodu = req.params.il_kodu;
+        const cikti_id = req.params.cikti_id;
 
-        connection.query(`DELETE FROM Iller WHERE IlKodu = "${il_kodu}"`,
+        connection.query(`DELETE FROM CiktiDetay WHERE CiktiID = "${cikti_id}"`,
             function (err, result) {
                 if (result.length > 0) {
                     const il = result[0];
@@ -90,18 +90,18 @@ router.route("/iller/:il_kodu")
     });
 
 
-router.route("/iller")
+router.route("/ciktidetay")
     .delete(function (req, res) {
         console.log("delete many");
-        const il_kodlari = JSON.parse(req.query.filter).ids;
+        const cikti_ids = JSON.parse(req.query.filter).ids;
 
         for (var i = 0; i < il_kodlari.length; i++) {
-            connection.query(`DELETE FROM Iller WHERE IlKodu = "${il_kodlari[i]}"`,
+            connection.query(`DELETE FROM CiktiDetay WHERE CiktiID = "${cikti_ids[i]}"`,
                 function (err, result) {
                     if (err) console.log(err);
                 });
         }
-        res.send(il_kodlari);
+        res.send(cikti_ids);
     });
 
 

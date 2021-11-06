@@ -1,14 +1,10 @@
 const router = require("express").Router();
 const connection = require("../config/database");
-// getList : /iller 
-// getOne : /iller/id -ok
-// getmany : /iller/ids - ok
-// update - updatemany : put /iller/id -ids -ok
-// delete - deletemany /id /ids -ok
 
-router.get("/iller", function (req, res) {
-    console.log("iller get");
-    connection.query(`SELECT * FROM Iller`,
+
+router.get("/aktiviteler", function (req, res) {
+    console.log("aktiviteler get");
+    connection.query(`SELECT * FROM Aktiviteler`,
         function (err, result) {
             if (err) {
                 console.log(err);
@@ -24,84 +20,84 @@ router.get("/iller", function (req, res) {
         });
 });
 
-router.post("/iller", async function (req, res) {
-    const yeni_il = req.body;
+router.post("/aktiviteler", async function (req, res) {
+    const yeni_aktivite = req.body;
 
-    connection.query(`INSERT INTO Iller (IlKodu, IlAdi) VALUES (${yeni_il})`,
+    connection.query(`INSERT INTO Aktiviteler (AktiviteID, AktiviteTanimi) VALUES (${yeni_aktivite} )`,
         function (err, result) {
             if (err) {
                 console.log(err);
             } else {
                 console.log(result);
-                res.send(yeni_il);
+                res.send(yeni_aktivite);
             }
         }
     );
 });
 
-router.route("/iller/:il_kodu")
+router.route("/aktiviteler/:aktivite_id")
     .get(function (req, res) {
-        const il_kodu = req.params.il_kodu;
+        const aktivite_id = req.params.aktivite_id;
 
-        connection.query(`SELECT * FROM Iller WHERE IlKodu = "${il_kodu}"`,
+        connection.query(`SELECT * FROM Aktiviteler WHERE AktiviteID = "${aktivite_id}"`,
             function (err, result) {
                 if (result.length > 0) {
                     if (err) console.log(err);
-                    const il = result[0];
-                    res.send(il);
+                    const aktivite = result[0];
+                    res.send(aktivite);
                 }
             });
     })
     .put(function (req, res) {
-        const yeni_il = req.body;
-        const il_kodu = req.params.il_kodu;
+        const yeni_aktivite = req.body;
+        const aktivite_id = req.params.aktivite_id;
 
-        const columns = ["IlKodu", "IlAdi"];
+        const columns = ["AktiviteID", "AktiviteTanimi"];
         let update_values = [];
 
         for (var i = 0; i < columns.length; i++) {
             update_values.push({
-                value: yeni_il[columns[i]],
+                value: yeni_aktivite[columns[i]],
                 column: columns[i],
             })
         }
 
         for (var j = 0; j < update_values.length; j++) {
-            connection.query(`UPDATE Iller SET ${update_values[j].column} = "${update_values[j].value}" ` +
-                ` WHERE IlKodu = "${il_kodu}"`,
+            connection.query(`UPDATE Aktiviteler SET ${update_values[j].column} = "${update_values[j].value}" ` +
+                ` WHERE AktiviteID = "${aktivite_id}"`,
                 function (err, result) {
                     if (err) console.log(err);
                 });
         }
 
-        res.send(yeni_il);
+        res.send(yeni_aktivite);
     })
     .delete(function (req, res) {
-        const il_kodu = req.params.il_kodu;
+        const aktivite_id = req.params.aktivite_id;
 
-        connection.query(`DELETE FROM Iller WHERE IlKodu = "${il_kodu}"`,
+        connection.query(`DELETE FROM Aktiviteler WHERE AktiviteID = "${aktivite_id}"`,
             function (err, result) {
                 if (result.length > 0) {
-                    const il = result[0];
-                    res.send(il);
+                    const aktivite = result[0];
+                    res.send(aktivite);
                     if (err) console.log(err);
                 }
             });
     });
 
 
-router.route("/iller")
+router.route("/aktiviteler")
     .delete(function (req, res) {
         console.log("delete many");
-        const il_kodlari = JSON.parse(req.query.filter).ids;
+        const aktivite_ids = JSON.parse(req.query.filter).ids;
 
-        for (var i = 0; i < il_kodlari.length; i++) {
-            connection.query(`DELETE FROM Iller WHERE IlKodu = "${il_kodlari[i]}"`,
+        for (var i = 0; i < aktivite_ids.length; i++) {
+            connection.query(`DELETE FROM Aktiviteler WHERE AktiviteID = "${aktivite_ids[i]}"`,
                 function (err, result) {
                     if (err) console.log(err);
                 });
         }
-        res.send(il_kodlari);
+        res.send(aktivite_ids);
     });
 
 

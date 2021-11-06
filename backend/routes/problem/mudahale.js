@@ -1,14 +1,8 @@
 const router = require("express").Router();
 const connection = require("../config/database");
-// getList : /iller 
-// getOne : /iller/id -ok
-// getmany : /iller/ids - ok
-// update - updatemany : put /iller/id -ids -ok
-// delete - deletemany /id /ids -ok
 
-router.get("/iller", function (req, res) {
-    console.log("iller get");
-    connection.query(`SELECT * FROM Iller`,
+router.get("/mudahale", function (req, res) {
+    connection.query(`SELECT * FROM Mudahale`,
         function (err, result) {
             if (err) {
                 console.log(err);
@@ -24,84 +18,84 @@ router.get("/iller", function (req, res) {
         });
 });
 
-router.post("/iller", async function (req, res) {
-    const yeni_il = req.body;
+router.post("/mudahale", async function (req, res) {
+    const yeni_mudahale = req.body;
 
-    connection.query(`INSERT INTO Iller (IlKodu, IlAdi) VALUES (${yeni_il})`,
+    connection.query(`INSERT INTO Mudahale (AlanID, SinifID, MudaheleID,  MudahaleAdi) VALUES (${yeni_mudahale} )`,
         function (err, result) {
             if (err) {
                 console.log(err);
             } else {
                 console.log(result);
-                res.send(yeni_il);
+                res.send(yeni_mudahale);
             }
         }
     );
 });
 
-router.route("/iller/:il_kodu")
+router.route("/mudahale/:mudahale_id")
     .get(function (req, res) {
-        const il_kodu = req.params.il_kodu;
+        const mudahale_id = req.params.mudahale_id;
 
-        connection.query(`SELECT * FROM Iller WHERE IlKodu = "${il_kodu}"`,
+        connection.query(`SELECT * FROM mudahale WHERE MudahaleID = "${mudahale_id}"`,
             function (err, result) {
                 if (result.length > 0) {
                     if (err) console.log(err);
-                    const il = result[0];
-                    res.send(il);
+                    const mudahale = result[0];
+                    res.send(mudahale);
                 }
             });
     })
     .put(function (req, res) {
-        const yeni_il = req.body;
-        const il_kodu = req.params.il_kodu;
+        const yeni_mudahale = req.body;
+        const mudahale_id = req.params.mudahale_id;
 
-        const columns = ["IlKodu", "IlAdi"];
+        const columns = ["AlanID", "SinifID", "MudaheleID", "MudahaleAdi"];
         let update_values = [];
 
         for (var i = 0; i < columns.length; i++) {
             update_values.push({
-                value: yeni_il[columns[i]],
+                value: yeni_mudahale[columns[i]],
                 column: columns[i],
             })
         }
 
         for (var j = 0; j < update_values.length; j++) {
-            connection.query(`UPDATE Iller SET ${update_values[j].column} = "${update_values[j].value}" ` +
-                ` WHERE IlKodu = "${il_kodu}"`,
+            connection.query(`UPDATE Mudahale SET ${update_values[j].column} = "${update_values[j].value}" ` +
+                ` WHERE MudahaleID = "${mudahale_id}"`,
                 function (err, result) {
                     if (err) console.log(err);
                 });
         }
 
-        res.send(yeni_il);
+        res.send(yeni_mudahale);
     })
     .delete(function (req, res) {
-        const il_kodu = req.params.il_kodu;
+        const mudahale_id = req.params.mudahale_id;
 
-        connection.query(`DELETE FROM Iller WHERE IlKodu = "${il_kodu}"`,
+        connection.query(`DELETE FROM Mudahale WHERE MudahaleID = "${mudahale_id}"`,
             function (err, result) {
                 if (result.length > 0) {
-                    const il = result[0];
-                    res.send(il);
+                    const mudahale = result[0];
+                    res.send(mudahale);
                     if (err) console.log(err);
                 }
             });
     });
 
 
-router.route("/iller")
+router.route("/mudahale")
     .delete(function (req, res) {
         console.log("delete many");
-        const il_kodlari = JSON.parse(req.query.filter).ids;
+        const mudahale_ids = JSON.parse(req.query.filter).ids;
 
         for (var i = 0; i < il_kodlari.length; i++) {
-            connection.query(`DELETE FROM Iller WHERE IlKodu = "${il_kodlari[i]}"`,
+            connection.query(`DELETE FROM Mudahale WHERE MudahaleID = "${mudahale_ids[i]}"`,
                 function (err, result) {
                     if (err) console.log(err);
                 });
         }
-        res.send(il_kodlari);
+        res.send(mudahale_ids);
     });
 
 
