@@ -35,36 +35,45 @@ router.post("/kullanicilar", async function (req, res) {
     console.log(yeni_kullanici)
     let error;
 
-    // connection.query(`INSERT INTO Kullanicilar (KullaniciAdi, Şifre) VALUES ("${yeni_kullanici["KullaniciAdi"]}", "${encrypted_sifre}" )`,
-    //     function (err, result) {
-    //         if (err) {
-    //             console.log(err);
-    //             error = err;
-    //         }
-    //     }
-    // );
+    connection.query(`INSERT INTO Kullanicilar (KullaniciAdi, Şifre) VALUES ("${yeni_kullanici["KullaniciAdi"]}", "${encrypted_sifre}" )`,
+        function (err, result) {
+            if (err) {
+                console.log(err);
+                error = err;
+            }
+        }
+    );
 
-    // connection.query(`INSERT INTO Birimler (BirimKodu, BirimAdi,  ${yeni_kullanici["UstBirimKodu"] == undefined ? "" : "UstBirimKodu,"} BulunduguAdres, IlKodu, IlceKodu, PostaKodu, BirimMudurKullaniciAdi)` +
-    //     ` VALUES (${yeni_kullanici["BirimKodu"]}, "${yeni_kullanici["BirimAdi"]}", ${yeni_kullanici["UstBirimKodu"] == undefined ? "" : "${ yeni_kullanici[\"UstBirimKodu\"]},"} "${yeni_kullanici["BulunduguAdres"]}", ${yeni_kullanici["IlKodu"]}` +
-    //     `, ${yeni_kullanici["IlceKodu"]}, ${yeni_kullanici["PostaKodu"]}, "${yeni_kullanici["BirimMudurKullaniciAdi"]}" )`,
-    //     function (err, result) {
-    //         if (err) {
-    //             console.log(err);
-    //             error = err;
-    //         }
-    //     }
-    // );
+    connection.query(`INSERT INTO Birimler (BirimKodu, BirimAdi,  ${yeni_kullanici["UstBirimKodu"] == undefined ? "" : "UstBirimKodu,"} BulunduguAdres, IlKodu, IlceKodu, PostaKodu, BirimMudurKullaniciAdi)` +
+        ` VALUES (${yeni_kullanici["BirimKodu"]}, "${yeni_kullanici["BirimAdi"]}", ${yeni_kullanici["UstBirimKodu"] == undefined ? "" : "${ yeni_kullanici[\"UstBirimKodu\"]},"} "${yeni_kullanici["BulunduguAdres"]}", ${yeni_kullanici["IlKodu"]}` +
+        `, ${yeni_kullanici["IlceKodu"]}, ${yeni_kullanici["PostaKodu"]}, "${yeni_kullanici["BirimMudurKullaniciAdi"]}" )`,
+        function (err, result) {
+            if (err) {
+                console.log(err);
+                error = err;
+            }
+        }
+    );
 
-    // connection.query(`INSERT INTO Personel (KullaniciAdi, Email, Ad, Soyad, SicilNo, Cep, EvAdresi, IlKodu, IlceKodu, PostaKodu ${yeni_kullanici["UstKullaniciAdi"] == undefined ? "" : ", UstKullaniciAdi,"} ${yeni_kullanici["CalistigiBirimKodu"] == undefined ? "" : "CalistigiBirimKodu"})` +
-    //     ` VALUES ("${yeni_kullanici["KullaniciAdi"]}", "${yeni_kullanici["Email"]}", "${yeni_kullanici["Ad"]}","${yeni_kullanici["Soyad"]}", "${yeni_kullanici["SicilNo"]}", "${yeni_kullanici["Cep"]}","${yeni_kullanici["EvAdresi"]}", ${yeni_kullanici["IlKodu"]}, ${yeni_kullanici["IlceKodu"]}` +
-    //     `,${yeni_kullanici["PostaKodu"]} ${yeni_kullanici["UstKullaniciAdi"] == undefined ? "" : ", ${yeni_kullanici[\"UstKullaniciAdi\"]},"} ${yeni_kullanici["CalistigiBirimKodu"]} )`,
-    //     function (err, result) {
-    //         if (err) {
-    //             console.log(err);
-    //             error = err;
-    //         }
-    //     }
-    // );
+    connection.query(`INSERT INTO Personel (KullaniciAdi, Email, Ad, Soyad, SicilNo, Cep, EvAdresi, IlKodu, IlceKodu, PostaKodu ,CalistigiBirimKodu)` +
+        ` VALUES ("${yeni_kullanici["KullaniciAdi"]}", "${yeni_kullanici["Email"]}", "${yeni_kullanici["Ad"]}","${yeni_kullanici["Soyad"]}", "${yeni_kullanici["SicilNo"]}", "${yeni_kullanici["Cep"]}","${yeni_kullanici["EvAdresi"]}", ${yeni_kullanici["IlKodu"]}, ${yeni_kullanici["IlceKodu"]}` +
+        `,${yeni_kullanici["PostaKodu"]}, ${yeni_kullanici["CalistigiBirimKodu"]} )`,
+        function (err, result) {
+            if (err) {
+                console.log(err);
+                error = err;
+            }
+        }
+    );
+
+    if (yeni_kullanici["UstKullanici"] != null) {
+        connection.query(`INSERT INTO Personel (UstKullaniciAdi) VALUES(${yeni_kullanici["UstKullaniciAdi"]}) WHERE KullaniciAdi = "${yeni_kullanici["KullaniciAdi"]}"`,
+            function (err, result) {
+                if (err) {
+                    console.log(err);
+                }
+            });
+    }
 
     res.send(yeni_kullanici);
 })

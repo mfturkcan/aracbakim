@@ -12,22 +12,14 @@ const PersonelListe = props => {
                 <TextField source="Cep" />
                 <TextField source="EvAdresi" />
 
-                <ReferenceField source="IlKodu" reference="iller" label="Il Adı">
-                    <TextField source="IlAdi" />
-                </ReferenceField>
-                <ReferenceField source="IlceKodu" reference="ilceler" label="Ilce Adı">
-                    <TextField source="IlceAdi" />
-                </ReferenceField>
+                <TextField source="IlKodu" />
+                <TextField source="IlceKodu" />
 
                 <TextField source="PostaKodu" />
 
-                <ReferenceField source="UstKullaniciAdi" reference="personel" label="Ust Kullanici Adi">
-                    <TextField source="KullaniciAdi" />
-                </ReferenceField>
+                <TextField source="UstKullaniciAdi" />
 
-                <ReferenceField source="CalistigiBirimKodu" reference="birimler" label="Birim Adı">
-                    <TextField source="BirimAdi" />
-                </ReferenceField>
+                <TextField source="CalistigiBirimKodu" />
 
             </Datagrid>
         </List>

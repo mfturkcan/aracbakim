@@ -48,13 +48,13 @@ connection.query("CREATE TABLE IF NOT EXISTS Ilceler(IlceKodu int PRIMARY KEY NO
 const personel_query = "CREATE TABLE IF NOT EXISTS Personel(KullaniciAdi VARCHAR(150) PRIMARY KEY NOT NULL, Email VARCHAR(255) NOT NULL" +
     ", Ad VARCHAR(255) NOT NULL, Soyad VARCHAR(255) NOT NULL, SicilNo VARCHAR(50) NOT NULL," +
     " Cep VARCHAR(15) NOT NULL, EvAdresi VARCHAR(255) NOT NULL, IlKodu int NOT NULL," +
-    " IlceKodu int NOT NULL, PostaKodu smallint NOT NULL, UstKullaniciAdi VARCHAR(150)," +
+    " IlceKodu int NOT NULL, PostaKodu int NOT NULL, UstKullaniciAdi VARCHAR(150)," +
     " CalistigiBirimKodu int NOT NULL, FOREIGN KEY(IlKodu) REFERENCES Iller(IlKodu), " +
     "FOREIGN KEY(IlceKodu) REFERENCES Ilceler(IlceKodu), UNIQUE(Email), UNIQUE(SicilNo))";
 
 const birim_query = "CREATE TABLE IF NOT EXISTS Birimler(BirimKodu int PRIMARY KEY NOT NULL, " +
     "BirimAdi VARCHAR(255) NOT NULL, UstBirimKodu int, BulunduguAdres VARCHAR(255) NOT NULL," +
-    " IlKodu int NOT NULL, IlceKodu int NOT NULL, PostaKodu smallint NOT NULL, BirimMudurKullaniciAdi VARCHAR(150) NOT NULL," +
+    " IlKodu int NOT NULL, IlceKodu int NOT NULL, PostaKodu int NOT NULL, BirimMudurKullaniciAdi VARCHAR(150) NOT NULL," +
     "FOREIGN KEY(IlKodu) REFERENCES Iller(IlKodu), FOREIGN KEY(IlceKodu) REFERENCES Ilceler(IlceKodu), FOREIGN KEY(BirimMudurKullaniciAdi) REFERENCES Personel(KullaniciAdi)," +
     " FOREIGN KEY(UstBirimKodu) REFERENCES Birimler(BirimKodu))";
 
@@ -77,7 +77,7 @@ connection.query("CREATE TABLE IF NOT EXISTS Kullanicilar (KullaniciAdi VARCHAR(
         console.log(result);
     });
 
-connection.query("CREATE TABLE IF NOT EXISTS Problem (ProblemTipiID tinyint PRIMARY KEY NOT NULL," +
+connection.query("CREATE TABLE IF NOT EXISTS Problem (ProblemTipiID int PRIMARY KEY NOT NULL," +
     " ProblemTanimi VARCHAR(255) NOT NULL, ProblemiTanimlayiciAdi VARCHAR(255) NOT NULL, ProblemiTanimlayiciSoyadi VARCHAR(255) NOT NULL, ProblemiTanimlayanTCNOPasaportno VARCHAR(50) NOT NULL, HedeflenenAmacTanimi VARCHAR(255) NOT NULL)",
     function (err, result) {
         if (err) throw err;
@@ -85,7 +85,7 @@ connection.query("CREATE TABLE IF NOT EXISTS Problem (ProblemTipiID tinyint PRIM
     });
 
 // Alantipi = müdahale(0) - çıktı(1)
-connection.query("CREATE TABLE IF NOT EXISTS Alanlar (AlanID tinyint PRIMARY KEY NOT NULL," +
+connection.query("CREATE TABLE IF NOT EXISTS Alanlar (AlanID int PRIMARY KEY NOT NULL," +
     " AlanAdi VARCHAR(255) NOT NULL, AlanTipi BOOLEAN NOT NULL, UNIQUE(AlanAdi) )",
     function (err, result) {
         if (err) throw err;
@@ -93,57 +93,57 @@ connection.query("CREATE TABLE IF NOT EXISTS Alanlar (AlanID tinyint PRIMARY KEY
     });
 
 // Alantipi = müdahale(0) - çıktı(1)
-connection.query("CREATE TABLE IF NOT EXISTS Siniflar (SinifID tinyint PRIMARY KEY NOT NULL," +
+connection.query("CREATE TABLE IF NOT EXISTS Siniflar (SinifID int PRIMARY KEY NOT NULL," +
     " SinifAdi VARCHAR(255) NOT NULL, AlanTipi BOOLEAN NOT NULL, UNIQUE(SinifAdi) )",
     function (err, result) {
         if (err) throw err;
         console.log(result);
     });
 
-connection.query("CREATE TABLE IF NOT EXISTS Mudahale (MudahaleID tinyint PRIMARY KEY NOT NULL, AlanID tinyint NOT NULL,SinifID tinyint NOT NULL," +
+connection.query("CREATE TABLE IF NOT EXISTS Mudahale (MudahaleID int PRIMARY KEY NOT NULL, AlanID int NOT NULL,SinifID int NOT NULL," +
     " MudahaleAdi VARCHAR(100) NOT NULL, FOREIGN KEY(AlanID) REFERENCES Alanlar(AlanID), FOREIGN KEY(SinifID) REFERENCES Siniflar(SinifID) )",
     function (err, result) {
         if (err) throw err;
         console.log(result);
     });
 
-connection.query("CREATE TABLE IF NOT EXISTS Aktiviteler (AktiviteID tinyint PRIMARY KEY NOT NULL," +
+connection.query("CREATE TABLE IF NOT EXISTS Aktiviteler (AktiviteID int PRIMARY KEY NOT NULL," +
     " AktiviteTanimi VARCHAR(255) NOT NULL )",
     function (err, result) {
         if (err) throw err;
         console.log(result);
     });
 
-connection.query("CREATE TABLE IF NOT EXISTS MudahaleDetay (MudahaleID tinyint NOT NULL, AktiviteID tinyint NOT NULL, AlanID tinyint NOT NULL,SinifID tinyint NOT NULL," +
-    " Sira tinyint NOT NULL, FOREIGN KEY(AlanID) REFERENCES Alanlar(AlanID), FOREIGN KEY(SinifID) REFERENCES Siniflar(SinifID) ," +
+connection.query("CREATE TABLE IF NOT EXISTS MudahaleDetay (MudahaleID int NOT NULL, AktiviteID int NOT NULL, AlanID int NOT NULL,SinifID int NOT NULL," +
+    " Sira int NOT NULL, FOREIGN KEY(AlanID) REFERENCES Alanlar(AlanID), FOREIGN KEY(SinifID) REFERENCES Siniflar(SinifID) ," +
     " FOREIGN KEY(AktiviteID) REFERENCES Aktiviteler(AktiviteID), FOREIGN KEY(MudahaleID) REFERENCES Mudahale(MudahaleID) )",
     function (err, result) {
         if (err) throw err;
         console.log(result);
     });
 
-connection.query("CREATE TABLE IF NOT EXISTS Cikti (CiktiID tinyint PRIMARY KEY NOT NULL, AlanID tinyint NOT NULL,SinifID tinyint NOT NULL," +
+connection.query("CREATE TABLE IF NOT EXISTS Cikti (CiktiID int PRIMARY KEY NOT NULL, AlanID int NOT NULL,SinifID int NOT NULL," +
     " CiktiAdi VARCHAR(100) NOT NULL, FOREIGN KEY(AlanID) REFERENCES Alanlar(AlanID), FOREIGN KEY(SinifID) REFERENCES Siniflar(SinifID) )",
     function (err, result) {
         if (err) throw err;
         console.log(result);
     });
 
-connection.query("CREATE TABLE IF NOT EXISTS Belirtecler (BelirtecID tinyint PRIMARY KEY NOT NULL," +
+connection.query("CREATE TABLE IF NOT EXISTS Belirtecler (BelirtecID int PRIMARY KEY NOT NULL," +
     " BelirtecTanimi VARCHAR(255) NOT NULL )",
     function (err, result) {
         if (err) throw err;
         console.log(result);
     });
 
-connection.query("CREATE TABLE IF NOT EXISTS CiktiDetay (CiktiID tinyint PRIMARY KEY NOT NULL, AlanID tinyint NOT NULL,SinifID tinyint NOT NULL, BelirtecID tinyint NOT NULL," +
+connection.query("CREATE TABLE IF NOT EXISTS CiktiDetay (CiktiID int PRIMARY KEY NOT NULL, AlanID int NOT NULL,SinifID int NOT NULL, BelirtecID int NOT NULL," +
     " Sira VARCHAR(100) NOT NULL, FOREIGN KEY(AlanID) REFERENCES Alanlar(AlanID), FOREIGN KEY(SinifID) REFERENCES Siniflar(SinifID), FOREIGN KEY(BelirtecID) REFERENCES Belirtecler(BelirtecID))",
     function (err, result) {
         if (err) throw err;
         console.log(result);
     });
 
-connection.query("CREATE TABLE IF NOT EXISTS ProblemBirim (ProblemID tinyint NOT NULL, BirimID int NOT NULL," +
+connection.query("CREATE TABLE IF NOT EXISTS ProblemBirim (ProblemID int NOT NULL, BirimID int NOT NULL," +
     " EslesmeTarihi VARCHAR(255) NOT NULL , FOREIGN KEY(ProblemID) REFERENCES Problem(ProblemTipiID) , FOREIGN KEY(BirimID) REFERENCES Birimler(BirimKodu))",
     function (err, result) {
         if (err) throw err;

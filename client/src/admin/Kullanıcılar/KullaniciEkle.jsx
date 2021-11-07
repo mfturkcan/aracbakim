@@ -12,7 +12,7 @@ const KullaniciEkle = ({ translate, ...props }) => {
 
     return (
         <Create id="KullaniciAdi" {...props} >
-            <TabbedForm >
+            <TabbedForm sanitizeEmptyValues={false}>
                 <FormTab label="Kullanıcı">
                     <TextInput source="KullaniciAdi" validate={required()} />
                     <TextInput source="Şifre" validate={required()} />
@@ -49,7 +49,7 @@ const KullaniciEkle = ({ translate, ...props }) => {
                         <FormDataConsumer>
                             {
                                 ({ formData, ...rest }) => {
-                                    return <SelectInput variant="filled" style={{ width: "250px" }} source="BirimMudurKullaniciAdi" choices={[{ id: 0, name: formData.KullaniciAdi ?? "" }]} />
+                                    return <SelectInput variant="filled" style={{ width: "250px" }} source="BirimMudurKullaniciAdi" choices={[{ id: formData.KullaniciAdi ?? "0", name: formData.KullaniciAdi ?? "" }]} />
                                 }
                             }
                         </FormDataConsumer>
@@ -83,7 +83,7 @@ const KullaniciEkle = ({ translate, ...props }) => {
                         <FormDataConsumer>
                             {
                                 ({ formData, ...rest }) => {
-                                    return <SelectInput label="Calistigi Birim Kodu" source="CalistigiBirimKodu" choices={[{ id: 0, name: formData.BirimKodu == undefined ? "" : formData.BirimKodu.toString() }]} style={{ width: "250px" }} />
+                                    return <SelectInput label="Calistigi Birim Kodu" source="CalistigiBirimKodu" choices={[{ id: formData.BirimKodu, name: formData.BirimKodu == undefined ? "" : formData.BirimKodu.toString() }]} style={{ width: "250px" }} />
 
                                 }
                             }
