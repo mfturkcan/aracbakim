@@ -49,12 +49,33 @@ import MudahaleDetayEkle from './Problem/MudahaleDetay/MudahaleDetayEkle';
 import ProblemBirimListe from './Problem/ProblemBirim/ProblemBirimListe';
 import ProblemBirimEkle from './Problem/ProblemBirim/ProblemBirimEkle';
 import ProblemBirimDuzenle from './Problem/ProblemBirim/ProblemBirimDuzenle';
+import { useAuth } from "../context/AuthContext";
+import { axiosInstance } from "../App";
+import { useHistory } from "react-router";
+import NotFound from './NotFound';
 
 const theme = {}
-
 const AdminPanel = props => {
+
+    const [user, setUser] = useAuth();
+    const history = useHistory();
+
+    const authProvider = {
+        // authentication
+        login: params => Promise.resolve(),
+        checkError: error => Promise.resolve(),
+        checkAuth: params => Promise.resolve(),
+        logout: async () => {
+            await axiosInstance.get("/logout");
+            history.push("/");
+            Promise.resolve();
+        },
+        getIdentity: () => Promise.resolve(),
+        // authorization
+        getPermissions: params => Promise.resolve(),
+    };
     return (
-        <Admin dataProvider={DataProvider} layout={MyLayout} theme={theme}>
+        <Admin dataProvider={DataProvider} layout={MyLayout} theme={theme} loginPage={false} catchAll={NotFound} authProvider={authProvider}>
             <Resource name="kullanicilar" options={{ label: "Kullanıcılar" }} show={KullaniciShow} list={KullaniciListe} edit={KullaniciDuzenle} create={KullaniciEkle} />
             <Resource name="personel" options={{ label: "Personel" }} list={PersonelListe} create={PersonelEkle} edit={PersonelDuzenle} />
             <Resource name="birimler" options={{ label: "Birimler" }} list={BirimlerListe} create={BirimlerEkle} edit={BirimlerDüzenle} />

@@ -11,12 +11,9 @@ const encryptPassword = (password) => {
 }
 
 const decryptPassword = (encryptedData) => {
-    console.log("sa");
     const decipher = crypto.AES.decrypt(encryptedData, Securitykey);
 
     let decryptedData = decipher.toString(crypto.enc.Utf8);
-
-    console.log(decryptedData);
     return decryptedData;
 }
 

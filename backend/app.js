@@ -10,7 +10,21 @@ const iller_routes = require("./routes/iller");
 const ilceler_routes = require("./routes/ilceler");
 const birimler_routes = require("./routes/birimler");
 const personel_routes = require("./routes/personel");
-const decryptPassword = require("./lib/password").decryptPassword;
+const user_routes = require("./routes/user/user")
+
+const list_routes = [
+    require("./routes/problem/problemler"),
+    require("./routes/problem/aktiviteler"),
+    require("./routes/problem/alanlar"),
+    require("./routes/problem/cikti"),
+    require("./routes/problem/ciktidetay"),
+    require("./routes/problem/mudahale"),
+    require("./routes/problem/mudahaledetay"),
+    require("./routes/problem/problembirim"),
+    require("./routes/problem/siniflar"),
+    require("./routes/problem/belirtecler"),
+]
+
 
 
 var options = {
@@ -39,113 +53,22 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const isAuth = (req, res, next) => {
+app.get("/isAuth", (req, res) => {
     if (req.session.user) {
-        console.log(req.session.user);
-        next();
-    }
-}
-
-app.post("/register", async (req, res) => {
-    const { username, password } = req.body;
-
-    let response = {
-        result: true,
-    }
-
-    if (username && password) {
-        const encryptedPassword = await encryptPassword(password);
-        encryptPassword
-        connection.query(`INSERT INTO Kullanicilar (KullaniciAdi , Şifre) VALUES ("${username}", "${encryptedPassword}")`,
-            function (err, result) {
-                if (err) {
-                    console.log(err);
-                    response = { result: false, message: "Kayıt olurken bir hata oluştu. Hata mesajı : " + err.message }
-                    res.json(response);
-                }
-                else {
-                    req.session.user = {
-                        username: username,
-                        role: 'Yönetici'
-                    }
-                    req.session.save();
-
-                    response = {
-                        result: true,
-                        user: req.session.user,
-                    }
-                    res.json(response);
-                }
-            });
-    }
-});
-
-app.post("/login", (req, res) => {
-    const { username, password } = req.body;
-
-    let response = {
-        result: true
-    }
-    if (username, password) {
-        connection.query(`SELECT * FROM Kullanicilar WHERE KullaniciAdi = "${username}"`, async function (err, result) {
-            if (err) {
-                console.log(err);
-                response = { result: false, message: "Giriş yaparken bir hata oluştu. Hata mesajı : " + err.message }
-                res.json(response);
-            } else {
-                if (result.length > 0) {
-                    const user = result[0];
-                    // is_password_valid Şifreyi oluştururken uyguladığımız methodu şuan girilen şifreye uygulayıp, sonucu kontrol eder.
-                    const is_password_valid = await encryptPassword(password) == user["Şifre"];
-
-                    if (is_password_valid) {
-                        req.session.user = user;
-                        req.session.save();
-                        response = {
-                            result: true,
-                            user: user,
-                        }
-                        res.json(response);
-                    } else {
-                        response = {
-                            result: false,
-                            message: "Şifreyi yanlış girdiniz!",
-                        }
-                    }
-                }
-                else {
-                    // Return result false, not user found
-                    response = {
-                        result: false,
-                        message: "Kullanıcı adına sahip bir kullanıcı bulunamadı!",
-                    }
-                    res.json(response);
-                }
-            }
+        res.json(req.session.user);
+    } else {
+        res.json({
+            username: '',
+            role: '',
         });
     }
-});
-
-app.get("/logout", (req, res) => {
-    req.session.destroy();
-    req.session.save();
-
-    res.json({
-        result: true
-    });
-});
-
-app.get("/decrypt", async (req, res) => {
-    //714d4eabdb2c07d019efb037f9d2b037
-    // U2FsdGVkX19HINQFycuL6+6AwgwPLQt/OgnaMn6itWU=
-
-    // U2FsdGVkX1+vGRcKFnEBdtSMI67e4dZMJVldTRmM/ss=
-    const encrypted = 'U2FsdGVkX19HINQFycuL6+6AwgwPLQt/OgnaMn6itWU=';
-
-    const password = await decryptPassword(encrypted);
-
-    res.send(password);
 })
+
+app.get("/test", (req, res) => {
+    res.send("test");
+})
+
+app.use(user_routes);
 
 app.use(kullanicilar_routes);
 app.use(iller_routes);
@@ -153,6 +76,7 @@ app.use(ilceler_routes);
 app.use(birimler_routes);
 app.use(personel_routes);
 
+list_routes.forEach(route => app.use(route));
 
 app.listen(5000, function () {
     console.log("Server has started at port 5000");

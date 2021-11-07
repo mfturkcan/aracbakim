@@ -1,10 +1,6 @@
 const router = require("express").Router();
-const connection = require("../config/database");
-// getList : /problembirim 
-// getOne : /problembirim/id -ok
-// getmany : /problembirim/ids - ok
-// update - updatemany : put /problembirim/id -ids -ok
-// delete - deletemany /id /ids -ok
+const connection = require("../../config/database");
+
 
 router.get("/problembirim", function (req, res) {
     console.log("problembirim get");

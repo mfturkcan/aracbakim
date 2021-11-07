@@ -1,13 +1,17 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { axiosInstance } from "../App";
+import { useHistory } from "react-router";
 
 const Kayit = props => {
+    let history = useHistory();
+
     const [errorMessage, setErrorMessage] = useState("");
     var regex_punch = new RegExp(/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
-    function handleClick(event) {
+    async function handleClick(event) {
         setErrorMessage("");
 
         // Noktalama işareti içeriyor mu?
@@ -20,8 +24,16 @@ const Kayit = props => {
         if (!includes_uppercase) setErrorMessage("Şifre harf en az bir büyük harf içermelidir.");
         if (!username || !password) setErrorMessage("Lütfen formu doldurunuz.");
 
-        console.log(errorMessage == "")
-        console.log({ username, password });
+        if (errorMessage == "") {
+            const { data } = await axiosInstance.post("/register", { username, password });
+            console.log(data);
+
+            if (data.result) {
+                history.push("/admin");
+            } else {
+                setErrorMessage(data.message);
+            }
+        }
     }
 
     return (

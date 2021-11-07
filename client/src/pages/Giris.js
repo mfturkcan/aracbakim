@@ -1,14 +1,17 @@
 import { useState } from "react";
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { axiosInstance } from "../App";
+import { useHistory } from "react-router";
+import { useAuth } from "../context/AuthContext";
 
 const Giris = props => {
     const [errorMessage, setErrorMessage] = useState("");
     var regex_punch = new RegExp(/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [user, setUser] = useAuth();
 
-    function handleClick(event) {
+    async function handleClick(event) {
         setErrorMessage("");
 
         // Noktalama işareti içeriyor mu?
@@ -21,9 +24,16 @@ const Giris = props => {
         if (!includes_uppercase) setErrorMessage("Şifre harf en az bir büyük harf içermelidir.");
         if (!username || !password) setErrorMessage("Lütfen formu doldurunuz.");
 
-        if (!errorMessage) {
+        if (errorMessage == "") {
+            const { data } = await axiosInstance.post("/login", { username, password });
 
+            if (!data.result) {
+                setErrorMessage(data.message);
+            } else {
+                setUser(data.user);
+            }
         }
+
     }
 
     return (
@@ -42,6 +52,9 @@ const Giris = props => {
                     <u style={{ color: "#f1c40f" }}>Hesap oluştur </u>
                 </Link>
             </p>
+            <button onClick={async (event) => {
+                await axiosInstance.get("/test");
+            }}>Test</button>
         </div>
     );
 }

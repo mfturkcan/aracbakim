@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const connection = require("../config/database");
+const connection = require("../../config/database");
 
 router.get("/mudahaledetay", function (req, res) {
     connection.query(`SELECT * FROM MudahaleDetay`,

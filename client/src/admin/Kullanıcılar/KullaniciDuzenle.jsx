@@ -14,7 +14,6 @@ const KullaniciDuzenle = props => {
                 <TextInput name="YeniŞifre" source="YeniŞifre" />
                 <FunctionField label="Şifre çözümlenmiş" render={src => decryptPassword(src["Şifre"])} />
                 <PasswordInput source="Şifre" disabled />
-                <SelectInput validate={required()} source="KullaniciRolu" optionText="name" choices={[{ id: 0, name: "Yönetici" }, { id: 1, name: "Birim Müdürü" }]} />
             </SimpleForm>
         </CustomEdit>
     );

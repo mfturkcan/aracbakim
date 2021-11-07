@@ -1,4 +1,4 @@
-const connection = require("./database");
+const connection = require("mysql2");
 
 connection.query("CREATE TABLE IF NOT EXISTS Problem (ProblemTipiID tinyint PRIMARY KEY NOT NULL," +
     " ProblemTanimi VARCHAR(255) NOT NULL, Problemi TanimlayiciAdi VARCHAR(255) NOT NULL, ProblemiTanimlayiciSoyadi VARCHAR(255) NOT NULL, ProblemiTanimlayanTCNOPasaportno VARCHAR(50) NOT NULL, HedeflenenAmacTanimi VARCHAR(255) NOT NULL)",
