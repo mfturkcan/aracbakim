@@ -1,13 +1,13 @@
 import { Edit, SimpleForm, TextInput, NumberInput } from "ra-ui-materialui";
 
-const BelirtecEkle = props => {
+const BelirtecDuzenle = props => {
     return (
-        <Create id="BelirtecID" {...props}>
-            <SimpleForm rowClick="edit">
+        <Edit id="BelirtecID" {...props}>
+            <SimpleForm >
                 <NumberInput source="BelirtecID" />
                 <TextInput source="BelirtecTanimi" />
             </SimpleForm>
-        </Create>
+        </Edit>
     );
 }
-export default BelirtecEkle;
+export default BelirtecDuzenle;

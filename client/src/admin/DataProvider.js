@@ -33,6 +33,33 @@ const DataProvider = {
                     case "ilceler":
                         return { id: field["IlceKodu"], ...field }
                         break;
+                    case "problem":
+                        return { id: field["ProblemID"], ...field }
+                        break;
+                    case "aktiviteler":
+                        return { id: field["AktiviteID"], ...field }
+                        break;
+                    case "belirtecler":
+                        return { id: field["BelirtecID"], ...field }
+                        break;
+                    case "mudahale":
+                        return { id: field["MudahaleID"], ...field }
+                        break;
+                    case "cikti":
+                        return { id: field["CiktiID"], ...field }
+                        break;
+                    case "ciktidetay":
+                        return { id: field["CiktiID"], ...field }
+                        break;
+                    case "mudahaledetay":
+                        return { id: field["MudahaleID"], ...field }
+                        break;
+                    case "problembirim":
+                        return { id: field["ProblemID"], ...field }
+                        break;
+                    case "siniflar":
+                        return { id: field["SinifID"], ...field }
+                        break;
                 }
             }),
             total: parseInt(headers.get('content-range').split('/').pop(), 10),

@@ -1,9 +1,9 @@
-import { Edit, SimpleForm, TextInput, NumberInput } from "ra-ui-materialui";
 import { required } from "ra-core";
+import { Create, SimpleForm, TextInput, NumberInput } from "ra-ui-materialui";
 
 const ProblemEkle = props => {
     return (
-        <Edit id="ProblemID" {...props}>
+        <Create id="ProblemID" {...props}>
             <SimpleForm>
                 <NumberInput source="IlKodu" validate={required()} />
                 <TextInput source="ProblemTanimi" validate={required()} />
@@ -12,7 +12,7 @@ const ProblemEkle = props => {
                 <TextInput source="ProblemiTanimlayanTCNOPasaportno" label="Tanimlayan TcNo & Pasaport" validate={required()} />
                 <TextInput source="HedeflenenAmacTanimi" validate={required()} />
             </SimpleForm>
-        </Edit>
+        </Create>
     );
 }
 export default ProblemEkle;

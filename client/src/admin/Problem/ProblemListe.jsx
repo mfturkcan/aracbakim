@@ -8,7 +8,7 @@ const ProblemListe = props => {
                 <TextField source="ProblemTanimi" />
                 <TextField source="ProblemiTanimlayiciAdi" />
                 <TextField source="ProblemiTanimlayiciSoyadi" />
-                <TextField source="ProblemiTanimlayanTCNOPasaportno" />
+                <TextField source="ProblemiTanimlayanTCNOPasaportno" label="Tanimlayan TcNo & Pasaport" />
                 <TextField source="HedeflenenAmacTanimi" />
             </Datagrid>
         </List>

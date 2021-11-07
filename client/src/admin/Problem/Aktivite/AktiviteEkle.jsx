@@ -1,6 +1,6 @@
 import { Create, SimpleForm, TextInput, NumberInput } from "ra-ui-materialui";
 
-const AktiviteDuzenle = props => {
+const AktiviteEkle = props => {
     return (
         <Create id="AktiviteID" {...props}>
             <SimpleForm>
@@ -10,4 +10,4 @@ const AktiviteDuzenle = props => {
         </Create>
     );
 }
-export default AktiviteDuzenle;
+export default AktiviteEkle;

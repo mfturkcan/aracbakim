@@ -18,13 +18,37 @@ import PersonelEkle from "./Personel/PersonelEkle";
 import PersonelDuzenle from "./Personel/PersonelDuzenle";
 import BirimlerEkle from "./Birimler/BirimlerEkle";
 import BirimlerDüzenle from "./Birimler/BirimlerDüzenle";
-import { createMuiTheme } from "ra-ui-materialui";
-import { defaultTheme } from 'react-admin';
-import merge from 'lodash/merge';
-import indigo from '@material-ui/core/colors/indigo';
-import pink from '@material-ui/core/colors/pink';
-import red from '@material-ui/core/colors/red';
 import MyLayout from "./Layout";
+import ProblemListe from './Problem/ProblemListe';
+import ProblemDuzenle from './Problem/ProblemDüzenle';
+import ProblemEkle from "./Problem/ProblemEkle";
+import AktiviteListe from './Problem/Aktivite/AktiviteListe';
+import AktiviteEkle from './Problem/Aktivite/AktiviteEkle';
+import AktiviteDuzenle from './Problem/Aktivite/AktiviteDuzenle';
+import AlanlarListe from './Problem/Alanlar/AlanListe';
+import AlanlarEkle from './Problem/Alanlar/AlanEkle';
+import AlanlarDuzenle from './Problem/Alanlar/AlanDuzenle';
+import MudahaleListe from './Problem/Mudahale/MudahaleList';
+import MudahaleEkle from './Problem/Mudahale/MudahaleEkle';
+import MudahaleDuzenle from './Problem/Mudahale/MudahaleDuzenle';
+import SinifListe from './Problem/Siniflar/SinifListe';
+import SinifEkle from './Problem/Siniflar/SinifEkle';
+import SinifDuzenle from './Problem/Siniflar/SinifDuzenle';
+import BelirtecListe from './Problem/Belirtecler/BelirtecListe';
+import BelirtecEkle from './Problem/Belirtecler/BelirtecEkle';
+import BelirtecDuzenle from './Problem/Belirtecler/BelirtecDuzenle';
+import CiktiListe from './Problem/Cikti/CiktiListe';
+import CiktiEkle from './Problem/Cikti/CiktiEkle';
+import CiktiDuzenle from './Problem/Cikti/CiktiDuzenle';
+import CiktiDetayListe from './Problem/CiktiDetay/CiktiDetayListe';
+import CiktiDetayEkle from './Problem/CiktiDetay/CiktiDetayEkle';
+import CiktiDetayDuzenle from './Problem/CiktiDetay/CiktiDetayDuzenle';
+import MudahaleDetayListe from './Problem/MudahaleDetay/MudahaleDetayListe';
+import MudahaleDetayDuzenle from './Problem/MudahaleDetay/MudahaleDetayDuzenle';
+import MudahaleDetayEkle from './Problem/MudahaleDetay/MudahaleDetayEkle';
+import ProblemBirimListe from './Problem/ProblemBirim/ProblemBirimListe';
+import ProblemBirimEkle from './Problem/ProblemBirim/ProblemBirimEkle';
+import ProblemBirimDuzenle from './Problem/ProblemBirim/ProblemBirimDuzenle';
 
 const theme = {}
 
@@ -36,6 +60,17 @@ const AdminPanel = props => {
             <Resource name="birimler" options={{ label: "Birimler" }} list={BirimlerListe} create={BirimlerEkle} edit={BirimlerDüzenle} />
             <Resource name="iller" options={{ label: "İller" }} show={IllerShow} list={IllerListe} edit={IllerDuzenle} create={IllerEkle} />
             <Resource name="ilceler" options={{ label: "İlçeler" }} show={IlcelerShow} list={IlcelerListe} edit={IlcelerDuzenle} create={IlcelerEkle} />
+            <Resource name="problem" options={{ label: "Problem" }} list={ProblemListe} create={ProblemEkle} edit={ProblemDuzenle} />
+            <Resource name="aktiviteler" options={{ label: "Aktivite" }} list={AktiviteListe} create={AktiviteEkle} edit={AktiviteDuzenle} />
+            <Resource name="alanlar" options={{ label: "Alanlar" }} list={AlanlarListe} create={AlanlarEkle} edit={AlanlarDuzenle} />
+            <Resource name="mudahale" options={{ label: "Mudahaleler" }} list={MudahaleListe} create={MudahaleEkle} edit={MudahaleDuzenle} />
+            <Resource name="siniflar" options={{ label: "Sınıflar" }} list={SinifListe} create={SinifEkle} edit={SinifDuzenle} />
+            <Resource name="belirtecler" options={{ label: "Belirteçler" }} list={BelirtecListe} create={BelirtecEkle} edit={BelirtecDuzenle} />
+            <Resource name="cikti" options={{ label: "Çıktılar" }} list={CiktiListe} create={CiktiEkle} edit={CiktiDuzenle} />
+            <Resource name="ciktidetay" options={{ label: "Çıktı Detay" }} list={CiktiDetayListe} create={CiktiDetayEkle} edit={CiktiDetayDuzenle} />
+            <Resource name="mudahaledetay" options={{ label: "Müdahale Detay" }} list={MudahaleDetayListe} create={MudahaleDetayEkle} edit={MudahaleDetayDuzenle} />
+            <Resource name="problembirim" options={{ label: "Problem Birim" }} list={ProblemBirimListe} create={ProblemBirimEkle} edit={ProblemBirimDuzenle} />
+
         </Admin>
     );
 }

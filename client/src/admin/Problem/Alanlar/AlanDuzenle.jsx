@@ -1,6 +1,6 @@
 import { Edit, SimpleForm, TextInput, NumberInput, BooleanInput } from "ra-ui-materialui";
 
-const AlanlarEkle = props => {
+const AlanlarDuzenle = props => {
     return (
         <Edit id="AlanID" {...props}>
             <SimpleForm rowClick="edit">
@@ -11,4 +11,4 @@ const AlanlarEkle = props => {
         </Edit>
     );
 }
-export default AlanlarEkle;
+export default AlanlarDuzenle;

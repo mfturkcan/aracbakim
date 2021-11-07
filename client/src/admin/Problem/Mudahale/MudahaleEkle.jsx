@@ -1,4 +1,4 @@
-import { Edit, SimpleForm, TextInput, NumberInput } from "ra-ui-materialui";
+import { Create, SimpleForm, TextInput, NumberInput } from "ra-ui-materialui";
 
 const MudahaleEkle = props => {
     return (
