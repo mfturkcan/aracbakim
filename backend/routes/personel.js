@@ -7,8 +7,15 @@ const connection = require("../config/database");
 // delete - deletemany /id /ids -ok
 
 router.get("/personel", function (req, res) {
-    console.log("personel get");
-    connection.query(`SELECT * FROM Personel`,
+    let sort = JSON.parse(req.query.sort);
+    let type = "KullaniciAdi";
+    let order = "ASC";
+    if (sort) {
+        type = sort[0] == "id" ? "KullaniciAdi" : sort[0];
+        order = sort[1];
+    }
+
+    connection.query(`SELECT * FROM Personel ORDER BY ${type} ${order}`,
         function (err, result) {
             if (err) {
                 console.log(err);

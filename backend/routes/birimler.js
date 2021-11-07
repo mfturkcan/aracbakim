@@ -7,8 +7,16 @@ const connection = require("../config/database");
 // delete - deletemany /id /ids -ok
 
 router.get("/birimler", function (req, res) {
-    console.log("birimler get");
-    connection.query(`SELECT * FROM Birimler`,
+
+    let sort = JSON.parse(req.query.sort);
+    let type = "BirimKodu";
+    let order = "ASC";
+    if (sort) {
+        type = sort[0] == "id" ? "BirimKodu" : sort[0];
+        order = sort[1];
+    }
+
+    connection.query(`SELECT * FROM Birimler ORDER BY ${type} ${order}`,
         function (err, result) {
             if (err) {
                 console.log(err);

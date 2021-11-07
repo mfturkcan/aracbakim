@@ -1,18 +1,14 @@
 import { required } from "ra-core";
-import { Create, SelectInput, TabbedForm, TextInput, FormTab, ReferenceInput, SimpleForm } from "ra-ui-materialui";
+import { Create, SelectInput, TabbedForm, TextInput, FormTab, ReferenceInput, SimpleForm, NumberInput } from "ra-ui-materialui";
 import { useEffect, useState } from "react";
 import { useShowController, SimpleShowLayout, FormDataConsumer, useFormContext } from "react-admin";
 import { Select, MenuItem } from '@mui/material';
 import { FormControl, FormHelperText, FormLabel, InputLabel } from "@material-ui/core";
 import { useFormState } from 'react-final-form/';
 
-const KullaniciEkle = props => {
+const KullaniciEkle = ({ translate, ...props }) => {
 
     const [rol, setRol] = useState("mudur");
-
-    let values;
-
-    useEffect(() => { console.log(values); }, [values]);
 
     return (
         <Create id="KullaniciAdi" {...props} >
@@ -32,7 +28,7 @@ const KullaniciEkle = props => {
 
                 {
                     rol == "mudur" && <FormTab label="Birim">
-                        <TextInput source="BirimKodu" />
+                        <NumberInput source="BirimKodu" />
                         <TextInput source="BirimAdi" />
 
                         <ReferenceInput source="UstBirimKodu" reference="birimler" label="Üst Birim Adı">
@@ -53,27 +49,10 @@ const KullaniciEkle = props => {
                         <FormDataConsumer>
                             {
                                 ({ formData, ...rest }) => {
-                                    console.log(formData)
-                                    return <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                                        <label htmlFor="BirimMudurKullaniciAdi" style={{ paddingLeft: "6px" }} >Birim Mudur Kullanici Adi: </label>
-                                        <select required={true} variant="filled" style={{ width: "250px" }} name="BirimMudurKullaniciAdi" id="BirimMudurKullaniciAdi" defaultValue={formData.KullaniciAdi ?? ""}>
-                                            <option value={formData.KullaniciAdi}>{formData.KullaniciAdi}</option>
-                                        </select>
-                                    </div>
+                                    return <SelectInput variant="filled" style={{ width: "250px" }} source="BirimMudurKullaniciAdi" choices={[{ id: 0, name: formData.KullaniciAdi ?? "" }]} />
                                 }
                             }
                         </FormDataConsumer>
-
-                        <FormDataConsumer>
-                            {
-                                ({ formData, ...rest }) => {
-                                    console.log(formData)
-                                    return <SelectInput source="BirimMudurKullaniciAdi" choices={[]} />
-                                }
-                            }
-                        </FormDataConsumer>
-
-                        <input name="BirimMudurKullaniciAdi" placeholder="Birim mudur" />
 
                     </FormTab>
                 }
@@ -95,7 +74,7 @@ const KullaniciEkle = props => {
                             <SelectInput optionText="IlceAdi" />
                         </ReferenceInput>
 
-                        <TextInput source="PostaKodu" validate={required()} />
+                        <NumberInput source="PostaKodu" validate={required()} />
 
                         <ReferenceInput source="UstKullaniciAdi" reference="personel" label="Ust Kullanici Adi">
                             <SelectInput optionText="KullaniciAdi" />
@@ -104,13 +83,8 @@ const KullaniciEkle = props => {
                         <FormDataConsumer>
                             {
                                 ({ formData, ...rest }) => {
-                                    console.log(formData.KullaniciAdi)
-                                    return <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                                        <label>Calistigi Birim Kodu: </label>
-                                        <Select key={formData.CalistigiBirimKodu} required={true} variant="filled" style={{ width: "250px" }} name="CalistigiBirimKodu" defaultValue={formData.BirimKodu ?? "BirimKodu"}>
-                                            <MenuItem value={formData.BirimKodu}>{formData.BirimKodu}</MenuItem>
-                                        </Select>
-                                    </div>
+                                    return <SelectInput label="Calistigi Birim Kodu" source="CalistigiBirimKodu" choices={[{ id: 0, name: formData.BirimKodu == undefined ? "" : formData.BirimKodu.toString() }]} style={{ width: "250px" }} />
+
                                 }
                             }
                         </FormDataConsumer>

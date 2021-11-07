@@ -5,7 +5,15 @@ const decryptPassword = require("../lib/password").decryptPassword;
 
 router.get("/kullanicilar", function (req, res) {
     console.log("get kullanicilar");
-    connection.query(`SELECT * FROM Kullanicilar`,
+    let sort = JSON.parse(req.query.sort);
+    let type = "KullaniciAdi";
+    let order = "ASC";
+    if (sort) {
+        type = sort[0] == "id" ? "KullaniciAdi" : sort[0];
+        order = sort[1];
+    }
+
+    connection.query(`SELECT * FROM Kullanicilar ORDER BY ${type} ${order}`,
         function (err, result) {
             if (err) {
                 console.log(err);

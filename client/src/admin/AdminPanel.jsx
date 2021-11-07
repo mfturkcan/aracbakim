@@ -74,6 +74,8 @@ const AdminPanel = props => {
         // authorization
         getPermissions: params => Promise.resolve(),
     };
+
+    // const i18nProvider = polyglotI18nProvider(() => ENi18n, "en", { allowMissing: true, onMissingKey: (key, _, __) => key });
     return (
         <Admin dataProvider={DataProvider} layout={MyLayout} theme={theme} loginPage={false} catchAll={NotFound} authProvider={authProvider}>
             <Resource name="kullanicilar" options={{ label: "Kullanıcılar" }} show={KullaniciShow} list={KullaniciListe} edit={KullaniciDuzenle} create={KullaniciEkle} />

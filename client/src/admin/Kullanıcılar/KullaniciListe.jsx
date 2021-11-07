@@ -8,7 +8,6 @@ const KullaniciListe = props => {
             <Datagrid rowClick="edit">
                 <TextField source="KullaniciAdi" />
                 <FunctionField label="Şifre" render={src => decryptPassword(src["Şifre"]) ?? src["Şifre"]} />
-                <SelectField source="KullaniciRolu" optionText="name" choices={[{ id: 0, name: "Yönetici" }, { id: 1, name: "Birim Müdürü" }]} />
             </Datagrid>
         </List>
     );
