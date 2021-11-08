@@ -5,7 +5,7 @@ const ProblemEkle = props => {
     return (
         <Edit id="ProblemID" {...props}>
             <SimpleForm>
-                <NumberInput source="IlKodu" validate={required()} />
+                <NumberInput source="ProblemTipiID" label="Problem Tipi ID" validate={required()} />
                 <TextInput source="ProblemTanimi" validate={required()} />
                 <TextInput source="ProblemiTanimlayiciAdi" validate={required()} />
                 <TextInput source="ProblemiTanimlayiciSoyadi" validate={required()} />

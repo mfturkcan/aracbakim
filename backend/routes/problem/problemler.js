@@ -40,7 +40,7 @@ router.route("/problem/:problem_id")
     .get(function (req, res) {
         const problem_id = req.params.problem_id;
 
-        connection.query(`SELECT * FROM Problem WHERE ProblemID = "${problem_id}"`,
+        connection.query(`SELECT * FROM Problem WHERE ProblemTipiID = "${problem_id}"`,
             function (err, result) {
                 if (result.length > 0) {
                     if (err) console.log(err);
@@ -65,7 +65,7 @@ router.route("/problem/:problem_id")
 
         for (var j = 0; j < update_values.length; j++) {
             connection.query(`UPDATE Problem SET ${update_values[j].column} = ${update_values[j].value} ` +
-                ` WHERE IlKodu = "${problem_id}"`,
+                ` WHERE ProblemTipiID = "${problem_id}"`,
                 function (err, result) {
                     if (result.length > 0) {
                         if (err) console.log(err);
@@ -78,7 +78,7 @@ router.route("/problem/:problem_id")
     .delete(function (req, res) {
         const problem_id = req.params.problem_id;
 
-        connection.query(`DELETE FROM Problem WHERE ProblemID = "${problem_id}"`,
+        connection.query(`DELETE FROM Problem WHERE ProblemTipiID = "${problem_id}"`,
             function (err, result) {
                 const problem = result[0];
                 res.send(problem);
@@ -93,7 +93,7 @@ router.route("/problem")
         const problem_ids = JSON.parse(req.query.filter).ids;
 
         for (var i = 0; i < problem_ids.length; i++) {
-            connection.query(`DELETE FROM Problem WHERE ProblemID = "${problem_ids[i]}"`,
+            connection.query(`DELETE FROM Problem WHERE ProblemTipiID = "${problem_ids[i]}"`,
                 function (err, result) {
                     if (err) console.log(err);
                 });

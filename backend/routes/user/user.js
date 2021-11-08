@@ -56,14 +56,16 @@ router.post("/login", (req, res) => {
 
                     if (is_password_valid) {
 
-                        connection.query(`SELECT BirimMudurKullaniciAdi FROM Birimler WHERE BirimMudurKullaniciAdi = ${username}`, function (err, result_role) {
+                        connection.query(`SELECT BirimMudurKullaniciAdi FROM Birimler WHERE BirimMudurKullaniciAdi = "${username}"`, function (err, result_role) {
                             if (err) {
                                 response = {
                                     result: false,
                                     message: "Giriş yaparken hata meydana geldi!",
                                 }
+                                console.log(err);
                                 res.json(response);
                             } else {
+                                console.log(result_role);
                                 if (result_role.length > 0) {
                                     req.session.user = {
                                         username: username,

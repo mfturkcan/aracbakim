@@ -28,7 +28,7 @@ const KullaniciEkle = ({ translate, ...props }) => {
 
                 {
                     rol == "mudur" && <FormTab label="Birim">
-                        <NumberInput source="BirimKodu" validate={required()} />
+                        <NumberInput source="BirimKodu" validate={required()} min={1} />
                         <TextInput source="BirimAdi" validate={required()} />
 
                         <ReferenceInput source="UstBirimKodu" reference="birimler" label="Üst Birim Adı">

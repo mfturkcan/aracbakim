@@ -41,50 +41,50 @@ router.post("/kullanicilar", async function (req, res) {
                 console.log(err);
                 error = err;
             }
+            if (yeni_kullanici["BirimKodu"] != null) {
+                connection.query(`INSERT INTO Birimler (BirimKodu, BirimAdi, BulunduguAdres, IlKodu, IlceKodu, PostaKodu, BirimMudurKullaniciAdi)` +
+                    ` VALUES (${yeni_kullanici["BirimKodu"]}, "${yeni_kullanici["BirimAdi"]}", "${yeni_kullanici["BulunduguAdres"]}", ${yeni_kullanici["IlKodu"]}` +
+                    `, ${yeni_kullanici["IlceKodu"]}, ${yeni_kullanici["PostaKodu"]}, "${yeni_kullanici["BirimMudurKullaniciAdi"]}" )`,
+                    function (err, result) {
+                        if (err) {
+                            console.log(err);
+                            error = err;
+                        }
+                        if (yeni_kullanici["UstBirimKodu"] != 0) {
+                            connection.query(`UPDATE Birimler SET UstBirimKodu = ${yeni_kullanici.UstBirimKodu} WHERE BirimKodu = ${yeni_kullanici.BirimKodu}`,
+                                function (err, result) {
+                                    if (err) {
+                                        console.log(err);
+                                    }
+                                });
+                        }
+                        connection.query(`INSERT INTO Personel (KullaniciAdi, Email, Ad, Soyad, SicilNo, Cep, EvAdresi, IlKodu, IlceKodu, PostaKodu ,CalistigiBirimKodu)` +
+                            ` VALUES ("${yeni_kullanici["KullaniciAdi"]}", "${yeni_kullanici["Email"]}", "${yeni_kullanici["Ad"]}","${yeni_kullanici["Soyad"]}", "${yeni_kullanici["SicilNo"]}", "${yeni_kullanici["Cep"]}","${yeni_kullanici["EvAdresi"]}", ${yeni_kullanici["IlKodu"]}, ${yeni_kullanici["IlceKodu"]}` +
+                            `,${yeni_kullanici["PostaKodu"]}, ${yeni_kullanici["CalistigiBirimKodu"]} )`,
+                            function (err, result) {
+                                if (err) {
+                                    console.log(err);
+                                    error = err;
+                                }
+                                if (yeni_kullanici["UstKullanici"] != null) {
+                                    connection.query(`UPDATE Personel SET UstKullaniciAdi =  ${yeni_kullanici["UstKullaniciAdi"]} WHERE KullaniciAdi = "${yeni_kullanici["KullaniciAdi"]}"`,
+                                        function (err, result) {
+                                            if (err) {
+                                                console.log(err);
+                                            }
+                                        });
+                                }
+                            }
+                        );
+                    }
+                );
+            }
         }
     );
 
-    if (yeni_kullanici["BirimKodu"] != null) {
-        connection.query(`INSERT INTO Birimler (BirimKodu, BirimAdi, BulunduguAdres, IlKodu, IlceKodu, PostaKodu, BirimMudurKullaniciAdi)` +
-            ` VALUES (${yeni_kullanici["BirimKodu"]}, "${yeni_kullanici["BirimAdi"]}", "${yeni_kullanici["BulunduguAdres"]}", ${yeni_kullanici["IlKodu"]}` +
-            `, ${yeni_kullanici["IlceKodu"]}, ${yeni_kullanici["PostaKodu"]}, "${yeni_kullanici["BirimMudurKullaniciAdi"]}" )`,
-            function (err, result) {
-                if (err) {
-                    console.log(err);
-                    error = err;
-                }
-            }
-        );
 
-        connection.query(`INSERT INTO Personel (KullaniciAdi, Email, Ad, Soyad, SicilNo, Cep, EvAdresi, IlKodu, IlceKodu, PostaKodu ,CalistigiBirimKodu)` +
-            ` VALUES ("${yeni_kullanici["KullaniciAdi"]}", "${yeni_kullanici["Email"]}", "${yeni_kullanici["Ad"]}","${yeni_kullanici["Soyad"]}", "${yeni_kullanici["SicilNo"]}", "${yeni_kullanici["Cep"]}","${yeni_kullanici["EvAdresi"]}", ${yeni_kullanici["IlKodu"]}, ${yeni_kullanici["IlceKodu"]}` +
-            `,${yeni_kullanici["PostaKodu"]}, ${yeni_kullanici["CalistigiBirimKodu"]} )`,
-            function (err, result) {
-                if (err) {
-                    console.log(err);
-                    error = err;
-                }
-            }
-        );
 
-        if (yeni_kullanici["UstKullanici"] != null) {
-            connection.query(`UPDATE Personel SET UstKullaniciAdi =  ${yeni_kullanici["UstKullaniciAdi"]} WHERE KullaniciAdi = "${yeni_kullanici["KullaniciAdi"]}"`,
-                function (err, result) {
-                    if (err) {
-                        console.log(err);
-                    }
-                });
-        }
 
-        if (yeni_kullanici["UstBirimKodu"] != null) {
-            connection.query(`UPDATE Birimler SET UstBirimKodu = ${yeni_kullanici.UstBirimKodu} WHERE BirimKodu = ${yeni_kullanici.BirimKodu}`,
-                function (err, result) {
-                    if (err) {
-                        console.log(err);
-                    }
-                });
-        }
-    }
 
     res.send(yeni_kullanici);
 })
@@ -102,29 +102,29 @@ router.route("/kullanicilar/:kullanici_adi")
                     let cozumlu_sifre = await decryptPassword(sifre);
                     console.log("şifre" + cozumlu_sifre)
 
-                    kullanici = { "Şifre": cozumlu_sifre, "Encrypted Şifre": sifre, ...kullanici }
+                    kullanici = { "Şifre": sifre, "Encrypted Şifre": cozumlu_sifre, ...kullanici }
                     console.log(kullanici);
                     res.json(kullanici);
                 }
             });
     })
-    .put(function (req, res) {
+    .put(async function (req, res) {
         const yeni_kullanici = req.body;
         console.log(yeni_kullanici);
         const kullanici_adi = req.params.kullanici_adi;
 
-        connection.query(`UPDATE Kullanicilar SET KullaniciAdi = "${yeni_kullanici.KullaniciAdi}" ` +
+        const yeni_sifre = await encryptPassword(yeni_kullanici["YeniŞifre"]);
+
+        connection.query(`UPDATE Kullanicilar SET KullaniciAdi = "${yeni_kullanici.KullaniciAdi}", Şifre = "${yeni_sifre}" ` +
             ` WHERE KullaniciAdi = "${kullanici_adi}"`,
             async function (err, result) {
-                if (result.length > 0) {
-                    if (err) console.log(err);
-                    let kullanici = result[0];
-                    let sifre = kullanici["Şifre"];
-                    let cozumlu_sifre = await decryptPassword(sifre);
+                if (err) console.log(err);
+                let kullanici = yeni_kullanici;
+                let sifre = kullanici["Şifre"];
+                let cozumlu_sifre = await decryptPassword(sifre);
 
-                    kullanici = { "Şifre": cozumlu_sifre, "Encrypted Şifre": sifre, ...kullanici }
-                    res.send(kullanici);
-                }
+                kullanici = { "Şifre": cozumlu_sifre, "Encrypted Şifre": sifre, ...kullanici }
+                res.send(kullanici);
             });
     })
     .delete(function (req, res) {

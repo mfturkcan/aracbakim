@@ -1,8 +1,9 @@
 import { Datagrid, List, SelectField, TextField, ReferenceField } from "ra-ui-materialui";
+import CustomEmptyPage from "../CustomEmptyPage";
 
 const PersonelListe = props => {
     return (
-        <List title="Personel" {...props}>
+        <List title="Personel" {...props} empty={<CustomEmptyPage Adi="Personel" />}>
             <Datagrid rowClick="edit">
                 <TextField source="KullaniciAdi" />
                 <TextField source="Email" />

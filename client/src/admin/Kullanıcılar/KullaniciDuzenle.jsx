@@ -11,9 +11,9 @@ const KullaniciDuzenle = props => {
         <CustomEdit id="KullaniciAdi" {...props}>
             <SimpleForm>
                 <TextInput source="KullaniciAdi" validate={required()} />
-                <TextInput name="YeniŞifre" source="YeniŞifre" />
-                <FunctionField label="Şifre çözümlenmiş" render={src => decryptPassword(src["Şifre"])} />
-                <PasswordInput source="Şifre" disabled />
+                <PasswordInput name="YeniŞifre" source="YeniŞifre" />
+                <TextInput source="Şifre" disabled />
+                <PasswordInput source="Encrypted Şifre" disabled />
             </SimpleForm>
         </CustomEdit>
     );

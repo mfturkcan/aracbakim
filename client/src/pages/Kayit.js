@@ -38,10 +38,10 @@ const Kayit = props => {
 
     return (
         <div>
-            <form method="post" onSubmit={(e) => { e.preventDefault(); }} class="box">
+            <form method="post" onSubmit={(e) => { e.preventDefault(); }} className="box">
                 <h1>Yönetici Kayıt</h1>
-                <input type="text" name="username" placeholder="kullanıcı adı" class="email" onChange={(event) => { setUsername(event.target.value); }} />
-                <input type="password" name="password" placeholder="şifre" class="email" onChange={(event) => { setPassword(event.target.value); }} />
+                <input type="text" name="username" placeholder="kullanıcı adı" className="email" onChange={(event) => { setUsername(event.target.value); }} />
+                <input type="password" name="password" placeholder="şifre" className="email" onChange={(event) => { setPassword(event.target.value); }} />
                 {errorMessage && <div style={{ color: "red", marginTop: "5px", fontSize: "12px" }}>{errorMessage}</div>}
                 <a href="#">
                     <button onClick={handleClick} id="btn2">

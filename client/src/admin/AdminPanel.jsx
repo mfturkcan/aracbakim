@@ -75,12 +75,27 @@ const AdminPanel = props => {
         getPermissions: params => Promise.resolve(),
     };
 
-    // const i18nProvider = polyglotI18nProvider(() => ENi18n, "en", { allowMissing: true, onMissingKey: (key, _, __) => key });
-    return (
-        <Admin dataProvider={DataProvider} layout={MyLayout} theme={theme} loginPage={false} catchAll={NotFound} authProvider={authProvider}>
+    const MudurPanel = () => {
+        return <Admin dataProvider={DataProvider} layout={MyLayout} theme={theme} loginPage={false} catchAll={NotFound} authProvider={authProvider}>
+            <Resource name="personel" options={{ label: "Personel" }} list={PersonelListe} edit={PersonelDuzenle} />
+            <Resource name="problem" options={{ label: "Problem" }} list={ProblemListe} create={ProblemEkle} edit={ProblemDuzenle} />
+            <Resource name="aktiviteler" options={{ label: "Aktivite" }} list={AktiviteListe} create={AktiviteEkle} edit={AktiviteDuzenle} />
+            <Resource name="alanlar" options={{ label: "Alanlar" }} list={AlanlarListe} create={AlanlarEkle} edit={AlanlarDuzenle} />
+            <Resource name="mudahale" options={{ label: "Mudahaleler" }} list={MudahaleListe} create={MudahaleEkle} edit={MudahaleDuzenle} />
+            <Resource name="siniflar" options={{ label: "Sınıflar" }} list={SinifListe} create={SinifEkle} edit={SinifDuzenle} />
+            <Resource name="belirtecler" options={{ label: "Belirteçler" }} list={BelirtecListe} create={BelirtecEkle} edit={BelirtecDuzenle} />
+            <Resource name="cikti" options={{ label: "Çıktılar" }} list={CiktiListe} create={CiktiEkle} edit={CiktiDuzenle} />
+            <Resource name="ciktidetay" options={{ label: "Çıktı Detay" }} list={CiktiDetayListe} create={CiktiDetayEkle} edit={CiktiDetayDuzenle} />
+            <Resource name="mudahaledetay" options={{ label: "Müdahale Detay" }} list={MudahaleDetayListe} create={MudahaleDetayEkle} edit={MudahaleDetayDuzenle} />
+            <Resource name="problembirim" options={{ label: "Problem Birim" }} list={ProblemBirimListe} create={ProblemBirimEkle} edit={ProblemBirimDuzenle} />
+        </Admin>
+    };
+
+    const YoneticiPanel = () => {
+        return <Admin dataProvider={DataProvider} layout={MyLayout} theme={theme} loginPage={false} catchAll={NotFound} authProvider={authProvider}>
             <Resource name="kullanicilar" options={{ label: "Kullanıcılar" }} show={KullaniciShow} list={KullaniciListe} edit={KullaniciDuzenle} create={KullaniciEkle} />
             <Resource name="personel" options={{ label: "Personel" }} list={PersonelListe} create={PersonelEkle} edit={PersonelDuzenle} />
-            <Resource name="birimler" options={{ label: "Birimler" }} list={BirimlerListe} edit={BirimlerDüzenle} />
+            <Resource name="birimler" options={{ label: "Birimler" }} list={BirimlerListe} create={BirimlerEkle} edit={BirimlerDüzenle} />
             <Resource name="iller" options={{ label: "İller" }} show={IllerShow} list={IllerListe} edit={IllerDuzenle} create={IllerEkle} />
             <Resource name="ilceler" options={{ label: "İlçeler" }} show={IlcelerShow} list={IlcelerListe} edit={IlcelerDuzenle} create={IlcelerEkle} />
             <Resource name="problem" options={{ label: "Problem" }} list={ProblemListe} create={ProblemEkle} edit={ProblemDuzenle} />
@@ -92,9 +107,12 @@ const AdminPanel = props => {
             <Resource name="cikti" options={{ label: "Çıktılar" }} list={CiktiListe} create={CiktiEkle} edit={CiktiDuzenle} />
             <Resource name="ciktidetay" options={{ label: "Çıktı Detay" }} list={CiktiDetayListe} create={CiktiDetayEkle} edit={CiktiDetayDuzenle} />
             <Resource name="mudahaledetay" options={{ label: "Müdahale Detay" }} list={MudahaleDetayListe} create={MudahaleDetayEkle} edit={MudahaleDetayDuzenle} />
-            <Resource name="problembirim" options={{ label: "Problem Birim" }} list={ProblemBirimListe} create={ProblemBirimEkle} edit={ProblemBirimDuzenle} />
-
         </Admin>
+    }
+
+
+    return (
+        user.role == "Yönetici" ? YoneticiPanel() : MudurPanel()
     );
 }
 

@@ -1,4 +1,4 @@
-import { SimpleForm, Edit, SelectInput, TextInput, ReferenceInput } from "ra-ui-materialui";
+import { SimpleForm, Edit, SelectInput, TextInput, ReferenceInput, NumberInput } from "ra-ui-materialui";
 import { FormDataConsumer } from "ra-core";
 import { required } from "ra-core";
 
@@ -6,7 +6,7 @@ const BirimlerDüzenle = props => {
     return (
         <Edit {...props} >
             <SimpleForm rowClick="edit" variant="outlined">
-                <TextInput source="BirimKodu" validate={required()} />
+                <NumberInput source="BirimKodu" validate={required()} min={1} />
                 <TextInput source="BirimAdi" validate={required()} />
 
                 <FormDataConsumer>

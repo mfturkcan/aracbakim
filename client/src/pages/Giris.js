@@ -15,14 +15,14 @@ const Giris = props => {
         setErrorMessage("");
 
         // Noktalama işareti içeriyor mu?
-        const includes_special = password.match(regex_punch) != null ? true : false;
-        const is_longer = password.length >= 8 ? true : false;
-        const includes_uppercase = password == password.toLowerCase() ? false : true;
+        // const includes_special = password.match(regex_punch) != null ? true : false;
+        // const is_longer = password.length >= 8 ? true : false;
+        // const includes_uppercase = password == password.toLowerCase() ? false : true;
 
-        if (!is_longer) setErrorMessage("Şifre en az 8 harf olmalıdır.");
-        if (!includes_special) setErrorMessage("Şifre en az bir noktalama işareti bulundurmak zorundadır.");
-        if (!includes_uppercase) setErrorMessage("Şifre harf en az bir büyük harf içermelidir.");
-        if (!username || !password) setErrorMessage("Lütfen formu doldurunuz.");
+        // if (!is_longer) setErrorMessage("Şifre en az 8 harf olmalıdır.");
+        // if (!includes_special) setErrorMessage("Şifre en az bir noktalama işareti bulundurmak zorundadır.");
+        // if (!includes_uppercase) setErrorMessage("Şifre harf en az bir büyük harf içermelidir.");
+        // if (!username || !password) setErrorMessage("Lütfen formu doldurunuz.");
 
         if (errorMessage == "") {
             const { data } = await axiosInstance.post("/login", { username, password });
@@ -38,10 +38,10 @@ const Giris = props => {
 
     return (
         <div>
-            <form method="post" onSubmit={(e) => { e.preventDefault(); }} class="box">
+            <form method="post" onSubmit={(e) => { e.preventDefault(); }} className="box">
                 <h1>Yönetici/Personel Giriş</h1>
-                <input type="text" name="username" placeholder="kullanıcı adı" class="email" onChange={(event) => { setUsername(event.target.value); }} />
-                <input type="password" name="password" placeholder="şifre" class="email" onChange={(event) => { setPassword(event.target.value); }} />
+                <input type="text" name="username" placeholder="kullanıcı adı" className="email" onChange={(event) => { setUsername(event.target.value); }} />
+                <input type="password" name="password" placeholder="şifre" className="email" onChange={(event) => { setPassword(event.target.value); }} />
                 {errorMessage && <div style={{ color: "red", marginTop: "5px", fontSize: "12px" }}>{errorMessage}</div>}
                 <a href="#"><button onClick={handleClick} id="btn2" className="btn">
                     Giriş

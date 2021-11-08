@@ -41,7 +41,7 @@ router.route("/problembirim/:problem_id")
     .get(function (req, res) {
         const problem_id = req.params.problem_id;
 
-        connection.query(`SELECT * FROM ProblemBirim WHERE ProblemID = "${problem_id}"`,
+        connection.query(`SELECT * FROM ProblemBirim WHERE ProblemTipiID = "${problem_id}"`,
             function (err, result) {
                 if (result.length > 0) {
                     if (err) console.log(err);
@@ -66,7 +66,7 @@ router.route("/problembirim/:problem_id")
 
         for (var j = 0; j < update_values.length; j++) {
             connection.query(`UPDATE ProblemBirim SET ${update_values[j].column} = "${update_values[j].value}" ` +
-                ` WHERE ProblemID = "${problem_id}"`,
+                ` WHERE ProblemTipiID = "${problem_id}"`,
                 function (err, result) {
                     if (err) console.log(err);
                 });
@@ -77,7 +77,7 @@ router.route("/problembirim/:problem_id")
     .delete(function (req, res) {
         const problem_id = req.params.problem_id;
 
-        connection.query(`DELETE FROM ProblemBirim WHERE ProblemID = "${problem_id}"`,
+        connection.query(`DELETE FROM ProblemBirim WHERE ProblemTipiID = "${problem_id}"`,
             function (err, result) {
                 if (result.length > 0) {
                     const il = result[0];
@@ -94,7 +94,7 @@ router.route("/problembirim")
         const problem_ids = JSON.parse(req.query.filter).ids;
 
         for (var i = 0; i < il_kodlari.length; i++) {
-            connection.query(`DELETE FROM ProblemBirim WHERE ProblemID = "${problem_ids[i]}"`,
+            connection.query(`DELETE FROM ProblemBirim WHERE ProblemTipiID = "${problem_ids[i]}"`,
                 function (err, result) {
                     if (err) console.log(err);
                 });
