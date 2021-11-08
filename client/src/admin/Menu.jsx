@@ -110,22 +110,11 @@ export const MyMenu = (props) => {
         }
     ]
 
-    // {
-    //     link: "/kullanicilar",
-    //         primaryText: "Kullanıcılar",
-    //             leftIcon: <AccountBoxIcon />
-    // },
-    // {
-    //     link: "/personel",
-    //         primaryText: "Personel",
-    //             leftIcon: <PeopleIcon />
-    // },
-
     return (
-        <div>
-            <List component="nav" style={{ width: "225px", height: "50px" }}>
-                <MenuItemLink style={{ width: "225px", height: "50px", marginLeft: "5px" }} to="/kullanicilar" primaryText="Kullanıcılar" leftIcon={<AccountBoxIcon />} />
-                <MenuItemLink style={{ width: "225px", height: "50px", marginLeft: "5px" }} to="/personel" primaryText="Personel" leftIcon={<PeopleIcon />} />
+        <Menu {...props}>
+            <List component="nav" style={{ height: "50px" }}>
+                <MenuItemLink style={{ height: "50px", marginLeft: "5px" }} to="/kullanicilar" primaryText="Kullanıcılar" leftIcon={<AccountBoxIcon />} />
+                <MenuItemLink style={{ height: "50px", marginLeft: "5px" }} to="/personel" primaryText="Personel" leftIcon={<PeopleIcon />} />
                 {
                     menuList.map(menu => {
                         return <div>
@@ -150,34 +139,7 @@ export const MyMenu = (props) => {
                         </div>
                     })
                 }
-
             </List>
-        </div>
+        </Menu>
     );
 };
-
-
-{/* <div>
-    <List component="nav" style={{ width: "225px", height: "50px" }}>
-        <ListItem button onClick={handleClick}>
-            <ListItemIcon>
-                <AccountBoxIcon />
-            </ListItemIcon>
-            <ListItemText inset primary="İller" style={{ paddingLeft: "16px" }} />
-            {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-        </ListItem>
-        <Collapse in={open} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-                <MenuItemLink style={{ height: "50px" }} to={"/iller"} primaryText="İller" leftIcon={<AccountBoxIcon />} />
-            </List>
-        </Collapse>
-    </List>
-</div> */}
-
-{/* <Menu {...props}>
-    {
-        menuList.map((menuItem) => {
-            return <MenuItemLink style={{ height: "50px" }} to={menuItem.link} primaryText={menuItem.primaryText} leftIcon={menuItem.leftIcon} />
-        })
-    }
-</Menu> */}

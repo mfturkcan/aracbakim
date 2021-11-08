@@ -26,8 +26,10 @@ router.get("/ilceler", function (req, res) {
 
 router.post("/ilceler", async function (req, res) {
     const yeni_ilce = req.body;
+    let keys = Object.keys(yeni_ilce);
+    let values = Object.values(yeni_ilce);
 
-    connection.query(`INSERT INTO Ilceler (IlceKodu, IlceAdi, IlKodu) VALUES ("${yeni_ilce["IlceKodu"]}", "${yeni_ilce["IlceAdi"]}", "${yeni_ilce["IlKodu"]}" )`,
+    connection.query(`INSERT INTO Ilceler (${keys.map(key => key)}) VALUES(${values.map(value => { if (typeof (value) == "string") return `"${value}"`; return value; })})`,
         function (err, result) {
             if (err) {
                 console.log(err);

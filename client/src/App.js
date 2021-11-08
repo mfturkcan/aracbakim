@@ -23,6 +23,7 @@ function App() {
   useEffect(async () => {
     const { data } = await axios.get("/isAuth", { withCredentials: true });
     setUser(data);
+    console.log(data)
   }, []);
 
   return (

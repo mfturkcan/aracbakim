@@ -35,9 +35,10 @@ router.get("/birimler", function (req, res) {
 router.post("/birimler", async function (req, res) {
     const yeni_birim = req.body;
 
-    connection.query(`INSERT INTO Birimler (BirimKodu, BirimAdi,  ${yeni_birim["UstBirimKodu"] == undefined ? "" : "UstBirimKodu,"} BulunduguAdres, IlKodu, IlceKodu, PostaKodu, BirimMudurKullaniciAdi)` +
-        ` VALUES (${yeni_birim["BirimKodu"]}, "${yeni_birim["BirimAdi"]}", ${yeni_birim["UstBirimKodu"] == undefined ? "" : "${ yeni_birim[\"UstBirimKodu\"]},"} "${yeni_birim["BulunduguAdres"]}", ${yeni_birim["IlKodu"]}` +
-        `, ${yeni_birim["IlceKodu"]}, ${yeni_birim["PostaKodu"]}, "${yeni_birim["BirimMudurKullaniciAdi"]}" )`,
+    let keys = Object.keys(yeni_birim);
+    let values = Object.values(yeni_birim);
+
+    connection.query(`INSERT INTO Birimler (${keys.map(key => key)}) VALUES(${values.map(value => { if (typeof (value) == "string") return `"${value}"`; return value; })})`,
         function (err, result) {
             if (err) {
                 console.log(err);

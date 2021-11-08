@@ -1,8 +1,9 @@
 import { Datagrid, List, SelectField, TextField, ReferenceField } from "ra-ui-materialui";
+import Empty from "../EmptyPage";
 
 const BirimlerListe = props => {
     return (
-        <List title="Birimler" {...props}>
+        <List title="Birimler" {...props} empty={<Empty />}>
             <Datagrid rowClick="edit">
                 <TextField source="BirimKodu" />
                 <TextField source="BirimAdi" />

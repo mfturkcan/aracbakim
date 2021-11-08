@@ -33,10 +33,10 @@ router.get("/personel", function (req, res) {
 
 router.post("/personel", async function (req, res) {
     const yeni_personel = req.body;
+    let keys = Object.keys(yeni_personel);
+    let values = Object.values(yeni_personel);
 
-    connection.query(`INSERT INTO Personel (KullaniciAdi, Email, Ad, Soyad, SicilNo, Cep, EvAdresi, IlKodu, IlceKodu, PostaKodu ${yeni_personel["UstKullaniciAdi"] == undefined ? "" : ", UstKullaniciAdi,"} ${yeni_personel["CalistigiBirimKodu"] == undefined ? "" : "CalistigiBirimKodu"})` +
-        ` VALUES ("${yeni_personel["KullaniciAdi"]}", "${yeni_personel["Email"]}", "${yeni_personel["Ad"]}","${yeni_personel["Soyad"]}", "${yeni_personel["SicilNo"]}", "${yeni_personel["Cep"]}","${yeni_personel["EvAdresi"]}", ${yeni_personel["IlKodu"]}, ${yeni_personel["IlceKodu"]}` +
-        `,${yeni_personel["PostaKodu"]} ${yeni_personel["UstKullaniciAdi"] == undefined ? "" : ", ${yeni_personel[\"UstKullaniciAdi\"]},"} ${yeni_personel["CalistigiBirimKodu"] ?? ""} )`,
+    connection.query(`INSERT INTO Personel (${keys.map(key => key)}) VALUES(${values.map(value => { if (typeof (value) == "string") return `"${value}"`; return value; })})`,
         function (err, result) {
             if (err) {
                 console.log(err);

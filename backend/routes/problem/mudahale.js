@@ -20,8 +20,10 @@ router.get("/mudahale", function (req, res) {
 
 router.post("/mudahale", async function (req, res) {
     const yeni_mudahale = req.body;
+    let keys = Object.keys(yeni_mudahale);
+    let values = Object.values(yeni_mudahale);
 
-    connection.query(`INSERT INTO Mudahale (AlanID, SinifID, MudaheleID,  MudahaleAdi) VALUES (${yeni_mudahale} )`,
+    connection.query(`INSERT INTO Mudahale (${keys.map(key => key)}) VALUES(${values.map(value => { if (typeof (value) == "string") return `"${value}"`; return value; })})`,
         function (err, result) {
             if (err) {
                 console.log(err);

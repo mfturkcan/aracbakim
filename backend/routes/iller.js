@@ -34,8 +34,10 @@ router.get("/iller", function (req, res) {
 
 router.post("/iller", async function (req, res) {
     const yeni_il = req.body;
+    let keys = Object.keys(yeni_il);
+    let values = Object.values(yeni_il);
 
-    connection.query(`INSERT INTO Iller (IlKodu, IlAdi) VALUES (${yeni_il})`,
+    connection.query(`INSERT INTO Iller (${keys.map(key => key)}) VALUES(${values.map(value => { if (typeof (value) == "string") return `"${value}"`; return value; })})`,
         function (err, result) {
             if (err) {
                 console.log(err);

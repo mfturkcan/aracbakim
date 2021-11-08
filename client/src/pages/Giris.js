@@ -6,7 +6,7 @@ import { useAuth } from "../context/AuthContext";
 
 const Giris = props => {
     const [errorMessage, setErrorMessage] = useState("");
-    var regex_punch = new RegExp(/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/);
+    var regex_punch = new RegExp(/[`!@#$%^&*()_+\-=\[\];':"\\|,.<>\/?~]/);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [user, setUser] = useAuth();

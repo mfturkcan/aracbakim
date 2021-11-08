@@ -21,8 +21,10 @@ router.get("/problem", function (req, res) {
 
 router.post("/problem", async function (req, res) {
     const yeni_problem = req.body;
+    let keys = Object.keys(yeni_problem);
+    let values = Object.values(yeni_problem);
 
-    connection.query(`INSERT INTO Problem (ProblemTipiID, ProblemTanimi, ProblemiTanimlayiciAdi, ProblemiTanimlayiciSoyadi, ProblemiTanimlayanTCNOPasaportno, HedeflenenAmacTanimi) VALUES (${yeni_problem})`,
+    connection.query(`INSERT INTO Problem  (${keys.map(key => key)}) VALUES(${values.map(value => { if (typeof (value) == "string") return `"${value}"`; return value; })})`,
         function (err, result) {
             if (err) {
                 console.log(err);

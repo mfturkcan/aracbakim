@@ -4,6 +4,102 @@ import { stringify } from 'query-string';
 const apiUrl = 'http://localhost:5000';
 const httpClient = fetchUtils.fetchJson;
 
+function getMany(json, resource) {
+    return json.map((field) => {
+        switch (resource) {
+            case "kullanicilar":
+                return { id: field["KullaniciAdi"], ...field }
+                break;
+            case "personel":
+                return { id: field["KullaniciAdi"], ...field }
+                break;
+            case "birimler":
+                return { id: field["BirimKodu"], ...field }
+                break;
+            case "iller":
+                return { id: field["IlKodu"], ...field }
+                break;
+            case "ilceler":
+                return { id: field["IlceKodu"], ...field }
+                break;
+            case "problem":
+                return { id: field["ProblemID"], ...field }
+                break;
+            case "aktiviteler":
+                return { id: field["AktiviteID"], ...field }
+                break;
+            case "belirtecler":
+                return { id: field["BelirtecID"], ...field }
+                break;
+            case "mudahale":
+                return { id: field["MudahaleID"], ...field }
+                break;
+            case "cikti":
+                return { id: field["CiktiID"], ...field }
+                break;
+            case "ciktidetay":
+                return { id: field["CiktiID"], ...field }
+                break;
+            case "mudahaledetay":
+                return { id: field["MudahaleID"], ...field }
+                break;
+            case "problembirim":
+                return { id: field["ProblemID"], ...field }
+                break;
+            case "siniflar":
+                return { id: field["SinifID"], ...field }
+                break;
+        }
+    });
+}
+
+function getOne(json, resource) {
+    switch (resource) {
+        case "kullanicilar":
+            return { data: { ...json, id: json["KullaniciAdi"] }, }
+            break;
+        case "personel":
+            return { data: { ...json, id: json["KullaniciAdi"] }, }
+            break;
+        case "birimler":
+            return { data: { ...json, id: json["BirimKodu"] }, }
+            break;
+        case "iller":
+            return { data: { ...json, id: json["IlKodu"] }, }
+            break;
+        case "ilceler":
+            return { data: { ...json, id: json["IlceKodu"] }, }
+            break;
+        case "problem":
+            return { data: { ...json, id: json["ProblemID"] }, }
+            break;
+        case "aktiviteler":
+            return { data: { ...json, id: json["AktiviteID"] }, }
+            break;
+        case "belirtecler":
+            return { data: { ...json, id: json["BelirtecID"] }, }
+            break;
+        case "mudahale":
+            return { data: { ...json, id: json["MudahaleID"] }, }
+            break;
+        case "cikti":
+            return { data: { ...json, id: json["CiktiID"] }, }
+            break;
+        case "ciktidetay":
+            return { data: { ...json, id: json["CiktiID"] }, }
+            break;
+        case "mudahaledetay":
+            return { data: { ...json, id: json["MudahaleID"] }, }
+            break;
+        case "problembirim":
+            return { data: { ...json, id: json["ProblemID"] }, }
+            break;
+        case "siniflar":
+            return { data: { ...json, id: json["SinifID"] }, }
+            break;
+    }
+}
+
 const DataProvider = {
     getList: (resource, params) => {
         const { page, perPage } = params.pagination;
@@ -16,77 +112,15 @@ const DataProvider = {
         const url = `${apiUrl}/${resource}?${stringify(query)}`;
 
         return httpClient(url).then(({ headers, json }) => ({
-            data: json.map(field => {
-                switch (resource) {
-                    case "kullanicilar":
-                        return { id: field["KullaniciAdi"], ...field }
-                        break;
-                    case "personel":
-                        return { id: field["KullaniciAdi"], ...field }
-                        break;
-                    case "birimler":
-                        return { id: field["BirimKodu"], ...field }
-                        break;
-                    case "iller":
-                        return { id: field["IlKodu"], ...field }
-                        break;
-                    case "ilceler":
-                        return { id: field["IlceKodu"], ...field }
-                        break;
-                    case "problem":
-                        return { id: field["ProblemID"], ...field }
-                        break;
-                    case "aktiviteler":
-                        return { id: field["AktiviteID"], ...field }
-                        break;
-                    case "belirtecler":
-                        return { id: field["BelirtecID"], ...field }
-                        break;
-                    case "mudahale":
-                        return { id: field["MudahaleID"], ...field }
-                        break;
-                    case "cikti":
-                        return { id: field["CiktiID"], ...field }
-                        break;
-                    case "ciktidetay":
-                        return { id: field["CiktiID"], ...field }
-                        break;
-                    case "mudahaledetay":
-                        return { id: field["MudahaleID"], ...field }
-                        break;
-                    case "problembirim":
-                        return { id: field["ProblemID"], ...field }
-                        break;
-                    case "siniflar":
-                        return { id: field["SinifID"], ...field }
-                        break;
-                }
-            }),
+            data: getMany(json, resource),
             total: parseInt(headers.get('content-range').split('/').pop(), 10),
         }));;
     },
 
     getOne: (resource, params) => {
 
-        console.log(params);
         return httpClient(`${apiUrl}/${resource}/${params.id}`).then(({ json }) => {
-            switch (resource) {
-                case "kullanicilar":
-                    return { data: { ...json, id: json["KullaniciAdi"] }, }
-                    break;
-                case "personel":
-                    return { data: { ...json, id: json["KullaniciAdi"] }, }
-                    break;
-                case "birimler":
-                    return { data: { ...json, id: json["BirimKodu"] }, }
-                    break;
-                case "iller":
-                    return { data: { ...json, id: json["IlKodu"] }, }
-                    break;
-                case "ilceler":
-                    return { data: { ...json, id: json["IlceKodu"] }, }
-                    break;
-            }
+            return getOne(json, resource);
         });
     },
 
@@ -96,25 +130,7 @@ const DataProvider = {
         };
         const url = `${apiUrl}/${resource}?${stringify(query)}`;
         return httpClient(url).then(({ json }) => ({
-            data: json.map(field => {
-                switch (resource) {
-                    case "kullanicilar":
-                        return { id: field["KullaniciAdi"], ...field }
-                        break;
-                    case "personel":
-                        return { id: field["KullaniciAdi"], ...field }
-                        break;
-                    case "birimler":
-                        return { id: field["BirimKodu"], ...field }
-                        break;
-                    case "iller":
-                        return { id: field["IlKodu"], ...field }
-                        break;
-                    case "ilceler":
-                        return { id: field["IlceKodu"], ...field }
-                        break;
-                }
-            }),
+            data: getMany(json, resource),
         }));
     },
 
@@ -132,25 +148,7 @@ const DataProvider = {
         const url = `${apiUrl}/${resource}?${stringify(query)}`;
 
         return httpClient(url).then(({ headers, json }) => ({
-            data: json.map(field => {
-                switch (resource) {
-                    case "kullanicilar":
-                        return { id: field["KullaniciAdi"], ...field }
-                        break;
-                    case "personel":
-                        return { id: field["KullaniciAdi"], ...field }
-                        break;
-                    case "birimler":
-                        return { id: field["BirimKodu"], ...field }
-                        break;
-                    case "iller":
-                        return { id: field["IlKodu"], ...field }
-                        break;
-                    case "ilceler":
-                        return { id: field["IlceKodu"], ...field }
-                        break;
-                }
-            }),
+            data: getMany(json, resource),
             total: parseInt(headers.get('content-range').split('/').pop(), 10),
         }));
     },
@@ -160,23 +158,7 @@ const DataProvider = {
             method: 'PUT',
             body: JSON.stringify(params.data),
         }).then(({ json }) => {
-            switch (resource) {
-                case "kullanicilar":
-                    return { data: { ...json, id: json["KullaniciAdi"] }, }
-                    break;
-                case "personel":
-                    return { data: { ...json, id: json["KullaniciAdi"] }, }
-                    break;
-                case "birimler":
-                    return { data: { ...json, id: json["BirimKodu"] }, }
-                    break;
-                case "iller":
-                    return { data: { ...json, id: json["IlKodu"] }, }
-                    break;
-                case "ilceler":
-                    return { data: { ...json, id: json["IlceKodu"] }, }
-                    break;
-            }
+            return getOne(json, resource)
         }),
 
     updateMany: (resource, params) => {
@@ -187,25 +169,7 @@ const DataProvider = {
             method: 'PUT',
             body: JSON.stringify(params.data),
         }).then(({ json }) => ({
-            data: json.map(field => {
-                switch (resource) {
-                    case "kullanicilar":
-                        return { id: field["KullaniciAdi"], ...field }
-                        break;
-                    case "personel":
-                        return { id: field["KullaniciAdi"], ...field }
-                        break;
-                    case "birimler":
-                        return { id: field["BirimKodu"], ...field }
-                        break;
-                    case "iller":
-                        return { id: field["IlKodu"], ...field }
-                        break;
-                    case "ilceler":
-                        return { id: field["IlceKodu"], ...field }
-                        break;
-                }
-            }),
+            data: getMany(json, resource),
         }));
     },
 
@@ -214,46 +178,14 @@ const DataProvider = {
             method: 'POST',
             body: JSON.stringify(params.data),
         }).then(({ json }) => {
-            switch (resource) {
-                case "kullanicilar":
-                    return { data: { ...json, id: json["KullaniciAdi"] }, }
-                    break;
-                case "personel":
-                    return { data: { ...json, id: json["KullaniciAdi"] }, }
-                    break;
-                case "birimler":
-                    return { data: { ...json, id: json["BirimKodu"] }, }
-                    break;
-                case "iller":
-                    return { data: { ...json, id: json["IlKodu"] }, }
-                    break;
-                case "ilceler":
-                    return { data: { ...json, id: json["IlceKodu"] }, }
-                    break;
-            }
+            return getOne(json, resource);
         }),
 
     delete: (resource, params) =>
         httpClient(`${apiUrl}/${resource}/${params.id}`, {
             method: 'DELETE',
         }).then(({ json }) => {
-            switch (resource) {
-                case "kullanicilar":
-                    return { data: { ...json, id: json["KullaniciAdi"] }, }
-                    break;
-                case "personel":
-                    return { data: { ...json, id: json["KullaniciAdi"] }, }
-                    break;
-                case "birimler":
-                    return { data: { ...json, id: json["BirimKodu"] }, }
-                    break;
-                case "iller":
-                    return { data: { ...json, id: json["IlKodu"] }, }
-                    break;
-                case "ilceler":
-                    return { data: { ...json, id: json["IlceKodu"] }, }
-                    break;
-            }
+            return getOne(json, resource);
         }),
 
     deleteMany: (resource, params) => {
@@ -264,25 +196,7 @@ const DataProvider = {
             method: 'DELETE',
             body: JSON.stringify(params.data),
         }).then(({ json }) => ({
-            data: json.map(field => {
-                switch (resource) {
-                    case "kullanicilar":
-                        return { id: field["KullaniciAdi"], ...field }
-                        break;
-                    case "personel":
-                        return { id: field["KullaniciAdi"], ...field }
-                        break;
-                    case "birimler":
-                        return { id: field["BirimKodu"], ...field }
-                        break;
-                    case "iller":
-                        return { id: field["IlKodu"], ...field }
-                        break;
-                    case "ilceler":
-                        return { id: field["IlceKodu"], ...field }
-                        break;
-                }
-            }),
+            data: getMany(json, resource),
         }));
     },
 }

@@ -55,19 +55,47 @@ router.post("/login", (req, res) => {
                     const is_password_valid = await decryptPassword(user["Şifre"]) == password;
 
                     if (is_password_valid) {
-                        req.session.user = {
-                            username: username,
-                            role: "Yönetici"
-                        };
-                        req.session.save();
-                        response = {
-                            result: true,
-                            user: {
-                                username: username,
-                                role: "Yönetici"
-                            },
-                        }
-                        res.json(response);
+
+                        connection.query(`SELECT BirimMudurKullaniciAdi FROM Birimler WHERE BirimMudurKullaniciAdi = ${username}`, function (err, result_role) {
+                            if (err) {
+                                response = {
+                                    result: false,
+                                    message: "Giriş yaparken hata meydana geldi!",
+                                }
+                                res.json(response);
+                            } else {
+                                if (result_role.length > 0) {
+                                    req.session.user = {
+                                        username: username,
+                                        role: "Müdür"
+                                    };
+                                    req.session.save();
+                                    response = {
+                                        result: true,
+                                        user: {
+                                            username: username,
+                                            role: "Müdür"
+                                        },
+                                    }
+                                    res.json(response);
+                                } else {
+                                    req.session.user = {
+                                        username: username,
+                                        role: "Yönetici"
+                                    };
+                                    req.session.save();
+                                    response = {
+                                        result: true,
+                                        user: {
+                                            username: username,
+                                            role: "Yönetici"
+                                        },
+                                    }
+                                    res.json(response);
+                                }
+                            }
+                        })
+
                     } else {
                         response = {
                             result: false,

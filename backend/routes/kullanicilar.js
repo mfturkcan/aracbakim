@@ -44,35 +44,46 @@ router.post("/kullanicilar", async function (req, res) {
         }
     );
 
-    connection.query(`INSERT INTO Birimler (BirimKodu, BirimAdi,  ${yeni_kullanici["UstBirimKodu"] == undefined ? "" : "UstBirimKodu,"} BulunduguAdres, IlKodu, IlceKodu, PostaKodu, BirimMudurKullaniciAdi)` +
-        ` VALUES (${yeni_kullanici["BirimKodu"]}, "${yeni_kullanici["BirimAdi"]}", ${yeni_kullanici["UstBirimKodu"] == undefined ? "" : "${ yeni_kullanici[\"UstBirimKodu\"]},"} "${yeni_kullanici["BulunduguAdres"]}", ${yeni_kullanici["IlKodu"]}` +
-        `, ${yeni_kullanici["IlceKodu"]}, ${yeni_kullanici["PostaKodu"]}, "${yeni_kullanici["BirimMudurKullaniciAdi"]}" )`,
-        function (err, result) {
-            if (err) {
-                console.log(err);
-                error = err;
-            }
-        }
-    );
-
-    connection.query(`INSERT INTO Personel (KullaniciAdi, Email, Ad, Soyad, SicilNo, Cep, EvAdresi, IlKodu, IlceKodu, PostaKodu ,CalistigiBirimKodu)` +
-        ` VALUES ("${yeni_kullanici["KullaniciAdi"]}", "${yeni_kullanici["Email"]}", "${yeni_kullanici["Ad"]}","${yeni_kullanici["Soyad"]}", "${yeni_kullanici["SicilNo"]}", "${yeni_kullanici["Cep"]}","${yeni_kullanici["EvAdresi"]}", ${yeni_kullanici["IlKodu"]}, ${yeni_kullanici["IlceKodu"]}` +
-        `,${yeni_kullanici["PostaKodu"]}, ${yeni_kullanici["CalistigiBirimKodu"]} )`,
-        function (err, result) {
-            if (err) {
-                console.log(err);
-                error = err;
-            }
-        }
-    );
-
-    if (yeni_kullanici["UstKullanici"] != null) {
-        connection.query(`INSERT INTO Personel (UstKullaniciAdi) VALUES(${yeni_kullanici["UstKullaniciAdi"]}) WHERE KullaniciAdi = "${yeni_kullanici["KullaniciAdi"]}"`,
+    if (yeni_kullanici["BirimKodu"] != null) {
+        connection.query(`INSERT INTO Birimler (BirimKodu, BirimAdi, BulunduguAdres, IlKodu, IlceKodu, PostaKodu, BirimMudurKullaniciAdi)` +
+            ` VALUES (${yeni_kullanici["BirimKodu"]}, "${yeni_kullanici["BirimAdi"]}", "${yeni_kullanici["BulunduguAdres"]}", ${yeni_kullanici["IlKodu"]}` +
+            `, ${yeni_kullanici["IlceKodu"]}, ${yeni_kullanici["PostaKodu"]}, "${yeni_kullanici["BirimMudurKullaniciAdi"]}" )`,
             function (err, result) {
                 if (err) {
                     console.log(err);
+                    error = err;
                 }
-            });
+            }
+        );
+
+        connection.query(`INSERT INTO Personel (KullaniciAdi, Email, Ad, Soyad, SicilNo, Cep, EvAdresi, IlKodu, IlceKodu, PostaKodu ,CalistigiBirimKodu)` +
+            ` VALUES ("${yeni_kullanici["KullaniciAdi"]}", "${yeni_kullanici["Email"]}", "${yeni_kullanici["Ad"]}","${yeni_kullanici["Soyad"]}", "${yeni_kullanici["SicilNo"]}", "${yeni_kullanici["Cep"]}","${yeni_kullanici["EvAdresi"]}", ${yeni_kullanici["IlKodu"]}, ${yeni_kullanici["IlceKodu"]}` +
+            `,${yeni_kullanici["PostaKodu"]}, ${yeni_kullanici["CalistigiBirimKodu"]} )`,
+            function (err, result) {
+                if (err) {
+                    console.log(err);
+                    error = err;
+                }
+            }
+        );
+
+        if (yeni_kullanici["UstKullanici"] != null) {
+            connection.query(`UPDATE Personel SET UstKullaniciAdi =  ${yeni_kullanici["UstKullaniciAdi"]} WHERE KullaniciAdi = "${yeni_kullanici["KullaniciAdi"]}"`,
+                function (err, result) {
+                    if (err) {
+                        console.log(err);
+                    }
+                });
+        }
+
+        if (yeni_kullanici["UstBirimKodu"] != null) {
+            connection.query(`UPDATE Birimler SET UstBirimKodu = ${yeni_kullanici.UstBirimKodu} WHERE BirimKodu = ${yeni_kullanici.BirimKodu}`,
+                function (err, result) {
+                    if (err) {
+                        console.log(err);
+                    }
+                });
+        }
     }
 
     res.send(yeni_kullanici);

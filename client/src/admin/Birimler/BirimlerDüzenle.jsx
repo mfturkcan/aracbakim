@@ -1,13 +1,13 @@
-import { Box } from "@material-ui/core";
 import { SimpleForm, Edit, SelectInput, TextInput, ReferenceInput } from "ra-ui-materialui";
 import { FormDataConsumer } from "ra-core";
+import { required } from "ra-core";
 
 const BirimlerDüzenle = props => {
     return (
         <Edit {...props} >
             <SimpleForm rowClick="edit" variant="outlined">
-                <TextInput source="BirimKodu" />
-                <TextInput source="BirimAdi" />
+                <TextInput source="BirimKodu" validate={required()} />
+                <TextInput source="BirimAdi" validate={required()} />
 
                 <FormDataConsumer>
                     {
@@ -25,18 +25,18 @@ const BirimlerDüzenle = props => {
                     }
                 </FormDataConsumer>
 
-                <TextInput source="BulunduguAdres" />
-                <ReferenceInput source="IlKodu" reference="iller" label="Il Adı">
+                <TextInput source="BulunduguAdres" validate={required()} />
+                <ReferenceInput source="IlKodu" reference="iller" label="Il Adı" validate={required()}>
                     <SelectInput optionText="IlAdi" />
                 </ReferenceInput>
 
-                <ReferenceInput source="IlceKodu" reference="ilceler" label="Ilce Adı">
+                <ReferenceInput source="IlceKodu" reference="ilceler" label="Ilce Adı" validate={required()}>
                     <SelectInput optionText="IlceAdi" />
                 </ReferenceInput>
 
-                <TextInput source="PostaKodu" />
+                <TextInput source="PostaKodu" validate={required()} />
 
-                <ReferenceInput source="BirimMudurKullaniciAdi" reference="personel" label="Mudur Kullanici Adi">
+                <ReferenceInput validate={required()} source="BirimMudurKullaniciAdi" reference="personel" label="Mudur Kullanici Adi">
                     <SelectInput optionText="KullaniciAdi" />
                 </ReferenceInput>
             </SimpleForm>

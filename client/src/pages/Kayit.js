@@ -7,7 +7,7 @@ const Kayit = props => {
     let history = useHistory();
 
     const [errorMessage, setErrorMessage] = useState("");
-    var regex_punch = new RegExp(/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/);
+    var regex_punch = new RegExp(/[`!@#$%^&*()_+\-=\[\];':"\\|,.<>\/?~]/);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 

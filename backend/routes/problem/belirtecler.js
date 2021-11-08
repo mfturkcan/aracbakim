@@ -22,8 +22,10 @@ router.get("/belirtecler", function (req, res) {
 
 router.post("/belirtecler", async function (req, res) {
     const yeni_belirtec = req.body;
+    let keys = Object.keys(yeni_belirtec);
+    let values = Object.values(yeni_belirtec);
 
-    connection.query(`INSERT INTO Belirtecler (BelirtecID, IlAdi) VALUES (${yeni_belirtec})`,
+    connection.query(`INSERT INTO Belirtecler (${keys.map(key => key)}) VALUES(${values.map(value => { if (typeof (value) == "string") return `"${value}"`; return value; })})`,
         function (err, result) {
             if (err) {
                 console.log(err);

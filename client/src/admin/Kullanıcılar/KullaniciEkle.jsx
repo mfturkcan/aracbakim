@@ -28,28 +28,28 @@ const KullaniciEkle = ({ translate, ...props }) => {
 
                 {
                     rol == "mudur" && <FormTab label="Birim">
-                        <NumberInput source="BirimKodu" />
-                        <TextInput source="BirimAdi" />
+                        <NumberInput source="BirimKodu" validate={required()} />
+                        <TextInput source="BirimAdi" validate={required()} />
 
                         <ReferenceInput source="UstBirimKodu" reference="birimler" label="Üst Birim Adı">
                             <SelectInput optionText="BirimAdi" />
                         </ReferenceInput>
-                        <TextInput source="BulunduguAdres" />
+                        <TextInput source="BulunduguAdres" validate={required()} />
 
-                        <ReferenceInput source="IlKodu" reference="iller" label="Il Adı">
+                        <ReferenceInput validate={required()} source="IlKodu" reference="iller" label="Il Adı">
                             <SelectInput optionText="IlAdi" />
                         </ReferenceInput>
 
-                        <ReferenceInput source="IlceKodu" reference="ilceler" label="Ilce Adı">
+                        <ReferenceInput validate={required()} source="IlceKodu" reference="ilceler" label="Ilce Adı">
                             <SelectInput optionText="IlceAdi" />
                         </ReferenceInput>
 
-                        <TextInput source="PostaKodu" />
+                        <TextInput source="PostaKodu" validate={required()} />
 
                         <FormDataConsumer>
                             {
                                 ({ formData, ...rest }) => {
-                                    return <SelectInput variant="filled" style={{ width: "250px" }} source="BirimMudurKullaniciAdi" choices={[{ id: formData.KullaniciAdi ?? "0", name: formData.KullaniciAdi ?? "" }]} />
+                                    return <SelectInput validate={required()} variant="filled" style={{ width: "250px" }} source="BirimMudurKullaniciAdi" choices={[{ id: formData.KullaniciAdi ?? "0", name: formData.KullaniciAdi ?? "" }]} />
                                 }
                             }
                         </FormDataConsumer>
@@ -83,7 +83,7 @@ const KullaniciEkle = ({ translate, ...props }) => {
                         <FormDataConsumer>
                             {
                                 ({ formData, ...rest }) => {
-                                    return <SelectInput label="Calistigi Birim Kodu" source="CalistigiBirimKodu" choices={[{ id: formData.BirimKodu, name: formData.BirimKodu == undefined ? "" : formData.BirimKodu.toString() }]} style={{ width: "250px" }} />
+                                    return <SelectInput validate={required()} label="Calistigi Birim Kodu" source="CalistigiBirimKodu" choices={[{ id: formData.BirimKodu, name: formData.BirimKodu == undefined ? "" : formData.BirimKodu.toString() }]} style={{ width: "250px" }} />
 
                                 }
                             }

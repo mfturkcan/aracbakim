@@ -21,8 +21,10 @@ router.get("/cikti", function (req, res) {
 
 router.post("/cikti", async function (req, res) {
     const yeni_cikti = req.body;
+    let keys = Object.keys(yeni_cikti);
+    let values = Object.values(yeni_cikti);
 
-    connection.query(`INSERT INTO Cikti (CiktiID, IlAdi) VALUES (${yeni_cikti} )`,
+    connection.query(`INSERT INTO Cikti (${keys.map(key => key)}) VALUES(${values.map(value => { if (typeof (value) == "string") return `"${value}"`; return value; })})`,
         function (err, result) {
             if (err) {
                 console.log(err);
