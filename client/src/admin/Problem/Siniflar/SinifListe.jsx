@@ -1,12 +1,14 @@
-import { List, Datagrid, TextField, NumberField, BooleanField } from "ra-ui-materialui";
+import { List, Datagrid, TextField, NumberField, FunctionField } from "ra-ui-materialui";
 
 const SinifListe = props => {
     return (
         <List id="SinifID" {...props}>
             <Datagrid rowClick="edit">
-                <NumberField source="SinifID" />
+                <NumberField source="SinifID" label="SinifID" />
                 <TextField source="SinifAdi" />
-                <BooleanField source="AlanTipi" />
+                <FunctionField source="AlanTipi" label="AlanTipi" render={(record, source) => {
+                    return record[source] == true ? "Mudahale(1)" : "Çıktı(0)";
+                }} />
             </Datagrid>
         </List>
     );

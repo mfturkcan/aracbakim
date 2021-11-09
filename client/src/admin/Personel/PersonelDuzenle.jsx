@@ -17,11 +17,15 @@ const PersonelDuzenle = props => {
                 <TextInput source="Cep" validate={required()} />
                 <TextInput source="EvAdresi" validate={required()} />
 
-                <ReferenceInput source="IlKodu" reference="iller" label="Il Adı" validate={required()}>
-                    <SelectInput optionText="IlAdi" />
+                <ReferenceInput source="IlKodu" reference="iller" label="IlKodu" validate={required()}>
+                    <SelectInput optionText={(src) => {
+                        return (`${src["IlAdi"]} -  ${src["IlKodu"]}`);
+                    }} />
                 </ReferenceInput>
-                <ReferenceInput source="IlceKodu" reference="ilceler" label="Ilce Adı" validate={required()}>
-                    <SelectInput optionText="IlceAdi" />
+                <ReferenceInput source="IlceKodu" reference="ilceler" label="IlceKodu" validate={required()}>
+                    <SelectInput optionText={(src) => {
+                        return (`${src["IlceAdi"]} -  ${src["IlceKodu"]}`);
+                    }} />
                 </ReferenceInput>
 
                 <TextInput source="PostaKodu" validate={required()} />
@@ -46,8 +50,10 @@ const PersonelDuzenle = props => {
                     }
                 </FormDataConsumer>
 
-                <ReferenceInput source="CalistigiBirimKodu" reference="birimler" label="Birim Adı">
-                    <SelectInput optionText="BirimAdi" />
+                <ReferenceInput validate={required()} source="CalistigiBirimKodu" reference="birimler" label="BirimKodu">
+                    <SelectInput optionText={(src) => {
+                        return (`${src["BirimKodu"]} -  ${src["BirimAdi"]}`);
+                    }} />
                 </ReferenceInput>
 
             </SimpleForm>

@@ -1,4 +1,4 @@
-import { List, Datagrid, TextField, ReferenceField } from "ra-ui-materialui";
+import { List, Datagrid, TextField, ReferenceField, SelectField } from "ra-ui-materialui";
 
 const IlcelerListe = props => {
     return (
@@ -6,12 +6,13 @@ const IlcelerListe = props => {
             <Datagrid rowClick="edit">
                 <TextField source="IlceKodu" />
                 <TextField source="IlceAdi" />
-                <ReferenceField source="IlKodu" reference="iller" label="Il Adı">
-                    <TextField source="IlAdi" />
-                </ReferenceField>
                 <TextField source="IlKodu" />
             </Datagrid>
         </List>
     );
 }
 export default IlcelerListe;
+
+{/* <ReferenceField label="IlAdı" source="IlKodu" reference="iller">
+    <TextField source="IlAdi" />
+</ReferenceField> */}

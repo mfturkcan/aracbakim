@@ -7,8 +7,10 @@ const IlcelerDuzenle = props => {
             <SimpleForm>
                 <TextInput source="IlceKodu" validate={required()} />
                 <TextInput source="IlceAdi" validate={required()} />
-                <ReferenceInput validate={required()} source="IlKodu" reference="iller" label="Bağlı olduğu Il">
-                    <SelectInput optionText="IlAdi" />
+                <ReferenceInput validate={required()} source="IlKodu" reference="iller" label="IlKodu">
+                    <SelectInput optionText={(source) => {
+                        return (`${source["IlAdi"]} - ${source["IlKodu"]}`);
+                    }} />
                 </ReferenceInput>
             </SimpleForm>
         </Edit>

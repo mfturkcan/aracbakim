@@ -13,19 +13,13 @@ const BirimlerListe = props => {
                 </ReferenceField>
                 <TextField source="BulunduguAdres" />
 
-                <ReferenceField source="IlKodu" reference="iller" label="Il Adı">
-                    <TextField source="IlAdi" />
-                </ReferenceField>
+                <TextField source="IlKodu" />
 
-                <ReferenceField source="IlceKodu" reference="ilceler" label="Ilce Adı">
-                    <TextField source="IlceAdi" />
-                </ReferenceField>
+                <TextField source="IlceKodu" />
 
                 <TextField source="PostaKodu" />
 
-                <ReferenceField source="BirimMudurKullaniciAdi" reference="personel" label="Mudur Kullanici Adi">
-                    <TextField source="KullaniciAdi" />
-                </ReferenceField>
+                <TextField source="BirimMudurKullaniciAdi" />
 
             </Datagrid>
         </List>

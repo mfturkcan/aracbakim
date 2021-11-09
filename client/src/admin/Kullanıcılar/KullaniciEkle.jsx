@@ -36,12 +36,16 @@ const KullaniciEkle = ({ translate, ...props }) => {
                         </ReferenceInput>
                         <TextInput source="BulunduguAdres" validate={required()} />
 
-                        <ReferenceInput validate={required()} source="IlKodu" reference="iller" label="Il Adı">
-                            <SelectInput optionText="IlAdi" />
+                        <ReferenceInput validate={required()} source="IlKodu" reference="iller" label="IlKodu">
+                            <SelectInput optionText={(src) => {
+                                return (`${src["IlAdi"]} -  ${src["IlKodu"]}`);
+                            }} />
                         </ReferenceInput>
 
-                        <ReferenceInput validate={required()} source="IlceKodu" reference="ilceler" label="Ilce Adı">
-                            <SelectInput optionText="IlceAdi" />
+                        <ReferenceInput validate={required()} source="IlceKodu" reference="ilceler" label="IlceKodu">
+                            <SelectInput optionText={(src) => {
+                                return (`${src["IlceAdi"]} -  ${src["IlceKodu"]}`);
+                            }} />
                         </ReferenceInput>
 
                         <TextInput source="PostaKodu" validate={required()} />
@@ -67,11 +71,15 @@ const KullaniciEkle = ({ translate, ...props }) => {
                         <TextInput source="Cep" validate={required()} />
                         <TextInput source="EvAdresi" validate={required()} />
 
-                        <ReferenceInput source="IlKodu" reference="iller" label="Il Adı" validate={required()}>
-                            <SelectInput optionText="IlAdi" />
+                        <ReferenceInput source="IlKodu" reference="iller" label="IlKodu" validate={required()}>
+                            <SelectInput optionText={(src) => {
+                                return (`${src["IlAdi"]} -  ${src["IlKodu"]}`);
+                            }} />
                         </ReferenceInput>
-                        <ReferenceInput source="IlceKodu" reference="ilceler" label="Ilce Adı" validate={required()}>
-                            <SelectInput optionText="IlceAdi" />
+                        <ReferenceInput source="IlceKodu" reference="ilceler" label="IlceKodu" validate={required()}>
+                            <SelectInput optionText={(src) => {
+                                return (`${src["IlceAdi"]} -  ${src["IlceKodu"]}`);
+                            }} />
                         </ReferenceInput>
 
                         <NumberInput source="PostaKodu" validate={required()} />

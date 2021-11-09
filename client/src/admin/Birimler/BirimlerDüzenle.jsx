@@ -26,12 +26,16 @@ const BirimlerDüzenle = props => {
                 </FormDataConsumer>
 
                 <TextInput source="BulunduguAdres" validate={required()} />
-                <ReferenceInput source="IlKodu" reference="iller" label="Il Adı" validate={required()}>
-                    <SelectInput optionText="IlAdi" />
+                <ReferenceInput source="IlKodu" reference="iller" label="IlKodu" validate={required()}>
+                    <SelectInput optionText={(src) => {
+                        return (`${src["IlAdi"]} -  ${src["IlKodu"]}`);
+                    }} />
                 </ReferenceInput>
 
-                <ReferenceInput source="IlceKodu" reference="ilceler" label="Ilce Adı" validate={required()}>
-                    <SelectInput optionText="IlceAdi" />
+                <ReferenceInput source="IlceKodu" reference="ilceler" label="IlceKodu" validate={required()}>
+                    <SelectInput optionText={(src) => {
+                        return (`${src["IlceAdi"]} -  ${src["IlceKodu"]}`);
+                    }} />
                 </ReferenceInput>
 
                 <TextInput source="PostaKodu" validate={required()} />

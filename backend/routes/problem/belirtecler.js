@@ -103,7 +103,7 @@ router.route("/belirtecler")
         console.log("delete many");
         const belirtec_ids = JSON.parse(req.query.filter).ids;
 
-        for (var i = 0; i < il_kodlari.length; i++) {
+        for (var i = 0; i < belirtec_ids.length; i++) {
             connection.query(`DELETE FROM Belirtecler WHERE BelirtecID = "${belirtec_ids[i]}"`,
                 function (err, result) {
                     if (err) {

@@ -19,7 +19,7 @@ const Empty = () => {
             <Typography variant="body1" color="textPrimary">
                 Birimler ancak BirimMüdür ile birlikte oluşturabilir.
             </Typography>
-            <Button onClick={handleClick} variant="filled" style={{ marginTop: "20px", backgroundColor: "blueviolet", color: "white" }}>Oluştur</Button>
+            <Button onClick={handleClick} style={{ marginTop: "20px", backgroundColor: "blueviolet", color: "white" }}>Oluştur</Button>
         </Box>
     );
 };

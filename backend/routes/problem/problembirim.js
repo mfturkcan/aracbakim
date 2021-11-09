@@ -103,7 +103,7 @@ router.route("/problembirim")
         console.log("delete many");
         const problem_ids = JSON.parse(req.query.filter).ids;
 
-        for (var i = 0; i < il_kodlari.length; i++) {
+        for (var i = 0; i < problem_ids.length; i++) {
             connection.query(`DELETE FROM ProblemBirim WHERE ProblemID = "${problem_ids[i]}"`,
                 function (err, result) {
                     if (err) {

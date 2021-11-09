@@ -103,7 +103,7 @@ router.route("/ciktidetay")
         console.log("delete many");
         const cikti_ids = JSON.parse(req.query.filter).ids;
 
-        for (var i = 0; i < il_kodlari.length; i++) {
+        for (var i = 0; i < cikti_ids.length; i++) {
             connection.query(`DELETE FROM CiktiDetay WHERE CiktiID = "${cikti_ids[i]}"`,
                 function (err, result) {
                     if (err) {

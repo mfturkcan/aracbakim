@@ -4,7 +4,7 @@ const BelirtecListe = props => {
     return (
         <List id="BelirtecID" {...props}>
             <Datagrid rowClick="edit">
-                <NumberField source="BelirtecID" />
+                <NumberField source="BelirtecID" label="BelirtecID" />
                 <TextField source="BelirtecTanimi" />
             </Datagrid>
         </List>

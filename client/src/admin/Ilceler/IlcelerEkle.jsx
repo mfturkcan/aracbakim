@@ -7,8 +7,10 @@ const IlcelerEkle = props => {
             <SimpleForm>
                 <TextInput source="IlceKodu" validate={required()} />
                 <TextInput source="IlceAdi" validate={required()} />
-                <ReferenceInput validate={required()} source="IlKodu" reference="iller" label="Bağlı olduğu Il">
-                    <SelectInput optionText="IlAdi" />
+                <ReferenceInput validate={required()} source="IlKodu" reference="iller" label="IlKodu">
+                    <SelectInput optionText={(src) => {
+                        return (`${src["IlAdi"]} -  ${src["IlKodu"]}`);
+                    }} />
                 </ReferenceInput>
             </SimpleForm>
         </Create>
