@@ -30,7 +30,7 @@ function App() {
     <div className="App">
       <Switch>
         <Route exact path="/">
-          <Giris />
+          {user.role == "" ? <Giris /> : <AdminPanel />}
         </Route>
         <Route path="/login">
           <Giris />

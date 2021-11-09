@@ -26,7 +26,3 @@ const BirimlerListe = props => {
     );
 }
 export default BirimlerListe;
-
-/*
-    Birimler (BirimKodu, BirimAdi, UstBirimKodu, BulunduguAdres, IlKodu, IlceKodu, PostaKodu, BirimMudurKullaniciAdi)
-*/
