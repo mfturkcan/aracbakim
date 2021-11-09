@@ -23,7 +23,7 @@ function getMany(json, resource) {
                 return { id: field["IlceKodu"], ...field }
                 break;
             case "problem":
-                return { id: field["ProblemID"], ...field }
+                return { id: field["ProblemTipiID"], ...field }
                 break;
             case "aktiviteler":
                 return { id: field["AktiviteID"], ...field }
@@ -49,6 +49,9 @@ function getMany(json, resource) {
             case "siniflar":
                 return { id: field["SinifID"], ...field }
                 break;
+            case "alanlar":
+                return { id: field["AlanID"], ...field }
+                break;
         }
     });
 }
@@ -71,7 +74,7 @@ function getOne(json, resource) {
             return { data: { ...json, id: json["IlceKodu"] }, }
             break;
         case "problem":
-            return { data: { ...json, id: json["ProblemID"] }, }
+            return { data: { ...json, id: json["ProblemTipiID"] }, }
             break;
         case "aktiviteler":
             return { data: { ...json, id: json["AktiviteID"] }, }
@@ -97,6 +100,9 @@ function getOne(json, resource) {
         case "siniflar":
             return { data: { ...json, id: json["SinifID"] }, }
             break;
+        case "alanlar":
+            return { data: { ...json, id: json["AlanID"] }, }
+            break;
     }
 }
 
@@ -111,15 +117,22 @@ const DataProvider = {
         };
         const url = `${apiUrl}/${resource}?${stringify(query)}`;
 
-        return httpClient(url).then(({ headers, json }) => ({
-            data: getMany(json, resource),
-            total: parseInt(headers.get('content-range').split('/').pop(), 10),
-        }));;
+        return httpClient(url).then(({ headers, json }) => {
+            if (json.errno) {
+                throw new Error(json.sqlMessage);
+            } return {
+                data: getMany(json, resource),
+                total: parseInt(headers.get('content-range').split('/').pop(), 10),
+            }
+        });
     },
 
     getOne: (resource, params) => {
 
         return httpClient(`${apiUrl}/${resource}/${params.id}`).then(({ json }) => {
+            if (json.errno) {
+                throw new Error(json.sqlMessage);
+            }
             return getOne(json, resource);
         });
     },
@@ -129,9 +142,13 @@ const DataProvider = {
             filter: JSON.stringify({ ids: params.ids }),
         };
         const url = `${apiUrl}/${resource}?${stringify(query)}`;
-        return httpClient(url).then(({ json }) => ({
-            data: getMany(json, resource),
-        }));
+        return httpClient(url).then(({ json }) => {
+            if (json.errno) {
+                throw new Error(json.sqlMessage);
+            } return {
+                data: getMany(json, resource),
+            }
+        });
     },
 
     getManyReference: (resource, params) => {
@@ -147,10 +164,14 @@ const DataProvider = {
         };
         const url = `${apiUrl}/${resource}?${stringify(query)}`;
 
-        return httpClient(url).then(({ headers, json }) => ({
-            data: getMany(json, resource),
-            total: parseInt(headers.get('content-range').split('/').pop(), 10),
-        }));
+        return httpClient(url).then(({ headers, json }) => {
+            if (json.errno) {
+                throw new Error(json.sqlMessage);
+            } return {
+                data: getMany(json, resource),
+                total: parseInt(headers.get('content-range').split('/').pop(), 10),
+            }
+        });
     },
 
     update: (resource, params) =>
@@ -158,7 +179,10 @@ const DataProvider = {
             method: 'PUT',
             body: JSON.stringify(params.data),
         }).then(({ json }) => {
-            return getOne(json, resource)
+            if (json.errno) {
+                throw new Error(json.sqlMessage);
+            }
+            return getOne(json, resource);
         }),
 
     updateMany: (resource, params) => {
@@ -168,9 +192,13 @@ const DataProvider = {
         return httpClient(`${apiUrl}/${resource}?${stringify(query)}`, {
             method: 'PUT',
             body: JSON.stringify(params.data),
-        }).then(({ json }) => ({
-            data: getMany(json, resource),
-        }));
+        }).then(({ json }) => {
+            if (json.errno) {
+                throw new Error(json.sqlMessage);
+            } return {
+                data: getMany(json, resource),
+            }
+        });
     },
 
     create: (resource, params) =>
@@ -178,6 +206,9 @@ const DataProvider = {
             method: 'POST',
             body: JSON.stringify(params.data),
         }).then(({ json }) => {
+            if (json.errno) {
+                throw new Error(json.sqlMessage);
+            }
             return getOne(json, resource);
         }),
 
@@ -185,6 +216,9 @@ const DataProvider = {
         httpClient(`${apiUrl}/${resource}/${params.id}`, {
             method: 'DELETE',
         }).then(({ json }) => {
+            if (json.errno) {
+                throw new Error(json.sqlMessage);
+            }
             return getOne(json, resource);
         }),
 
@@ -195,9 +229,13 @@ const DataProvider = {
         return httpClient(`${apiUrl}/${resource}?${stringify(query)}`, {
             method: 'DELETE',
             body: JSON.stringify(params.data),
-        }).then(({ json }) => ({
-            data: getMany(json, resource),
-        }));
+        }).then(({ json }) => {
+            if (json.errno) {
+                throw new Error(json.sqlMessage);
+            } return {
+                data: getMany(json, resource),
+            }
+        });
     },
 }
 

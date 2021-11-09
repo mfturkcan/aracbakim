@@ -57,7 +57,10 @@ router.route("/birimler/:birim_kodu")
 
         connection.query(`SELECT * FROM Birimler WHERE BirimKodu = ${birim_kodu}`,
             function (err, result) {
-                if (err) console.log(err);
+                if (err) {
+                    console.log(err);
+                    res.send(err);
+                }
                 const birim = result[0];
                 res.send(birim);
             });
@@ -70,7 +73,10 @@ router.route("/birimler/:birim_kodu")
             `IlceKodu = ${yeni_birim["IlceKodu"]}, PostaKodu = ${yeni_birim["PostaKodu"]}, BirimMudurKullaniciAdi = "${yeni_birim["BirimMudurKullaniciAdi"]}" ` +
             ` WHERE BirimKodu = ${birim_kodu}`,
             function (err, result) {
-                if (err) console.log(err);
+                if (err) {
+                    console.log(err);
+                    res.send(err);
+                }
                 const birim = result[0];
                 res.send(birim);
             });
@@ -82,7 +88,10 @@ router.route("/birimler/:birim_kodu")
             function (err, result) {
                 const birim = result[0];
                 res.send(birim);
-                if (err) console.log(err);
+                if (err) {
+                    console.log(err);
+                    res.send(err);
+                }
             });
     });
 
@@ -95,7 +104,10 @@ router.route("/birimler")
         for (var i = 0; i < birim_kodlari.length; i++) {
             connection.query(`DELETE FROM Birimler WHERE BirimKodu = "${birim_kodlari[i]}"`,
                 function (err, result) {
-                    if (err) console.log(err);
+                    if (err) {
+                        console.log(err);
+                        res.send(err);
+                    }
                 });
         }
         res.send(ilce_kodlari);

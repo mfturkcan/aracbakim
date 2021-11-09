@@ -65,10 +65,6 @@ app.get("/isAuth", (req, res) => {
     }
 })
 
-app.get("/test", (req, res) => {
-    res.send("test");
-})
-
 app.use(user_routes);
 
 app.use(kullanicilar_routes);

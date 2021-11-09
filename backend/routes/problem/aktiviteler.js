@@ -29,6 +29,7 @@ router.post("/aktiviteler", async function (req, res) {
         function (err, result) {
             if (err) {
                 console.log(err);
+                res.send(err);
             } else {
                 console.log(result);
                 res.send(yeni_aktivite);
@@ -44,7 +45,7 @@ router.route("/aktiviteler/:aktivite_id")
         connection.query(`SELECT * FROM Aktiviteler WHERE AktiviteID = "${aktivite_id}"`,
             function (err, result) {
                 if (result.length > 0) {
-                    if (err) console.log(err);
+                    if (err) { console.log(err); res.send(err); }
                     const aktivite = result[0];
                     res.send(aktivite);
                 }
@@ -68,7 +69,7 @@ router.route("/aktiviteler/:aktivite_id")
             connection.query(`UPDATE Aktiviteler SET ${update_values[j].column} = "${update_values[j].value}" ` +
                 ` WHERE AktiviteID = "${aktivite_id}"`,
                 function (err, result) {
-                    if (err) console.log(err);
+                    if (err) { console.log(err); res.send(err); }
                 });
         }
 
@@ -82,7 +83,7 @@ router.route("/aktiviteler/:aktivite_id")
                 if (result.length > 0) {
                     const aktivite = result[0];
                     res.send(aktivite);
-                    if (err) console.log(err);
+                    if (err) { console.log(err); res.send(err); }
                 }
             });
     });
@@ -96,7 +97,7 @@ router.route("/aktiviteler")
         for (var i = 0; i < aktivite_ids.length; i++) {
             connection.query(`DELETE FROM Aktiviteler WHERE AktiviteID = "${aktivite_ids[i]}"`,
                 function (err, result) {
-                    if (err) console.log(err);
+                    if (err) { console.log(err); res.send(err); }
                 });
         }
         res.send(aktivite_ids);

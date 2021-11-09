@@ -1,11 +1,15 @@
 import { required } from "ra-core";
-import { Create, SimpleForm, TextInput, NumberInput } from "ra-ui-materialui";
+import { Create, SimpleForm, TextInput, NumberInput, ReferenceInput, SelectInput, ReferenceField } from "ra-ui-materialui";
+import { FunctionField } from "react-admin";
 
 const ProblemEkle = props => {
     return (
-        <Create id="ProblemID" {...props}>
+        <Create id="ProblemTipiID" {...props}>
             <SimpleForm>
                 <NumberInput source="ProblemTipiID" label="Problem Tipi ID" validate={required()} />
+                <ReferenceInput name="ProblemIDs" reference="problem" label="Varolan ProblemTipiIdler">
+                    <SelectInput optionText="ProblemTipiID" />
+                </ReferenceInput>
                 <TextInput source="ProblemTanimi" validate={required()} />
                 <TextInput source="ProblemiTanimlayiciAdi" validate={required()} />
                 <TextInput source="ProblemiTanimlayiciSoyadi" validate={required()} />

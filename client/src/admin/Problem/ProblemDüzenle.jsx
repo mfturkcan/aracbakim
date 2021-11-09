@@ -3,7 +3,7 @@ import { required } from "ra-core";
 
 const ProblemEkle = props => {
     return (
-        <Edit id="ProblemID" {...props}>
+        <Edit id="ProblemTipiID" {...props}>
             <SimpleForm>
                 <NumberInput source="ProblemTipiID" label="Problem Tipi ID" validate={required()} />
                 <TextInput source="ProblemTanimi" validate={required()} />

@@ -5,9 +5,9 @@ const ProblemBirimListe = props => {
     return (
         <List id="ProblemID" {...props} empty={<CustomEmptyPage Adi="Problem Birim" />}>
             <Datagrid rowClick="edit">
-                <NumberField source="ProblemID" />
-                <NumberField source="BirimID" />
-                <DateField source="EslesmeTarihi" />
+                <NumberField source="ProblemID" label="ProblemID" />
+                <NumberField source="BirimID" label="BirimID" />
+                <DateField source="EslesmeTarihi" label="EslesmeTarihi" />
             </Datagrid>
         </List>
     );

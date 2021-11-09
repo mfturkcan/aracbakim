@@ -55,7 +55,10 @@ router.route("/personel/:kullanici_adi")
 
         connection.query(`SELECT * FROM Personel WHERE KullaniciAdi = "${kullanici_adi}"`,
             function (err, result) {
-                if (err) console.log(err);
+                if (err) {
+                    console.log(err);
+                    res.send(err);
+                }
                 const personel = result[0];
                 res.send(personel);
             });
@@ -68,7 +71,10 @@ router.route("/personel/:kullanici_adi")
             `,PostaKodu = ${yeni_personel["PostaKodu"]}, UstKullaniciAdi = "${yeni_personel["UstKullaniciAdi"] ?? ""}", CalistigiBirimKodu = ${yeni_personel["CalistigiBirimKodu"] ?? 0} ` +
             ` WHERE KullaniciAdi = "${kullanici_adi}"`,
             function (err, result) {
-                if (err) console.log(err);
+                if (err) {
+                    console.log(err);
+                    res.send(err);
+                }
                 const ilce = result[0];
                 res.send(ilce);
             });
@@ -80,7 +86,10 @@ router.route("/personel/:kullanici_adi")
             function (err, result) {
                 const personel = result[0];
                 res.send(personel);
-                if (err) console.log(err);
+                if (err) {
+                    console.log(err);
+                    res.send(err);
+                }
             });
     });
 
@@ -93,7 +102,10 @@ router.route("/personel")
         for (var i = 0; i < kullanici_adlari.length; i++) {
             connection.query(`DELETE FROM Personel WHERE KullaniciAdi = "${kullanici_adlari[i]}"`,
                 function (err, result) {
-                    if (err) console.log(err);
+                    if (err) {
+                        console.log(err);
+                        res.send(err);
+                    }
                 });
         }
         res.send(kullanici_adlari);

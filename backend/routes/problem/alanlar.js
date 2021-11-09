@@ -28,6 +28,7 @@ router.post("/alanlar", async function (req, res) {
         function (err, result) {
             if (err) {
                 console.log(err);
+                res.send(err);
             } else {
                 console.log(result);
                 res.send(yeni_alan);
@@ -43,7 +44,10 @@ router.route("/alanlar/:alan_id")
         connection.query(`SELECT * FROM Alanlar WHERE AlanID = "${alan_id}"`,
             function (err, result) {
                 if (result.length > 0) {
-                    if (err) console.log(err);
+                    if (err) {
+                        console.log(err);
+                        res.send(err);
+                    }
                     const alan = result[0];
                     res.send(alan);
                 }
@@ -67,7 +71,10 @@ router.route("/alanlar/:alan_id")
             connection.query(`UPDATE Alan SET ${update_values[j].column} = "${update_values[j].value}" ` +
                 ` WHERE AlanID = "${alan_id}"`,
                 function (err, result) {
-                    if (err) console.log(err);
+                    if (err) {
+                        console.log(err);
+                        res.send(err);
+                    }
                 });
         }
 
@@ -81,7 +88,10 @@ router.route("/alanlar/:alan_id")
                 if (result.length > 0) {
                     const alan = result[0];
                     res.send(alan);
-                    if (err) console.log(err);
+                    if (err) {
+                        console.log(err);
+                        res.send(err);
+                    }
                 }
             });
     });
@@ -92,10 +102,13 @@ router.route("/alanlar")
         console.log("delete many");
         const alan_ids = JSON.parse(req.query.filter).ids;
 
-        for (var i = 0; i < il_kodlari.length; i++) {
+        for (var i = 0; i < alan_ids.length; i++) {
             connection.query(`DELETE FROM Alanlar WHERE AlanID = "${alan_ids[i]}"`,
                 function (err, result) {
-                    if (err) console.log(err);
+                    if (err) {
+                        console.log(err);
+                        res.send(err);
+                    };
                 });
         }
         res.send(alan_ids);

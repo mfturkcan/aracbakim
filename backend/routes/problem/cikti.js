@@ -28,6 +28,7 @@ router.post("/cikti", async function (req, res) {
         function (err, result) {
             if (err) {
                 console.log(err);
+                res.send(err);
             } else {
                 console.log(result);
                 res.send(yeni_cikti);
@@ -43,7 +44,10 @@ router.route("/cikti/:cikti_id")
         connection.query(`SELECT * FROM Cikti WHERE CiktiID = "${cikti_id}"`,
             function (err, result) {
                 if (result.length > 0) {
-                    if (err) console.log(err);
+                    if (err) {
+                        console.log(err);
+                        res.send(err);
+                    }
                     const cikti = result[0];
                     res.send(cikti);
                 }
@@ -67,7 +71,10 @@ router.route("/cikti/:cikti_id")
             connection.query(`UPDATE Cikti SET ${update_values[j].column} = "${update_values[j].value}" ` +
                 ` WHERE CiktiID = "${cikti_id}"`,
                 function (err, result) {
-                    if (err) console.log(err);
+                    if (err) {
+                        console.log(err);
+                        res.send(err);
+                    }
                 });
         }
 
@@ -81,7 +88,10 @@ router.route("/cikti/:cikti_id")
                 if (result.length > 0) {
                     const cikti = result[0];
                     res.send(cikti);
-                    if (err) console.log(err);
+                    if (err) {
+                        console.log(err);
+                        res.send(err);
+                    }
                 }
             });
     });
@@ -95,7 +105,10 @@ router.route("/cikti")
         for (var i = 0; i < il_kodlari.length; i++) {
             connection.query(`DELETE FROM Cikti WHERE CiktiID = "${cikti_ids[i]}"`,
                 function (err, result) {
-                    if (err) console.log(err);
+                    if (err) {
+                        console.log(err);
+                        res.send(err);
+                    }
                 });
         }
         res.send(cikti_ids);

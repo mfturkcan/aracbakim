@@ -28,6 +28,7 @@ router.post("/siniflar", async function (req, res) {
         function (err, result) {
             if (err) {
                 console.log(err);
+                res.send(err);
             } else {
                 console.log(result);
                 res.send(yeni_sinif);
@@ -43,7 +44,10 @@ router.route("/siniflar/:sinif_id")
         connection.query(`SELECT * FROM Siniflar WHERE SinifID = "${sinif_id}"`,
             function (err, result) {
                 if (result.length > 0) {
-                    if (err) console.log(err);
+                    if (err) {
+                        console.log(err);
+                        res.send(err);
+                    }
                     const sinif = result[0];
                     res.send(sinif);
                 }
@@ -67,7 +71,10 @@ router.route("/siniflar/:sinif_id")
             connection.query(`UPDATE Siniflar SET ${update_values[j].column} = "${update_values[j].value}" ` +
                 ` WHERE SinifID = "${sinif_id}"`,
                 function (err, result) {
-                    if (err) console.log(err);
+                    if (err) {
+                        console.log(err);
+                        res.send(err);
+                    }
                 });
         }
 
@@ -81,7 +88,10 @@ router.route("/siniflar/:sinif_id")
                 if (result.length > 0) {
                     const sinif = result[0];
                     res.send(sinif);
-                    if (err) console.log(err);
+                    if (err) {
+                        console.log(err);
+                        res.send(err);
+                    }
                 }
             });
     });
@@ -95,7 +105,10 @@ router.route("/siniflar")
         for (var i = 0; i < sinif_ids.length; i++) {
             connection.query(`DELETE FROM Siniflar WHERE SinifID = "${sinif_ids[i]}"`,
                 function (err, result) {
-                    if (err) console.log(err);
+                    if (err) {
+                        console.log(err);
+                        res.send(err);
+                    }
                 });
         }
         res.send(sinif_ids);

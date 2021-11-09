@@ -52,9 +52,6 @@ const Giris = props => {
                     <u style={{ color: "#f1c40f" }}>Hesap oluştur </u>
                 </Link>
             </p>
-            <button onClick={async (event) => {
-                await axiosInstance.get("/test");
-            }}>Test</button>
         </div>
     );
 }

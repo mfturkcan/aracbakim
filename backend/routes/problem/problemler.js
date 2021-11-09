@@ -2,7 +2,6 @@ const router = require("express").Router();
 const connection = require("../../config/database");
 
 router.get("/problem", function (req, res) {
-    console.log("iller get");
     connection.query(`SELECT * FROM Problem`,
         function (err, result) {
             if (err) {
@@ -28,6 +27,7 @@ router.post("/problem", async function (req, res) {
         function (err, result) {
             if (err) {
                 console.log(err);
+                res.send(err);
             } else {
                 console.log(result);
                 res.send(yeni_problem);
@@ -43,7 +43,10 @@ router.route("/problem/:problem_id")
         connection.query(`SELECT * FROM Problem WHERE ProblemTipiID = "${problem_id}"`,
             function (err, result) {
                 if (result.length > 0) {
-                    if (err) console.log(err);
+                    if (err) {
+                        console.log(err);
+                        res.send(err);
+                    }
                     const problem = result[0];
                     res.send(problem);
                 }
@@ -68,7 +71,10 @@ router.route("/problem/:problem_id")
                 ` WHERE ProblemTipiID = "${problem_id}"`,
                 function (err, result) {
                     if (result.length > 0) {
-                        if (err) console.log(err);
+                        if (err) {
+                            console.log(err);
+                            res.send(err);
+                        }
                     }
                 });
         }
@@ -82,7 +88,10 @@ router.route("/problem/:problem_id")
             function (err, result) {
                 const problem = result[0];
                 res.send(problem);
-                if (err) console.log(err);
+                if (err) {
+                    console.log(err);
+                    res.send(err);
+                }
             });
     });
 
@@ -95,7 +104,10 @@ router.route("/problem")
         for (var i = 0; i < problem_ids.length; i++) {
             connection.query(`DELETE FROM Problem WHERE ProblemTipiID = "${problem_ids[i]}"`,
                 function (err, result) {
-                    if (err) console.log(err);
+                    if (err) {
+                        console.log(err);
+                        res.send(err);
+                    }
                 });
         }
         res.send(problem_ids);

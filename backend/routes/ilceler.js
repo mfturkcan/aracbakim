@@ -49,7 +49,10 @@ router.route("/ilceler/:ilce_kodu")
         connection.query(`SELECT * FROM Ilceler WHERE IlceKodu = "${ilce_kodu}"`,
             function (err, result) {
                 if (result.length > 0) {
-                    if (err) console.log(err);
+                    if (err) {
+                        console.log(err);
+                        res.send(err);
+                    }
                     const ilce = result[0];
                     res.send(ilce);
                 }
@@ -63,7 +66,10 @@ router.route("/ilceler/:ilce_kodu")
             ` WHERE IlceKodu = "${ilce_kodu}"`,
             function (err, result) {
                 if (result.length > 0) {
-                    if (err) console.log(err);
+                    if (err) {
+                        console.log(err);
+                        res.send(err);
+                    }
                     const ilce = result[0];
                     res.send(ilce);
                 }
@@ -77,7 +83,10 @@ router.route("/ilceler/:ilce_kodu")
                 if (result.length > 0) {
                     const ilce = result[0];
                     res.send(ilce);
-                    if (err) console.log(err);
+                    if (err) {
+                        console.log(err);
+                        res.send(err);
+                    }
                 }
             });
     });
@@ -91,7 +100,10 @@ router.route("/ilceler")
         for (var i = 0; i < il_kodlari.length; i++) {
             connection.query(`DELETE FROM Ilceler WHERE IlceKodu = "${ilce_kodlari[i]}"`,
                 function (err, result) {
-                    if (err) console.log(err);
+                    if (err) {
+                        console.log(err);
+                        res.send(err);
+                    }
                 });
         }
         res.send(ilce_kodlari);

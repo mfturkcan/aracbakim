@@ -41,6 +41,7 @@ router.post("/iller", async function (req, res) {
         function (err, result) {
             if (err) {
                 console.log(err);
+                res.send(err);
             } else {
                 console.log(result);
                 res.send(yeni_il);
@@ -56,7 +57,10 @@ router.route("/iller/:il_kodu")
         connection.query(`SELECT * FROM Iller WHERE IlKodu = "${il_kodu}"`,
             function (err, result) {
                 if (result.length > 0) {
-                    if (err) console.log(err);
+                    if (err) {
+                        console.log(err);
+                        res.send(err);
+                    }
                     const il = result[0];
                     res.send(il);
                 }
@@ -80,7 +84,10 @@ router.route("/iller/:il_kodu")
             connection.query(`UPDATE Iller SET ${update_values[j].column} = "${update_values[j].value}" ` +
                 ` WHERE IlKodu = "${il_kodu}"`,
                 function (err, result) {
-                    if (err) console.log(err);
+                    if (err) {
+                        console.log(err);
+                        res.send(err);
+                    }
                 });
         }
 
@@ -94,7 +101,10 @@ router.route("/iller/:il_kodu")
                 if (result.length > 0) {
                     const il = result[0];
                     res.send(il);
-                    if (err) console.log(err);
+                    if (err) {
+                        console.log(err);
+                        res.send(err);
+                    }
                 }
             });
     });
@@ -108,7 +118,10 @@ router.route("/iller")
         for (var i = 0; i < il_kodlari.length; i++) {
             connection.query(`DELETE FROM Iller WHERE IlKodu = "${il_kodlari[i]}"`,
                 function (err, result) {
-                    if (err) console.log(err);
+                    if (err) {
+                        console.log(err);
+                        res.send(err);
+                    }
                 });
         }
         res.send(il_kodlari);

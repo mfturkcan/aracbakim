@@ -53,6 +53,7 @@ import { useAuth } from "../context/AuthContext";
 import { axiosInstance } from "../App";
 import { useHistory } from "react-router";
 import NotFound from './NotFound';
+import { useEffect } from 'react';
 
 const theme = {}
 const AdminPanel = props => {
@@ -60,13 +61,21 @@ const AdminPanel = props => {
     const [user, setUser] = useAuth();
     const history = useHistory();
 
+    useEffect(() => {
+        if (user.role == "") {
+            history.push("/");
+        }
+    });
+
     const authProvider = {
         // authentication
         login: params => Promise.resolve(),
         checkError: error => Promise.resolve(),
         checkAuth: params => Promise.resolve(),
         logout: async () => {
-            await axiosInstance.get("/logout");
+            if (user.role != "") {
+                await axiosInstance.get("/logout");
+            }
             history.push("/");
             Promise.resolve();
         },
@@ -88,6 +97,8 @@ const AdminPanel = props => {
             <Resource name="ciktidetay" options={{ label: "Çıktı Detay" }} list={CiktiDetayListe} create={CiktiDetayEkle} edit={CiktiDetayDuzenle} />
             <Resource name="mudahaledetay" options={{ label: "Müdahale Detay" }} list={MudahaleDetayListe} create={MudahaleDetayEkle} edit={MudahaleDetayDuzenle} />
             <Resource name="problembirim" options={{ label: "Problem Birim" }} list={ProblemBirimListe} create={ProblemBirimEkle} edit={ProblemBirimDuzenle} />
+            <Resource name="birimler" options={{ label: "Birimler" }} list={BirimlerListe} create={BirimlerEkle} edit={BirimlerDüzenle} />
+
         </Admin>
     };
 
@@ -112,7 +123,9 @@ const AdminPanel = props => {
 
 
     return (
-        user.role == "Yönetici" ? YoneticiPanel() : MudurPanel()
+        user.role != "" ? user.role == "Yönetici" ? YoneticiPanel() : MudurPanel() : <Admin dataProvider={DataProvider} loginPage={false} authProvider={authProvider}>
+            <Resource name="kullanicilar" options={{ label: "Kullanıcılar" }} list={KullaniciListe} />
+        </Admin>
     );
 }
 

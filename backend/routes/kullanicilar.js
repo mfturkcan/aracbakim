@@ -39,7 +39,7 @@ router.post("/kullanicilar", async function (req, res) {
         function (err, result) {
             if (err) {
                 console.log(err);
-                error = err;
+                res.send(err);
             }
             if (yeni_kullanici["BirimKodu"] != null) {
                 connection.query(`INSERT INTO Birimler (BirimKodu, BirimAdi, BulunduguAdres, IlKodu, IlceKodu, PostaKodu, BirimMudurKullaniciAdi)` +
@@ -48,13 +48,14 @@ router.post("/kullanicilar", async function (req, res) {
                     function (err, result) {
                         if (err) {
                             console.log(err);
-                            error = err;
+                            res.send(err);
                         }
                         if (yeni_kullanici["UstBirimKodu"] != 0) {
                             connection.query(`UPDATE Birimler SET UstBirimKodu = ${yeni_kullanici.UstBirimKodu} WHERE BirimKodu = ${yeni_kullanici.BirimKodu}`,
                                 function (err, result) {
                                     if (err) {
                                         console.log(err);
+                                        res.send(err);
                                     }
                                 });
                         }
@@ -64,13 +65,14 @@ router.post("/kullanicilar", async function (req, res) {
                             function (err, result) {
                                 if (err) {
                                     console.log(err);
-                                    error = err;
+                                    res.send(err);
                                 }
                                 if (yeni_kullanici["UstKullanici"] != null) {
                                     connection.query(`UPDATE Personel SET UstKullaniciAdi =  ${yeni_kullanici["UstKullaniciAdi"]} WHERE KullaniciAdi = "${yeni_kullanici["KullaniciAdi"]}"`,
                                         function (err, result) {
                                             if (err) {
                                                 console.log(err);
+                                                res.send(err);
                                             }
                                         });
                                 }
@@ -96,7 +98,10 @@ router.route("/kullanicilar/:kullanici_adi")
         connection.query(`SELECT * FROM Kullanicilar WHERE KullaniciAdi = "${kullanici_adi}"`,
             async function (err, result) {
                 if (result.length > 0) {
-                    if (err) console.log(err);
+                    if (err) {
+                        console.log(err);
+                        res.send(err);
+                    }
                     let kullanici = result[0];
                     let sifre = kullanici["Şifre"];
                     let cozumlu_sifre = await decryptPassword(sifre);
@@ -118,7 +123,10 @@ router.route("/kullanicilar/:kullanici_adi")
         connection.query(`UPDATE Kullanicilar SET KullaniciAdi = "${yeni_kullanici.KullaniciAdi}", Şifre = "${yeni_sifre}" ` +
             ` WHERE KullaniciAdi = "${kullanici_adi}"`,
             async function (err, result) {
-                if (err) console.log(err);
+                if (err) {
+                    console.log(err);
+                    res.send(err);
+                }
                 let kullanici = yeni_kullanici;
                 let sifre = kullanici["Şifre"];
                 let cozumlu_sifre = await decryptPassword(sifre);
@@ -135,7 +143,10 @@ router.route("/kullanicilar/:kullanici_adi")
                 if (result.length > 0) {
                     const kullanici = result[0];
                     res.send(kullanici);
-                    if (err) console.log(err);
+                    if (err) {
+                        console.log(err);
+                        res.send(err);
+                    }
                 }
             });
     });
@@ -149,7 +160,10 @@ router.route("/kullanicilar")
         for (var i = 0; i < kullanici_adlari.length; i++) {
             connection.query(`DELETE FROM Kullanicilar WHERE KullaniciAdi = "${kullanici_adlari[i]}"`,
                 function (err, result) {
-                    if (err) console.log(err);
+                    if (err) {
+                        console.log(err);
+                        res.send(err);
+                    }
                 });
         }
         res.send(kullanici_adlari);

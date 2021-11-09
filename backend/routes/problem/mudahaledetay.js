@@ -27,6 +27,7 @@ router.post("/mudahaledetay", async function (req, res) {
         function (err, result) {
             if (err) {
                 console.log(err);
+                res.send(err);
             } else {
                 console.log(result);
                 res.send(yeni_mudahale);
@@ -42,7 +43,10 @@ router.route("/mudahaledetay/:mudahale_id")
         connection.query(`SELECT * FROM mudahaledetay WHERE MudahaleID = "${mudahale_id}"`,
             function (err, result) {
                 if (result.length > 0) {
-                    if (err) console.log(err);
+                    if (err) {
+                        console.log(err);
+                        res.send(err);
+                    }
                     const mudahaledetay = result[0];
                     res.send(mudahaledetay);
                 }
@@ -66,7 +70,10 @@ router.route("/mudahaledetay/:mudahale_id")
             connection.query(`UPDATE MudahaleDetay SET ${update_values[j].column} = "${update_values[j].value}" ` +
                 ` WHERE MudahaleID = "${mudahale_id}"`,
                 function (err, result) {
-                    if (err) console.log(err);
+                    if (err) {
+                        console.log(err);
+                        res.send(err);
+                    }
                 });
         }
 
@@ -80,7 +87,10 @@ router.route("/mudahaledetay/:mudahale_id")
                 if (result.length > 0) {
                     const mudahaledetay = result[0];
                     res.send(mudahaledetay);
-                    if (err) console.log(err);
+                    if (err) {
+                        console.log(err);
+                        res.send(err);
+                    }
                 }
             });
     });
@@ -94,7 +104,10 @@ router.route("/mudahaledetay")
         for (var i = 0; i < il_kodlari.length; i++) {
             connection.query(`DELETE FROM MudahaleDetay WHERE MudahaleID = "${mudahale_ids[i]}"`,
                 function (err, result) {
-                    if (err) console.log(err);
+                    if (err) {
+                        console.log(err);
+                        res.send(err);
+                    }
                 });
         }
         res.send(mudahale_ids);

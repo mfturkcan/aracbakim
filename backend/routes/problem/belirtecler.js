@@ -29,6 +29,7 @@ router.post("/belirtecler", async function (req, res) {
         function (err, result) {
             if (err) {
                 console.log(err);
+                res.send(err);
             } else {
                 console.log(result);
                 res.send(yeni_belirtec);
@@ -44,7 +45,10 @@ router.route("/belirtecler/:belirtec_id")
         connection.query(`SELECT * FROM Belirtecler WHERE BelirtecID = "${belirtec_id}"`,
             function (err, result) {
                 if (result.length > 0) {
-                    if (err) console.log(err);
+                    if (err) {
+                        console.log(err);
+                        res.send(err);
+                    }
                     const il = result[0];
                     res.send(il);
                 }
@@ -68,7 +72,10 @@ router.route("/belirtecler/:belirtec_id")
             connection.query(`UPDATE Belirtecler SET ${update_values[j].column} = "${update_values[j].value}" ` +
                 ` WHERE BelirtecID = "${belirtec_id}"`,
                 function (err, result) {
-                    if (err) console.log(err);
+                    if (err) {
+                        console.log(err);
+                        res.send(err);
+                    }
                 });
         }
 
@@ -82,7 +89,10 @@ router.route("/belirtecler/:belirtec_id")
                 if (result.length > 0) {
                     const il = result[0];
                     res.send(il);
-                    if (err) console.log(err);
+                    if (err) {
+                        console.log(err);
+                        res.send(err);
+                    }
                 }
             });
     });
@@ -96,7 +106,10 @@ router.route("/belirtecler")
         for (var i = 0; i < il_kodlari.length; i++) {
             connection.query(`DELETE FROM Belirtecler WHERE BelirtecID = "${belirtec_ids[i]}"`,
                 function (err, result) {
-                    if (err) console.log(err);
+                    if (err) {
+                        console.log(err);
+                        res.send(err);
+                    }
                 });
         }
         res.send(belirtec_ids);
