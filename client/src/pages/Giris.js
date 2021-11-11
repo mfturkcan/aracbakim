@@ -22,7 +22,7 @@ const Giris = props => {
         // if (!is_longer) setErrorMessage("Şifre en az 8 harf olmalıdır.");
         // if (!includes_special) setErrorMessage("Şifre en az bir noktalama işareti bulundurmak zorundadır.");
         // if (!includes_uppercase) setErrorMessage("Şifre harf en az bir büyük harf içermelidir.");
-        // if (!username || !password) setErrorMessage("Lütfen formu doldurunuz.");
+        if (!username || !password) setErrorMessage("Lütfen formu doldurunuz.");
 
         if (errorMessage == "") {
             const { data } = await axiosInstance.post("/login", { username, password });

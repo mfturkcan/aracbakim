@@ -42,15 +42,15 @@ router.post("/kullanicilar", async function (req, res) {
                 res.send(err);
             }
             if (yeni_kullanici["BirimKodu"] != null) {
-                connection.query(`INSERT INTO Birimler (BirimKodu, BirimAdi, BulunduguAdres, IlKodu, IlceKodu, PostaKodu, BirimMudurKullaniciAdi)` +
+                connection.query(`INSERT INTO Birimler (BirimKodu, BirimAdi, BulunduguAdres, IlKodu, IlceKodu, PostaKodu)` +
                     ` VALUES (${yeni_kullanici["BirimKodu"]}, "${yeni_kullanici["BirimAdi"]}", "${yeni_kullanici["BulunduguAdres"]}", ${yeni_kullanici["IlKodu"]}` +
-                    `, ${yeni_kullanici["IlceKodu"]}, ${yeni_kullanici["PostaKodu"]}, "${yeni_kullanici["BirimMudurKullaniciAdi"]}" )`,
+                    `, ${yeni_kullanici["IlceKodu"]}, ${yeni_kullanici["PostaKodu"]} )`,
                     function (err, result) {
                         if (err) {
                             console.log(err);
                             res.send(err);
                         }
-                        if (yeni_kullanici["UstBirimKodu"] != 0) {
+                        if (yeni_kullanici["UstBirimKodu"] != 0 && yeni_kullanici["UstBirimKodu"] != undefined) {
                             connection.query(`UPDATE Birimler SET UstBirimKodu = ${yeni_kullanici.UstBirimKodu} WHERE BirimKodu = ${yeni_kullanici.BirimKodu}`,
                                 function (err, result) {
                                     if (err) {
@@ -67,7 +67,7 @@ router.post("/kullanicilar", async function (req, res) {
                                     console.log(err);
                                     res.send(err);
                                 }
-                                if (yeni_kullanici["UstKullanici"] != null) {
+                                if (yeni_kullanici["UstKullanici"] != null && yeni_kullanici["UstKullanici"] != undefined) {
                                     connection.query(`UPDATE Personel SET UstKullaniciAdi =  ${yeni_kullanici["UstKullaniciAdi"]} WHERE KullaniciAdi = "${yeni_kullanici["KullaniciAdi"]}"`,
                                         function (err, result) {
                                             if (err) {
@@ -76,6 +76,12 @@ router.post("/kullanicilar", async function (req, res) {
                                             }
                                         });
                                 }
+                                connection.query(`UPDATE Birimler SET BirimMudurKullaniciAdi = "${yeni_kullanici["BirimMudurKullaniciAdi"]}" WHERE BirimKodu = ${yeni_kullanici["BirimKodu"]}`, function (err, result) {
+                                    if (err) {
+                                        console.log(err);
+                                        res.send(err);
+                                    }
+                                });
                             }
                         );
                     }

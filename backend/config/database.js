@@ -45,7 +45,7 @@ connection.query("CREATE DATABASE IF NOT EXISTS db; USE db;", function (err, res
 
         const birim_query = "CREATE TABLE IF NOT EXISTS Birimler(BirimKodu int PRIMARY KEY NOT NULL, " +
             "BirimAdi VARCHAR(255) NOT NULL, UstBirimKodu int, BulunduguAdres VARCHAR(255) NOT NULL," +
-            " IlKodu int NOT NULL, IlceKodu int NOT NULL, PostaKodu int NOT NULL, BirimMudurKullaniciAdi VARCHAR(150) NOT NULL," +
+            " IlKodu int NOT NULL, IlceKodu int NOT NULL, PostaKodu int NOT NULL, BirimMudurKullaniciAdi VARCHAR(150)," +
             "FOREIGN KEY(IlKodu) REFERENCES Iller(IlKodu), FOREIGN KEY(IlceKodu) REFERENCES Ilceler(IlceKodu), FOREIGN KEY(BirimMudurKullaniciAdi) REFERENCES Personel(KullaniciAdi)," +
             " FOREIGN KEY(UstBirimKodu) REFERENCES Birimler(BirimKodu))";
 

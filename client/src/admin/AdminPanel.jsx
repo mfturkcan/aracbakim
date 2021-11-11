@@ -61,12 +61,6 @@ const AdminPanel = props => {
     const [user, setUser] = useAuth();
     const history = useHistory();
 
-    useEffect(() => {
-        if (user.role == "") {
-            history.push("/");
-        }
-    });
-
     const authProvider = {
         // authentication
         login: params => Promise.resolve(),
@@ -76,6 +70,10 @@ const AdminPanel = props => {
             if (user.role != "") {
                 await axiosInstance.get("/logout");
             }
+            setUser({
+                username: '',
+                role: '',
+            });
             history.push("/");
             Promise.resolve();
         },

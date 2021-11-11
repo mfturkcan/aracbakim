@@ -12,7 +12,7 @@ const KullaniciEkle = ({ translate, ...props }) => {
 
     return (
         <Create id="KullaniciAdi" {...props} >
-            <TabbedForm sanitizeEmptyValues={false}>
+            <TabbedForm sanitizeEmptyValues={true}>
                 <FormTab label="Kullanıcı">
                     <TextInput source="KullaniciAdi" validate={required()} />
                     <TextInput source="Şifre" validate={required()} />
