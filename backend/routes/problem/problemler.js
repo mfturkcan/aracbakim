@@ -69,14 +69,12 @@ router.route("/problem/:problem_id")
         }
 
         for (var j = 0; j < update_values.length; j++) {
-            connection.query(`UPDATE Problem SET ${update_values[j].column} = ${update_values[j].value} ` +
+            connection.query(`UPDATE Problem SET ${update_values[j].column} = "${update_values[j].value}" ` +
                 ` WHERE ProblemTipiID = "${problem_id}"`,
                 function (err, result) {
-                    if (result.length > 0) {
-                        if (err) {
-                            console.log(err);
-                            res.send(err);
-                        }
+                    if (err) {
+                        console.log(err);
+                        return res.send(err);
                     }
                 });
         }
@@ -107,7 +105,7 @@ router.route("/problem")
                 function (err, result) {
                     if (err) {
                         console.log(err);
-                        res.send(err);
+                        return res.send(err);
                     }
                 });
         }

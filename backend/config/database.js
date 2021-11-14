@@ -22,6 +22,8 @@ connection.query("CREATE DATABASE IF NOT EXISTS db; USE db;", function (err, res
             console.log("Connected successful");
         });
 
+        connection.query("SET foreign_key_checks = 0;");
+
 
         connection.query("CREATE TABLE IF NOT EXISTS Iller(IlKodu int PRIMARY KEY NOT NULL," +
             " IlAdi VARCHAR(100) NOT NULL)", function (err, result) {
