@@ -87,12 +87,10 @@ router.route("/iller/:il_kodu")
                     if (err) {
                         console.log(err);
                         res.send(err);
-                    } else {
-                        res.send(yeni_il);
                     }
                 });
         }
-
+        res.send(yeni_il);
 
     })
     .delete(function (req, res) {
@@ -125,12 +123,10 @@ router.route("/iller")
                     if (err) {
                         console.log(err);
                         res.send(err);
-                    } else {
-                        res.send(il_kodlari);
                     }
                 });
         }
-
+        res.send(il_kodlari);
     });
 
 

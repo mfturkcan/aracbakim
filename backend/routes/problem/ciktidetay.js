@@ -77,12 +77,10 @@ router.route("/ciktidetay/:cikti_id")
                     if (err) {
                         console.log(err);
                         res.send(err);
-                    } else {
-                        res.send(yeni_cikti);
                     }
                 });
         }
-
+        res.send(yeni_cikti);
 
     })
     .delete(function (req, res) {
@@ -115,12 +113,10 @@ router.route("/ciktidetay")
                     if (err) {
                         console.log(err);
                         res.send(err);
-                    } else {
-                        res.send(cikti_ids);
                     }
                 });
         }
-
+        res.send(cikti_ids);
     });
 
 

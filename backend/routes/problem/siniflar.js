@@ -76,12 +76,10 @@ router.route("/siniflar/:sinif_id")
                     if (err) {
                         console.log(err);
                         res.send(err);
-                    } else {
-                        res.send(yeni_sinif);
                     }
                 });
         }
-
+        res.send(yeni_sinif);
     })
     .delete(function (req, res) {
         const sinif_id = req.params.sinif_id;
@@ -112,12 +110,10 @@ router.route("/siniflar")
                     if (err) {
                         console.log(err);
                         res.send(err);
-                    } else {
-                        res.send(sinif_ids);
                     }
                 });
         }
-
+        res.send(sinif_ids);
     });
 
 

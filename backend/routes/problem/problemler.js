@@ -76,12 +76,11 @@ router.route("/problem/:problem_id")
                         if (err) {
                             console.log(err);
                             res.send(err);
-                        } else {
-                            res.send(yeni_problem);
                         }
                     }
                 });
         }
+        res.send(yeni_problem);
     })
     .delete(function (req, res) {
         const problem_id = req.params.problem_id;
@@ -109,11 +108,10 @@ router.route("/problem")
                     if (err) {
                         console.log(err);
                         res.send(err);
-                    } else {
-                        res.send(problem_ids);
                     }
                 });
         }
+        res.send(problem_ids);
     });
 
 

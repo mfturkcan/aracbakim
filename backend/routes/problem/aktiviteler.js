@@ -71,12 +71,10 @@ router.route("/aktiviteler/:aktivite_id")
             connection.query(`UPDATE Aktiviteler SET ${update_values[j].column} = "${update_values[j].value}" ` +
                 ` WHERE AktiviteID = "${aktivite_id}"`,
                 function (err, result) {
-                    if (err) { console.log(err); res.send(err); } else {
-                        res.send(yeni_aktivite);
-                    }
+                    if (err) { console.log(err); res.send(err); }
                 });
         }
-
+        res.send(yeni_aktivite);
 
     })
     .delete(function (req, res) {
@@ -103,11 +101,10 @@ router.route("/aktiviteler")
         for (var i = 0; i < aktivite_ids.length; i++) {
             connection.query(`DELETE FROM Aktiviteler WHERE AktiviteID = "${aktivite_ids[i]}"`,
                 function (err, result) {
-                    if (err) { console.log(err); res.send(err); } else {
-                        res.send(aktivite_ids);
-                    }
+                    if (err) { console.log(err); res.send(err); }
                 });
         }
+        res.send(aktivite_ids);
     });
 
 

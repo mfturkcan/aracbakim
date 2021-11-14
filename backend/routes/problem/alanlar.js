@@ -74,13 +74,11 @@ router.route("/alanlar/:alan_id")
                 function (err, result) {
                     if (err) {
                         console.log(err);
-                        res.send(err);
-                    } else {
-                        res.send(yeni_alan);
+                        return res.send(err);
                     }
                 });
         }
-
+        res.send(yeni_alan);
 
     })
     .delete(function (req, res) {
@@ -113,12 +111,10 @@ router.route("/alanlar")
                         console.log(err);
                         res.send(err);
                     }
-                    else {
-                        res.send(alan_ids);
-                    }
+
                 });
         }
-
+        res.send(alan_ids);
     });
 
 

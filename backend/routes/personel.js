@@ -111,12 +111,10 @@ router.route("/personel")
                     if (err) {
                         console.log(err);
                         res.send(err);
-                    } else {
-                        res.send(kullanici_adlari);
                     }
                 });
         }
-
+        res.send(kullanici_adlari);
     });
 
 

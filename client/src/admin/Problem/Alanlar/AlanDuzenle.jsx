@@ -5,7 +5,7 @@ import { FunctionField } from 'react-admin';
 const AlanlarDuzenle = props => {
     return (
         <Edit id="AlanID" {...props}>
-            <SimpleForm rowClick="edit">
+            <SimpleForm >
                 <NumberInput source="AlanID" validate={required()} label="AlanID" />
                 <TextInput source="AlanAdi" validate={required()} />
                 <FunctionField label="Alan Tipi" render={(record) => {

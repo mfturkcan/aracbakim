@@ -75,12 +75,10 @@ router.route("/mudahale/:mudahale_id")
                     if (err) {
                         console.log(err);
                         res.send(err);
-                    } else {
-                        res.send(yeni_mudahale);
                     }
                 });
         }
-
+        res.send(yeni_mudahale);
     })
     .delete(function (req, res) {
         const mudahale_id = req.params.mudahale_id;
@@ -111,11 +109,10 @@ router.route("/mudahale")
                     if (err) {
                         console.log(err);
                         res.send(err);
-                    } else {
-                        res.send(mudahale_ids);
                     }
                 });
         }
+        res.send(mudahale_ids);
     });
 
 

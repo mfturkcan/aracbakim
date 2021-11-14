@@ -76,12 +76,10 @@ router.route("/belirtecler/:belirtec_id")
                     if (err) {
                         console.log(err);
                         res.send(err);
-                    } else {
-                        res.send(yeni_belirtec);
                     }
                 });
         }
-
+        res.send(yeni_belirtec);
 
     })
     .delete(function (req, res) {
@@ -112,11 +110,10 @@ router.route("/belirtecler")
                     if (err) {
                         console.log(err);
                         res.send(err);
-                    } else {
-                        res.send(belirtec_ids);
                     }
                 });
         }
+        res.send(belirtec_ids);
     });
 
 

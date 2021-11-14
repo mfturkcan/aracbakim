@@ -77,11 +77,10 @@ router.route("/problembirim/:problem_id")
                     if (err) {
                         console.log(err);
                         res.send(err);
-                    } else {
-                        res.send(yeni_problem_birim);
                     }
                 });
         }
+        res.send(yeni_problem_birim);
     })
     .delete(function (req, res) {
         const problem_id = req.params.problem_id;
@@ -113,12 +112,10 @@ router.route("/problembirim")
                     if (err) {
                         console.log(err);
                         res.send(err);
-                    } else {
-                        res.send(problem_ids);
                     }
                 });
         }
-
+        res.send(problem_ids);
     });
 
 

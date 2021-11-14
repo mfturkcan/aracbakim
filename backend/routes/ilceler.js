@@ -108,11 +108,10 @@ router.route("/ilceler")
                     if (err) {
                         console.log(err);
                         res.send(err);
-                    } else {
-                        res.send(ilce_kodlari);
                     }
                 });
         }
+        res.send(ilce_kodlari);
     });
 
 

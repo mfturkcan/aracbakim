@@ -173,12 +173,10 @@ router.route("/kullanicilar")
                     if (err) {
                         console.log(err);
                         res.send(err);
-                    } else {
-                        res.send(kullanici_adlari);
                     }
                 });
         }
-
+        res.send(kullanici_adlari);
     });
 
 module.exports = router;
