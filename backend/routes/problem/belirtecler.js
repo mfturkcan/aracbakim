@@ -48,9 +48,10 @@ router.route("/belirtecler/:belirtec_id")
                     if (err) {
                         console.log(err);
                         res.send(err);
+                    } else {
+                        const il = result[0];
+                        res.send(il);
                     }
-                    const il = result[0];
-                    res.send(il);
                 }
             });
     })
@@ -75,11 +76,13 @@ router.route("/belirtecler/:belirtec_id")
                     if (err) {
                         console.log(err);
                         res.send(err);
+                    } else {
+                        res.send(yeni_belirtec);
                     }
                 });
         }
 
-        res.send(yeni_belirtec);
+
     })
     .delete(function (req, res) {
         const belirtec_id = req.params.belirtec_id;
@@ -109,10 +112,11 @@ router.route("/belirtecler")
                     if (err) {
                         console.log(err);
                         res.send(err);
+                    } else {
+                        res.send(belirtec_ids);
                     }
                 });
         }
-        res.send(belirtec_ids);
     });
 
 

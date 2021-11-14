@@ -48,8 +48,10 @@ router.route("/siniflar/:sinif_id")
                         console.log(err);
                         res.send(err);
                     }
-                    const sinif = result[0];
-                    res.send(sinif);
+                    else {
+                        const sinif = result[0];
+                        res.send(sinif);
+                    }
                 }
             });
     })
@@ -74,11 +76,12 @@ router.route("/siniflar/:sinif_id")
                     if (err) {
                         console.log(err);
                         res.send(err);
+                    } else {
+                        res.send(yeni_sinif);
                     }
                 });
         }
 
-        res.send(yeni_sinif);
     })
     .delete(function (req, res) {
         const sinif_id = req.params.sinif_id;
@@ -86,11 +89,12 @@ router.route("/siniflar/:sinif_id")
         connection.query(`DELETE FROM Siniflar WHERE SinifID = "${sinif_id}"`,
             function (err, result) {
                 if (result.length > 0) {
-                    const sinif = result[0];
-                    res.send(sinif);
                     if (err) {
                         console.log(err);
                         res.send(err);
+                    } else {
+                        const sinif = result[0];
+                        res.send(sinif);
                     }
                 }
             });
@@ -108,10 +112,12 @@ router.route("/siniflar")
                     if (err) {
                         console.log(err);
                         res.send(err);
+                    } else {
+                        res.send(sinif_ids);
                     }
                 });
         }
-        res.send(sinif_ids);
+
     });
 
 

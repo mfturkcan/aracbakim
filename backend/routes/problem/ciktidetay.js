@@ -49,8 +49,10 @@ router.route("/ciktidetay/:cikti_id")
                         console.log(err);
                         res.send(err);
                     }
-                    const il = result[0];
-                    res.send(il);
+                    else {
+                        const il = result[0];
+                        res.send(il);
+                    }
                 }
             });
     })
@@ -75,11 +77,13 @@ router.route("/ciktidetay/:cikti_id")
                     if (err) {
                         console.log(err);
                         res.send(err);
+                    } else {
+                        res.send(yeni_cikti);
                     }
                 });
         }
 
-        res.send(yeni_cikti);
+
     })
     .delete(function (req, res) {
         const cikti_id = req.params.cikti_id;
@@ -87,11 +91,13 @@ router.route("/ciktidetay/:cikti_id")
         connection.query(`DELETE FROM CiktiDetay WHERE CiktiID = "${cikti_id}"`,
             function (err, result) {
                 if (result.length > 0) {
-                    const il = result[0];
-                    res.send(il);
+
                     if (err) {
                         console.log(err);
                         res.send(err);
+                    } else {
+                        const il = result[0];
+                        res.send(il);
                     }
                 }
             });
@@ -109,10 +115,12 @@ router.route("/ciktidetay")
                     if (err) {
                         console.log(err);
                         res.send(err);
+                    } else {
+                        res.send(cikti_ids);
                     }
                 });
         }
-        res.send(cikti_ids);
+
     });
 
 

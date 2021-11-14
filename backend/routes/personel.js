@@ -59,8 +59,10 @@ router.route("/personel/:kullanici_adi")
                     console.log(err);
                     res.send(err);
                 }
-                const personel = result[0];
-                res.send(personel);
+                else {
+                    const personel = result[0];
+                    res.send(personel);
+                }
             });
     })
     .put(function (req, res) {
@@ -75,8 +77,10 @@ router.route("/personel/:kullanici_adi")
                     console.log(err);
                     res.send(err);
                 }
-                const ilce = result[0];
-                res.send(ilce);
+                else {
+                    const ilce = result[0];
+                    res.send(ilce);
+                }
             });
     })
     .delete(function (req, res) {
@@ -84,11 +88,13 @@ router.route("/personel/:kullanici_adi")
 
         connection.query(`DELETE FROM Personel WHERE KullaniciAdi = "${kullanici_adi}"`,
             function (err, result) {
-                const personel = result[0];
-                res.send(personel);
+
                 if (err) {
                     console.log(err);
                     res.send(err);
+                } else {
+                    const personel = result[0];
+                    res.send(personel);
                 }
             });
     });
@@ -105,10 +111,12 @@ router.route("/personel")
                     if (err) {
                         console.log(err);
                         res.send(err);
+                    } else {
+                        res.send(kullanici_adlari);
                     }
                 });
         }
-        res.send(kullanici_adlari);
+
     });
 
 

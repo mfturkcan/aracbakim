@@ -53,8 +53,10 @@ router.route("/ilceler/:ilce_kodu")
                         console.log(err);
                         res.send(err);
                     }
-                    const ilce = result[0];
-                    res.send(ilce);
+                    else {
+                        const ilce = result[0];
+                        res.send(ilce);
+                    }
                 }
             });
     })
@@ -70,8 +72,10 @@ router.route("/ilceler/:ilce_kodu")
                         console.log(err);
                         res.send(err);
                     }
-                    const ilce = result[0];
-                    res.send(ilce);
+                    else {
+                        const ilce = result[0];
+                        res.send(ilce);
+                    }
                 }
             });
     })
@@ -81,11 +85,12 @@ router.route("/ilceler/:ilce_kodu")
         connection.query(`DELETE FROM Iller WHERE IlKodu = "${ilce_kodu}"`,
             function (err, result) {
                 if (result.length > 0) {
-                    const ilce = result[0];
-                    res.send(ilce);
                     if (err) {
                         console.log(err);
                         res.send(err);
+                    } else {
+                        const ilce = result[0];
+                        res.send(ilce);
                     }
                 }
             });
@@ -103,10 +108,11 @@ router.route("/ilceler")
                     if (err) {
                         console.log(err);
                         res.send(err);
+                    } else {
+                        res.send(ilce_kodlari);
                     }
                 });
         }
-        res.send(ilce_kodlari);
     });
 
 

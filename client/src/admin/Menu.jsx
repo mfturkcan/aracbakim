@@ -19,6 +19,7 @@ import MiscellaneousServicesIcon from '@mui/icons-material/MiscellaneousServices
 import CleaningServicesIcon from '@mui/icons-material/CleaningServices';
 import LocationCityIcon from '@mui/icons-material/LocationCity';
 import RoomIcon from '@mui/icons-material/Room';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
 export const MyMenu = (props) => {
 
@@ -26,6 +27,7 @@ export const MyMenu = (props) => {
     let [mudahaleOpen, setMudahaleOpen] = useState(false);
     let [alanOpen, setAlanOpen] = useState(false);
     let [ilOpen, setIlOpen] = useState(false);
+    let [ciktiOpen, setCiktiOpen] = useState(false);
     const [user, setUser] = useAuth();
 
     const yoneticiList = [
@@ -110,7 +112,25 @@ export const MyMenu = (props) => {
                     leftIcon: <LocationCityIcon />
                 },
             ],
-        }
+        },
+        {
+            listIcon: <ExitToAppIcon />,
+            listName: "Çıktı- ÇıktıDetay",
+            state: ciktiOpen,
+            stateMethod: setCiktiOpen,
+            menuItems: [
+                {
+                    link: "/cikti",
+                    primaryText: "Çıktı",
+                    leftIcon: <ExitToAppIcon />
+                },
+                {
+                    link: "/ciktidetay",
+                    primaryText: "ÇıktıDetay",
+                    leftIcon: <ExitToAppIcon />
+                },
+            ],
+        },
     ]
 
     const mudurList = [
@@ -175,6 +195,24 @@ export const MyMenu = (props) => {
                     link: "/belirtecler",
                     primaryText: "Belirteç",
                     leftIcon: <CallToActionIcon />
+                },
+            ],
+        },
+        {
+            listIcon: <ExitToAppIcon />,
+            listName: "Çıktı- ÇıktıDetay",
+            state: ciktiOpen,
+            stateMethod: setCiktiOpen,
+            menuItems: [
+                {
+                    link: "/cikti",
+                    primaryText: "Çıktı",
+                    leftIcon: <ExitToAppIcon />
+                },
+                {
+                    link: "/ciktidetay",
+                    primaryText: "ÇıktıDetay",
+                    leftIcon: <ExitToAppIcon />
                 },
             ],
         },

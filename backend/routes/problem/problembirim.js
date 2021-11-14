@@ -49,8 +49,10 @@ router.route("/problembirim/:problem_id")
                         console.log(err);
                         res.send(err);
                     }
-                    const il = result[0];
-                    res.send(il);
+                    else {
+                        const il = result[0];
+                        res.send(il);
+                    }
                 }
             });
     })
@@ -75,11 +77,11 @@ router.route("/problembirim/:problem_id")
                     if (err) {
                         console.log(err);
                         res.send(err);
+                    } else {
+                        res.send(yeni_problem_birim);
                     }
                 });
         }
-
-        res.send(yeni_problem_birim);
     })
     .delete(function (req, res) {
         const problem_id = req.params.problem_id;
@@ -87,11 +89,13 @@ router.route("/problembirim/:problem_id")
         connection.query(`DELETE FROM ProblemBirim WHERE ProblemID = "${problem_id}"`,
             function (err, result) {
                 if (result.length > 0) {
-                    const il = result[0];
-                    res.send(il);
+
                     if (err) {
                         console.log(err);
                         res.send(err);
+                    } else {
+                        const il = result[0];
+                        res.send(il);
                     }
                 }
             });
@@ -109,10 +113,12 @@ router.route("/problembirim")
                     if (err) {
                         console.log(err);
                         res.send(err);
+                    } else {
+                        res.send(problem_ids);
                     }
                 });
         }
-        res.send(problem_ids);
+
     });
 
 

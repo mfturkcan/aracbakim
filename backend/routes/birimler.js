@@ -61,8 +61,10 @@ router.route("/birimler/:birim_kodu")
                     console.log(err);
                     res.send(err);
                 }
-                const birim = result[0];
-                res.send(birim);
+                else {
+                    const birim = result[0];
+                    res.send(birim);
+                }
             });
     })
     .put(function (req, res) {
@@ -77,8 +79,10 @@ router.route("/birimler/:birim_kodu")
                     console.log(err);
                     res.send(err);
                 }
-                const birim = result[0];
-                res.send(birim);
+                else {
+                    const birim = result[0];
+                    res.send(birim);
+                }
             });
     })
     .delete(function (req, res) {
@@ -86,11 +90,12 @@ router.route("/birimler/:birim_kodu")
 
         connection.query(`DELETE FROM Birimler WHERE BirimKodu = "${birim_kodu}"`,
             function (err, result) {
-                const birim = result[0];
-                res.send(birim);
                 if (err) {
                     console.log(err);
                     res.send(err);
+                } else {
+                    const birim = result[0];
+                    res.send(birim);
                 }
             });
     });
@@ -107,10 +112,12 @@ router.route("/birimler")
                     if (err) {
                         console.log(err);
                         res.send(err);
+                    } else {
+                        res.send(ilce_kodlari);
                     }
                 });
         }
-        res.send(ilce_kodlari);
+
     });
 
 

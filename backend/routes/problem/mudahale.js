@@ -47,8 +47,10 @@ router.route("/mudahale/:mudahale_id")
                         console.log(err);
                         res.send(err);
                     }
-                    const mudahale = result[0];
-                    res.send(mudahale);
+                    else {
+                        const mudahale = result[0];
+                        res.send(mudahale);
+                    }
                 }
             });
     })
@@ -73,11 +75,12 @@ router.route("/mudahale/:mudahale_id")
                     if (err) {
                         console.log(err);
                         res.send(err);
+                    } else {
+                        res.send(yeni_mudahale);
                     }
                 });
         }
 
-        res.send(yeni_mudahale);
     })
     .delete(function (req, res) {
         const mudahale_id = req.params.mudahale_id;
@@ -85,11 +88,12 @@ router.route("/mudahale/:mudahale_id")
         connection.query(`DELETE FROM Mudahale WHERE MudahaleID = "${mudahale_id}"`,
             function (err, result) {
                 if (result.length > 0) {
-                    const mudahale = result[0];
-                    res.send(mudahale);
                     if (err) {
                         console.log(err);
                         res.send(err);
+                    } else {
+                        const mudahale = result[0];
+                        res.send(mudahale);
                     }
                 }
             });
@@ -107,10 +111,11 @@ router.route("/mudahale")
                     if (err) {
                         console.log(err);
                         res.send(err);
+                    } else {
+                        res.send(mudahale_ids);
                     }
                 });
         }
-        res.send(mudahale_ids);
     });
 
 

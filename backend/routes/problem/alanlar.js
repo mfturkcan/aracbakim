@@ -47,9 +47,10 @@ router.route("/alanlar/:alan_id")
                     if (err) {
                         console.log(err);
                         res.send(err);
+                    } else {
+                        const alan = result[0];
+                        res.send(alan);
                     }
-                    const alan = result[0];
-                    res.send(alan);
                 }
             });
     })
@@ -68,17 +69,19 @@ router.route("/alanlar/:alan_id")
         }
 
         for (var j = 0; j < update_values.length; j++) {
-            connection.query(`UPDATE Alan SET ${update_values[j].column} = "${update_values[j].value}" ` +
+            connection.query(`UPDATE Alanlar SET ${update_values[j].column} = "${update_values[j].value}" ` +
                 ` WHERE AlanID = "${alan_id}"`,
                 function (err, result) {
                     if (err) {
                         console.log(err);
                         res.send(err);
+                    } else {
+                        res.send(yeni_alan);
                     }
                 });
         }
 
-        res.send(yeni_alan);
+
     })
     .delete(function (req, res) {
         const alan_id = req.params.alan_id;
@@ -86,11 +89,12 @@ router.route("/alanlar/:alan_id")
         connection.query(`DELETE FROM Alanlar WHERE AlanID = "${alan_id}"`,
             function (err, result) {
                 if (result.length > 0) {
-                    const alan = result[0];
-                    res.send(alan);
                     if (err) {
                         console.log(err);
                         res.send(err);
+                    } else {
+                        const alan = result[0];
+                        res.send(alan);
                     }
                 }
             });
@@ -108,10 +112,13 @@ router.route("/alanlar")
                     if (err) {
                         console.log(err);
                         res.send(err);
-                    };
+                    }
+                    else {
+                        res.send(alan_ids);
+                    }
                 });
         }
-        res.send(alan_ids);
+
     });
 
 

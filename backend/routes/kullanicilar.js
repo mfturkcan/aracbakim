@@ -107,15 +107,17 @@ router.route("/kullanicilar/:kullanici_adi")
                     if (err) {
                         console.log(err);
                         res.send(err);
-                    }
-                    let kullanici = result[0];
-                    let sifre = kullanici["Şifre"];
-                    let cozumlu_sifre = await decryptPassword(sifre);
-                    console.log("şifre" + cozumlu_sifre)
+                    } else {
+                        let kullanici = result[0];
+                        let sifre = kullanici["Şifre"];
+                        let cozumlu_sifre = await decryptPassword(sifre);
+                        console.log("şifre" + cozumlu_sifre)
 
-                    kullanici = { "Şifre": sifre, "Encrypted Şifre": cozumlu_sifre, ...kullanici }
-                    console.log(kullanici);
-                    res.json(kullanici);
+                        kullanici = { "Şifre": sifre, "Encrypted Şifre": cozumlu_sifre, ...kullanici }
+                        console.log(kullanici);
+                        res.json(kullanici);
+                    }
+
                 }
             });
     })
@@ -133,12 +135,14 @@ router.route("/kullanicilar/:kullanici_adi")
                     console.log(err);
                     res.send(err);
                 }
-                let kullanici = yeni_kullanici;
-                let sifre = kullanici["Şifre"];
-                let cozumlu_sifre = await decryptPassword(sifre);
+                else {
+                    let kullanici = yeni_kullanici;
+                    let sifre = kullanici["Şifre"];
+                    let cozumlu_sifre = await decryptPassword(sifre);
 
-                kullanici = { "Şifre": cozumlu_sifre, "Encrypted Şifre": sifre, ...kullanici }
-                res.send(kullanici);
+                    kullanici = { "Şifre": cozumlu_sifre, "Encrypted Şifre": sifre, ...kullanici }
+                    res.send(kullanici);
+                }
             });
     })
     .delete(function (req, res) {
@@ -169,10 +173,12 @@ router.route("/kullanicilar")
                     if (err) {
                         console.log(err);
                         res.send(err);
+                    } else {
+                        res.send(kullanici_adlari);
                     }
                 });
         }
-        res.send(kullanici_adlari);
+
     });
 
 module.exports = router;
