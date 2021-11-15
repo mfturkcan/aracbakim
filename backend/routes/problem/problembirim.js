@@ -59,8 +59,9 @@ router.route("/problembirim/:problem_id")
     .put(function (req, res) {
         const yeni_problem_birim = req.body;
         const problem_id = req.params.problem_id;
+        console.log(yeni_problem_birim)
 
-        const columns = ["ProblemID", "BirimID", "EşleşmeTarihi"];
+        const columns = ["ProblemID", "BirimID", "EslesmeTarihi"];
         let update_values = [];
 
         for (var i = 0; i < columns.length; i++) {

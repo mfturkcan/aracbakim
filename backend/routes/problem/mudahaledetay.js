@@ -36,11 +36,11 @@ router.post("/mudahaledetay", async function (req, res) {
     );
 });
 
-router.route("/mudahaledetay/:mudahale_id")
+router.route("/mudahaledetay/:aktivite_id")
     .get(function (req, res) {
-        const mudahale_id = req.params.mudahale_id;
+        const aktivite_id = req.params.aktivite_id;
 
-        connection.query(`SELECT * FROM mudahaledetay WHERE MudahaleID = "${mudahale_id}"`,
+        connection.query(`SELECT * FROM mudahaledetay WHERE AktiviteID = "${aktivite_id}"`,
             function (err, result) {
                 if (result.length > 0) {
                     if (err) {
@@ -56,7 +56,7 @@ router.route("/mudahaledetay/:mudahale_id")
     })
     .put(function (req, res) {
         const yeni_mudahale = req.body;
-        const mudahale_id = req.params.mudahale_id;
+        const aktivite_id = req.params.aktivite_id;
 
         const columns = ["AlanID", "SinifID", "MudahaleID", "AktiviteID", "Sira"];
         let update_values = [];
@@ -70,7 +70,7 @@ router.route("/mudahaledetay/:mudahale_id")
 
         for (var j = 0; j < update_values.length; j++) {
             connection.query(`UPDATE MudahaleDetay SET ${update_values[j].column} = "${update_values[j].value}" ` +
-                ` WHERE MudahaleID = "${mudahale_id}"`,
+                ` WHERE AktiviteID = "${aktivite_id}"`,
                 function (err, result) {
                     if (err) {
                         console.log(err);
@@ -81,9 +81,9 @@ router.route("/mudahaledetay/:mudahale_id")
         res.send(yeni_mudahale);
     })
     .delete(function (req, res) {
-        const mudahale_id = req.params.mudahale_id;
+        const aktivite_id = req.params.aktivite_id;
 
-        connection.query(`DELETE FROM MudahaleDetay WHERE MudahaleID = "${mudahale_id}"`,
+        connection.query(`DELETE FROM MudahaleDetay WHERE AktiviteID = "${aktivite_id}"`,
             function (err, result) {
                 if (result.length > 0) {
                     if (err) {
@@ -101,10 +101,10 @@ router.route("/mudahaledetay/:mudahale_id")
 router.route("/mudahaledetay")
     .delete(function (req, res) {
         console.log("delete many");
-        const mudahale_ids = JSON.parse(req.query.filter).ids;
+        const aktivite_ids = JSON.parse(req.query.filter).ids;
 
-        for (var i = 0; i < mudahale_ids.length; i++) {
-            connection.query(`DELETE FROM MudahaleDetay WHERE MudahaleID = "${mudahale_ids[i]}"`,
+        for (var i = 0; i < aktivite_ids.length; i++) {
+            connection.query(`DELETE FROM MudahaleDetay WHERE AktiviteID = "${aktivite_ids[i]}"`,
                 function (err, result) {
                     if (err) {
                         console.log(err);

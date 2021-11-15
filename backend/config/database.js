@@ -107,9 +107,9 @@ connection.query("CREATE DATABASE IF NOT EXISTS db; USE db;", function (err, res
 
             });
 
-        connection.query("CREATE TABLE IF NOT EXISTS MudahaleDetay (MudahaleID int NOT NULL, AktiviteID int NOT NULL, AlanID int NOT NULL,SinifID int NOT NULL," +
+        connection.query("CREATE TABLE IF NOT EXISTS MudahaleDetay (MudahaleID int NOT NULL, AktiviteID int PRIMARY KEY NOT NULL, AlanID int NOT NULL,SinifID int NOT NULL," +
             " Sira int NOT NULL, FOREIGN KEY(AlanID) REFERENCES Alanlar(AlanID), FOREIGN KEY(SinifID) REFERENCES Siniflar(SinifID) ," +
-            " FOREIGN KEY(AktiviteID) REFERENCES Aktiviteler(AktiviteID), FOREIGN KEY(MudahaleID) REFERENCES Mudahale(MudahaleID) )",
+            " FOREIGN KEY(AktiviteID) REFERENCES Aktiviteler(AktiviteID), FOREIGN KEY(MudahaleID) REFERENCES Mudahale(MudahaleID))",
             function (err, result) {
                 if (err) console.log(err);
 

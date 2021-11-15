@@ -41,7 +41,7 @@ function getMany(json, resource) {
                 return { id: field["CiktiID"], ...field }
                 break;
             case "mudahaledetay":
-                return { id: field["MudahaleID"], ...field }
+                return { id: field["AktiviteID"], ...field }
                 break;
             case "problembirim":
                 return { id: field["ProblemID"], ...field }
@@ -92,7 +92,7 @@ function getOne(json, resource) {
             return { data: { ...json, id: json["CiktiID"] }, }
             break;
         case "mudahaledetay":
-            return { data: { ...json, id: json["MudahaleID"] }, }
+            return { data: { ...json, id: json["AktiviteID"] }, }
             break;
         case "problembirim":
             return { data: { ...json, id: json["ProblemID"] }, }
