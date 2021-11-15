@@ -69,7 +69,8 @@ router.route("/alanlar/:alan_id")
         }
 
         for (var j = 0; j < update_values.length; j++) {
-            connection.query(`UPDATE Alanlar SET ${update_values[j].column} = "${update_values[j].value}" ` +
+            let value = update_values[j].column == "AlanTipi" ? (update_values[j].value) : `"${update_values[j].value}"`;
+            connection.query(`UPDATE Alanlar SET ${update_values[j].column} = ${value} ` +
                 ` WHERE AlanID = "${alan_id}"`,
                 function (err, result) {
                     if (err) {

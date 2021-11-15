@@ -70,7 +70,9 @@ router.route("/siniflar/:sinif_id")
         }
 
         for (var j = 0; j < update_values.length; j++) {
-            connection.query(`UPDATE Siniflar SET ${update_values[j].column} = "${update_values[j].value}" ` +
+            let value = update_values[j].column == "AlanTipi" ? (update_values[j].value) : `"${update_values[j].value}"`;
+
+            connection.query(`UPDATE Siniflar SET ${update_values[j].column} = ${value} ` +
                 ` WHERE SinifID = "${sinif_id}"`,
                 function (err, result) {
                     if (err) {

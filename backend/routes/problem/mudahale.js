@@ -57,8 +57,8 @@ router.route("/mudahale/:mudahale_id")
     .put(function (req, res) {
         const yeni_mudahale = req.body;
         const mudahale_id = req.params.mudahale_id;
-
-        const columns = ["AlanID", "SinifID", "MudaheleID", "MudahaleAdi"];
+        console.log(yeni_mudahale)
+        const columns = ["AlanID", "SinifID", "MudahaleID", "MudahaleAdi"];
         let update_values = [];
 
         for (var i = 0; i < columns.length; i++) {
