@@ -70,8 +70,9 @@ router.route("/birimler/:birim_kodu")
     .put(function (req, res) {
         const yeni_birim = req.body;
         const birim_kodu = req.params.birim_kodu;
+        console.log(yeni_birim["UstBirimKodu"])
 
-        connection.query(`UPDATE Birimler SET BirimKodu = ${yeni_birim["BirimKodu"]}, BirimAdi = "${yeni_birim["BirimAdi"]}", UstBirimKodu = ${yeni_birim["UstBirimKodu"] ?? 0}, BulunduguAdres = "${yeni_birim["BulunduguAdres"]}", IlKodu = ${yeni_birim["IlKodu"]} ` +
+        connection.query(`UPDATE Birimler SET BirimKodu = ${yeni_birim["BirimKodu"]}, BirimAdi = "${yeni_birim["BirimAdi"]}",UstBirimKodu = "${yeni_birim["UstBirimKodu"] ?? 0}", BulunduguAdres = "${yeni_birim["BulunduguAdres"]}", IlKodu = ${yeni_birim["IlKodu"]}, ` +
             `IlceKodu = ${yeni_birim["IlceKodu"]}, PostaKodu = ${yeni_birim["PostaKodu"]}, BirimMudurKullaniciAdi = "${yeni_birim["BirimMudurKullaniciAdi"]}" ` +
             ` WHERE BirimKodu = ${birim_kodu}`,
             function (err, result) {

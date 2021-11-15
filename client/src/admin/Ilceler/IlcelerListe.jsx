@@ -2,7 +2,7 @@ import { List, Datagrid, TextField, ReferenceField, SelectField } from "ra-ui-ma
 
 const IlcelerListe = props => {
     return (
-        <List id="IlceKodu" {...props}>
+        <List {...props}>
             <Datagrid rowClick="edit">
                 <TextField source="IlceKodu" />
                 <TextField source="IlceAdi" />

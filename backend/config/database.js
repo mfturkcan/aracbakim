@@ -32,7 +32,7 @@ connection.query("CREATE DATABASE IF NOT EXISTS db; USE db;", function (err, res
             });
 
         connection.query("CREATE TABLE IF NOT EXISTS Ilceler(IlceKodu int PRIMARY KEY NOT NULL," +
-            " IlceAdi VARCHAR(100) NOT NULL, IlKodu int NOT NULL, FOREIGN KEY (IlKodu) REFERENCES Iller(IlKodu))",
+            " IlceAdi VARCHAR(100) NOT NULL, IlKodu int  NOT NULL, FOREIGN KEY (IlKodu) REFERENCES Iller(IlKodu))",
             function (err, result) {
                 if (err) console.log(err);
 

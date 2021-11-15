@@ -20,7 +20,6 @@ router.get("/ilceler", function (req, res) {
                 res.set('X-Total-Count', 10);
                 res.send(result);
             }
-
         });
 });
 
@@ -45,18 +44,17 @@ router.post("/ilceler", async function (req, res) {
 router.route("/ilceler/:ilce_kodu")
     .get(function (req, res) {
         const ilce_kodu = req.params.ilce_kodu;
+        console.log(ilce_kodu)
 
-        connection.query(`SELECT * FROM Ilceler WHERE IlceKodu = "${ilce_kodu}"`,
+        connection.query(`SELECT * FROM Ilceler WHERE IlceKodu = "${ilce_kodu}" `,
             function (err, result) {
-                if (result.length > 0) {
-                    if (err) {
-                        console.log(err);
-                        res.send(err);
-                    }
-                    else {
-                        const ilce = result[0];
-                        res.send(ilce);
-                    }
+                if (err) {
+                    console.log(err);
+                    res.send(err);
+                }
+                else {
+                    const ilce = result[0];
+                    res.send(ilce);
                 }
             });
     })
@@ -64,7 +62,7 @@ router.route("/ilceler/:ilce_kodu")
         const yeni_ilce = req.body;
         const ilce_kodu = req.params.ilce_kodu;
 
-        connection.query(`UPDATE Ilceler SET IlceKodu = "${yeni_ilce.IlceKodu}", IlceAdi = "${yeni_ilce.IlceAdi}" ` +
+        connection.query(`UPDATE Ilceler SET IlceKodu = "${yeni_ilce.IlceKodu}", IlKodu = "${yeni_ilce.IlKodu}", IlceAdi = "${yeni_ilce.IlceAdi}" ` +
             ` WHERE IlceKodu = "${ilce_kodu}"`,
             function (err, result) {
                 if (result.length > 0) {
@@ -82,7 +80,7 @@ router.route("/ilceler/:ilce_kodu")
     .delete(function (req, res) {
         const ilce_kodu = req.params.ilce_kodu;
 
-        connection.query(`DELETE FROM Iller WHERE IlKodu = "${ilce_kodu}"`,
+        connection.query(`DELETE FROM Iller WHERE IlceKodu = "${ilce_kodu}"`,
             function (err, result) {
                 if (result.length > 0) {
                     if (err) {
@@ -100,10 +98,10 @@ router.route("/ilceler/:ilce_kodu")
 router.route("/ilceler")
     .delete(function (req, res) {
         console.log("delete many");
-        const ilce_kodlari = JSON.parse(req.query.filter).ids;
+        const ilcekodlari = JSON.parse(req.query.filter).ids;
 
-        for (var i = 0; i < il_kodlari.length; i++) {
-            connection.query(`DELETE FROM Ilceler WHERE IlceKodu = "${ilce_kodlari[i]}"`,
+        for (var i = 0; i < ilcekodlari.length; i++) {
+            connection.query(`DELETE FROM Ilceler WHERE IlceKodu = "${ilcekodlari[i]}"`,
                 function (err, result) {
                     if (err) {
                         console.log(err);
@@ -111,7 +109,7 @@ router.route("/ilceler")
                     }
                 });
         }
-        res.send(ilce_kodlari);
+        res.send(ilcekodlari);
     });
 
 

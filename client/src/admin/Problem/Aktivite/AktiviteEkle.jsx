@@ -4,7 +4,7 @@ const AktiviteEkle = props => {
     return (
         <Create id="AktiviteID" {...props}>
             <SimpleForm>
-                <NumberInput source="AktiviteID" />
+                <NumberInput source="AktiviteID" label="AktiviteID" />
                 <TextInput source="AktiviteTanimi" />
             </SimpleForm>
         </Create>

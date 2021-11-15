@@ -8,9 +8,7 @@ const BirimlerListe = props => {
                 <TextField source="BirimKodu" />
                 <TextField source="BirimAdi" />
 
-                <ReferenceField source="UstBirimKodu" reference="birimler" label="Üst Birim Adı">
-                    <TextField source="BirimAdi" />
-                </ReferenceField>
+                <TextField source="UstBirimKodu" />
                 <TextField source="BulunduguAdres" />
 
                 <TextField source="IlKodu" />

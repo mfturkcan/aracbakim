@@ -125,17 +125,18 @@ router.route("/kullanicilar/:kullanici_adi")
         const yeni_kullanici = req.body;
         console.log(yeni_kullanici);
         const kullanici_adi = req.params.kullanici_adi;
-
+        const isNewPass = yeni_kullanici["YeniŞifre"] != undefined;
         const yeni_sifre = await encryptPassword(yeni_kullanici["YeniŞifre"]);
 
-        connection.query(`UPDATE Kullanicilar SET KullaniciAdi = "${yeni_kullanici.KullaniciAdi}", Şifre = "${yeni_sifre}" ` +
+        connection.query(`UPDATE Kullanicilar SET KullaniciAdi = "${yeni_kullanici.KullaniciAdi}"` +
             ` WHERE KullaniciAdi = "${kullanici_adi}"`,
             async function (err, result) {
                 if (err) {
                     console.log(err);
-                    res.send(err);
+                    return res.send(err);
                 }
                 else {
+                    if (isNewPass) connection.query(`UPDATE Kullanicilar SET Şifre = "${yeni_sifre}" WHERE KullaniciAdi = "${kullanici_adi}"`);
                     let kullanici = yeni_kullanici;
                     let sifre = kullanici["Şifre"];
                     let cozumlu_sifre = await decryptPassword(sifre);

@@ -14,7 +14,10 @@ const BirimlerDüzenle = props => {
                         ({ formData, ...rest }) => {
                             return <div>
                                 <ReferenceInput source="UstBirimKodu" reference="birimler" label="Üst Birim Adı" allowEmpty={true}>
-                                    <SelectInput optionText="BirimAdi" />
+                                    <SelectInput optionText="BirimAdi" choices={(src) => {
+                                        console.log(src);
+                                        return src;
+                                    }} />
                                 </ReferenceInput>
 
                                 {formData.id == formData.UstBirimKodu &&

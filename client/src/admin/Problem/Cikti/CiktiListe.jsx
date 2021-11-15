@@ -4,9 +4,9 @@ const CiktiListe = props => {
     return (
         <List id="CiktiID" {...props}>
             <Datagrid rowClick="edit">
-                <NumberField source="AlanID" />
-                <NumberField source="SinifID" />
-                <NumberField source="CiktiID" />
+                <NumberField source="AlanID" label="AlanID" />
+                <NumberField source="SinifID" label="SinifID" />
+                <NumberField source="CiktiID" label="CiktiID" />
                 <TextField source="CiktiAdi" />
             </Datagrid>
         </List>

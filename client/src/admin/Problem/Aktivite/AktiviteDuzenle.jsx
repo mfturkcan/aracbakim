@@ -4,7 +4,7 @@ const AktiviteDuzenle = props => {
     return (
         <Edit id="AktiviteID" {...props}>
             <SimpleForm>
-                <NumberInput source="AktiviteID" />
+                <NumberInput source="AktiviteID" label="AktiviteID" />
                 <TextInput source="AktiviteTanimi" />
             </SimpleForm>
         </Edit>
