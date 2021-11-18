@@ -151,13 +151,12 @@ router.route("/kullanicilar/:kullanici_adi")
 
         connection.query(`DELETE FROM Kullanicilar WHERE KullaniciAdi = "${kullanici_adi}"`,
             function (err, result) {
-                if (result.length > 0) {
+                if (err) {
+                    console.log(err);
+                    res.send(err);
+                }else{
                     const kullanici = result[0];
                     res.send(kullanici);
-                    if (err) {
-                        console.log(err);
-                        res.send(err);
-                    }
                 }
             });
     });

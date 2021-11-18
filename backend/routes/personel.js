@@ -88,7 +88,6 @@ router.route("/personel/:kullanici_adi")
 
         connection.query(`DELETE FROM Personel WHERE KullaniciAdi = "${kullanici_adi}"`,
             function (err, result) {
-
                 if (err) {
                     console.log(err);
                     res.send(err);

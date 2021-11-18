@@ -82,12 +82,10 @@ router.route("/aktiviteler/:aktivite_id")
 
         connection.query(`DELETE FROM Aktiviteler WHERE AktiviteID = "${aktivite_id}"`,
             function (err, result) {
-                if (result.length > 0) {
-                    if (err) { console.log(err); res.send(err); }
-                    else {
-                        const aktivite = result[0];
-                        res.send(aktivite);
-                    }
+                if (err) { console.log(err); res.send(err); }
+                else {
+                    const aktivite = result[0];
+                    res.send(aktivite);
                 }
             });
     });

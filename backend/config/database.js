@@ -112,7 +112,6 @@ connection.query("CREATE DATABASE IF NOT EXISTS db; USE db;", function (err, res
             " FOREIGN KEY(AktiviteID) REFERENCES Aktiviteler(AktiviteID), FOREIGN KEY(MudahaleID) REFERENCES Mudahale(MudahaleID))",
             function (err, result) {
                 if (err) console.log(err);
-
             });
 
         connection.query("CREATE TABLE IF NOT EXISTS Cikti (CiktiID int PRIMARY KEY NOT NULL, AlanID int NOT NULL,SinifID int NOT NULL," +
@@ -137,10 +136,36 @@ connection.query("CREATE DATABASE IF NOT EXISTS db; USE db;", function (err, res
             });
 
         connection.query("CREATE TABLE IF NOT EXISTS ProblemBirim (ProblemID int NOT NULL, BirimID int NOT NULL," +
-            " EslesmeTarihi VARCHAR(255) NOT NULL , FOREIGN KEY(ProblemID) REFERENCES Problem(ProblemTipiID) , FOREIGN KEY(BirimID) REFERENCES Birimler(BirimKodu))",
+            " EslesmeTarihi DATETIME NOT NULL , FOREIGN KEY(ProblemID) REFERENCES Problem(ProblemTipiID) , FOREIGN KEY(BirimID) REFERENCES Birimler(BirimKodu))",
             function (err, result) {
                 if (err) console.log(err);
+            });
+        connection.query("CREATE TABLE IF NOT EXISTS ProblemMudahale (MudahaleID int PRIMARY KEY NOT NULL, AlanID int NOT NULL, ProblemID int NOT NULL, SinifID int NOT NULL,"
+            +" FOREIGN KEY(MudahaleID) REFERENCES Mudahale(MudahaleID), FOREIGN KEY(AlanID) REFERENCES Alanlar(AlanID),FOREIGN KEY(ProblemID) REFERENCES Problem(ProblemTipiID), FOREIGN KEY(SinifID) REFERENCES Siniflar(SinifID))",
+            function(err, result){
+                if(err) console.log(err);
+            });
 
+        connection.query("CREATE TABLE IF NOT EXISTS ProblemCikti (CiktiID int PRIMARY KEY NOT NULL, AlanID int NOT NULL, ProblemID int NOT NULL, SinifID int NOT NULL,"
+            +" FOREIGN KEY(CiktiID) REFERENCES Cikti(CiktiID), FOREIGN KEY(AlanID) REFERENCES Alanlar(AlanID),FOREIGN KEY(ProblemID) REFERENCES Problem(ProblemTipiID), FOREIGN KEY(SinifID) REFERENCES Siniflar(SinifID))",
+            function(err, result){
+                if(err) console.log(err);
+            });
+
+        // FK - EkleyenKullaniciAdi, EklenmeTarihi DATETIME
+        connection.query("CREATE TABLE IF NOT EXISTS IlaveMudahaleDetay (MudahaleID int NOT NULL, AktiviteID int PRIMARY KEY NOT NULL, AlanID int NOT NULL, SinifID int NOT NULL, ProblemID int NOT NULL,"+
+            " Sira int NOT NULL, EkleyenKullaniciAdi VARCHAR(150) NOT NULL, EklenmeTarihi DATETIME NOT NULL, FOREIGN KEY(AlanID) REFERENCES Alanlar(AlanID), FOREIGN KEY(SinifID) REFERENCES Siniflar(SinifID) ," +
+            " FOREIGN KEY(AktiviteID) REFERENCES Aktiviteler(AktiviteID), FOREIGN KEY(MudahaleID) REFERENCES Mudahale(MudahaleID), FOREIGN KEY(ProblemID) REFERENCES Problem(ProblemTipiID))",
+            function (err, result) {
+                if (err) console.log(err);
+            });
+
+        // FK - EkleyenKullaniciAdi, EklenmeTarihi DATETIME
+        connection.query("CREATE TABLE IF NOT EXISTS IlaveCiktiDetay (MudahaleID int NOT NULL, BelirtecID int PRIMARY KEY NOT NULL, AlanID int NOT NULL,SinifID int NOT NULL, ProblemID int NOT NULL," +
+            " Sira int NOT NULL, EkleyenKullaniciAdi VARCHAR(150) NOT NULL, EklenmeTarihi DATETIME NOT NULL, FOREIGN KEY(AlanID) REFERENCES Alanlar(AlanID), FOREIGN KEY(SinifID) REFERENCES Siniflar(SinifID) ," +
+            " FOREIGN KEY(BelirtecID) REFERENCES Belirtecler(BelirtecID), FOREIGN KEY(MudahaleID) REFERENCES Mudahale(MudahaleID), FOREIGN KEY(ProblemID) REFERENCES Problem(ProblemTipiID))",
+            function (err, result) {
+                if (err) console.log(err);
             });
     }
 });

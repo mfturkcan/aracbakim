@@ -88,14 +88,12 @@ router.route("/siniflar/:sinif_id")
 
         connection.query(`DELETE FROM Siniflar WHERE SinifID = "${sinif_id}"`,
             function (err, result) {
-                if (result.length > 0) {
-                    if (err) {
-                        console.log(err);
-                        res.send(err);
-                    } else {
-                        const sinif = result[0];
-                        res.send(sinif);
-                    }
+                if (err) {
+                    console.log(err);
+                    res.send(err);
+                } else {
+                    const sinif = result[0];
+                    res.send(sinif);
                 }
             });
     });

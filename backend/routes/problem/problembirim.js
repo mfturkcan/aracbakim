@@ -88,15 +88,12 @@ router.route("/problembirim/:problem_id")
 
         connection.query(`DELETE FROM ProblemBirim WHERE ProblemID = "${problem_id}"`,
             function (err, result) {
-                if (result.length > 0) {
-
-                    if (err) {
-                        console.log(err);
-                        res.send(err);
-                    } else {
-                        const il = result[0];
-                        res.send(il);
-                    }
+                if (err) {
+                    console.log(err);
+                    res.send(err);
+                } else {
+                    const il = result[0];
+                    res.send(il);
                 }
             });
     });

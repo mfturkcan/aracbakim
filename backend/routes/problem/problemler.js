@@ -85,11 +85,12 @@ router.route("/problem/:problem_id")
 
         connection.query(`DELETE FROM Problem WHERE ProblemTipiID = "${problem_id}"`,
             function (err, result) {
-                const problem = result[0];
-                res.send(problem);
                 if (err) {
                     console.log(err);
                     res.send(err);
+                }else{
+                    const problem = result[0];
+                    res.send(problem);
                 }
             });
     });

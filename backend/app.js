@@ -16,13 +16,14 @@ const list_routes = [
     require("./routes/problem/problemler"),
     require("./routes/problem/aktiviteler"),
     require("./routes/problem/alanlar"),
-    require("./routes/problem/cikti"),
-    require("./routes/problem/ciktidetay"),
+    require("./routes/cikti/cikti"),
+    require("./routes/cikti/ciktidetay"),
     require("./routes/problem/mudahale"),
     require("./routes/problem/mudahaledetay"),
     require("./routes/problem/problembirim"),
     require("./routes/problem/siniflar"),
     require("./routes/problem/belirtecler"),
+    require("./routes/problem/problemmudahale")
 ]
 
 

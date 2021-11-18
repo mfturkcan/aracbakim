@@ -82,14 +82,12 @@ router.route("/ilceler/:ilce_kodu")
 
         connection.query(`DELETE FROM Iller WHERE IlceKodu = "${ilce_kodu}"`,
             function (err, result) {
-                if (result.length > 0) {
-                    if (err) {
-                        console.log(err);
-                        res.send(err);
-                    } else {
-                        const ilce = result[0];
-                        res.send(ilce);
-                    }
+                if (err) {
+                    console.log(err);
+                    res.send(err);
+                } else {
+                    const ilce = result[0];
+                    res.send(ilce);
                 }
             });
     });

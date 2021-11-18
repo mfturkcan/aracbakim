@@ -85,14 +85,12 @@ router.route("/mudahaledetay/:aktivite_id")
 
         connection.query(`DELETE FROM MudahaleDetay WHERE AktiviteID = "${aktivite_id}"`,
             function (err, result) {
-                if (result.length > 0) {
-                    if (err) {
-                        console.log(err);
-                        res.send(err);
-                    } else {
-                        const mudahaledetay = result[0];
-                        res.send(mudahaledetay);
-                    }
+                if (err) {
+                    console.log(err);
+                    res.send(err);
+                } else {
+                    const mudahaledetay = result[0];
+                    res.send(mudahaledetay);
                 }
             });
     });

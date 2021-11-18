@@ -87,14 +87,12 @@ router.route("/alanlar/:alan_id")
 
         connection.query(`DELETE FROM Alanlar WHERE AlanID = "${alan_id}"`,
             function (err, result) {
-                if (result.length > 0) {
-                    if (err) {
-                        console.log(err);
-                        res.send(err);
-                    } else {
-                        const alan = result[0];
-                        res.send(alan);
-                    }
+                if (err) {
+                    console.log(err);
+                    res.send(err);
+                } else {
+                    const alan = result[0];
+                    res.send(alan);
                 }
             });
     });

@@ -98,15 +98,12 @@ router.route("/iller/:il_kodu")
 
         connection.query(`DELETE FROM Iller WHERE IlKodu = "${il_kodu}"`,
             function (err, result) {
-                if (result.length > 0) {
-
-                    if (err) {
-                        console.log(err);
-                        res.send(err);
-                    } else {
-                        const il = result[0];
-                        res.send(il);
-                    }
+                if (err) {
+                    console.log(err);
+                    res.send(err);
+                } else {
+                    const il = result[0];
+                    res.send(il);
                 }
             });
     });

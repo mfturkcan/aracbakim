@@ -54,6 +54,7 @@ import { axiosInstance } from "../App";
 import { useHistory } from "react-router";
 import NotFound from './NotFound';
 import { useEffect } from 'react';
+import {ProblemMudahaleEkle, ProblemMudahaleDuzenle, ProblemMudahaleListe} from "./Problem/ProblemMudahale/ProblemMudahale";
 
 const theme = {}
 const AdminPanel = props => {
@@ -92,11 +93,9 @@ const AdminPanel = props => {
             <Resource name="siniflar" options={{ label: "Sınıflar" }} list={SinifListe} create={SinifEkle} edit={SinifDuzenle} />
             <Resource name="belirtecler" options={{ label: "Belirteçler" }} list={BelirtecListe} create={BelirtecEkle} edit={BelirtecDuzenle} />
             <Resource name="cikti" options={{ label: "Çıktılar" }} list={CiktiListe} create={CiktiEkle} edit={CiktiDuzenle} />
-            <Resource name="ciktidetay" options={{ label: "Çıktı Detay" }} list={CiktiDetayListe} create={CiktiDetayEkle} edit={CiktiDetayDuzenle} />
-            <Resource name="mudahaledetay" options={{ label: "Müdahale Detay" }} list={MudahaleDetayListe} create={MudahaleDetayEkle} edit={MudahaleDetayDuzenle} />
             <Resource name="problembirim" options={{ label: "Problem Birim" }} list={ProblemBirimListe} create={ProblemBirimEkle} edit={ProblemBirimDuzenle} />
             <Resource name="birimler" options={{ label: "Birimler" }} list={BirimlerListe} create={BirimlerEkle} edit={BirimlerDuzenle} />
-
+            <Resource name="problemmudahale" options={{ label: "Problem Mudahale" }} list={ProblemMudahaleListe} create={ProblemMudahaleEkle} edit={ProblemMudahaleDuzenle} />
         </Admin>
     };
 

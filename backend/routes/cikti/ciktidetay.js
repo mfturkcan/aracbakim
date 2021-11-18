@@ -1,9 +1,10 @@
 const router = require("express").Router();
 const connection = require("../../config/database");
 
-router.get("/cikti", function (req, res) {
-    console.log("cikti get");
-    connection.query(`SELECT * FROM Cikti`,
+
+router.get("/ciktidetay", function (req, res) {
+    console.log("ciktidetay get");
+    connection.query(`SELECT * FROM CiktiDetay`,
         function (err, result) {
             if (err) {
                 console.log(err);
@@ -19,12 +20,12 @@ router.get("/cikti", function (req, res) {
         });
 });
 
-router.post("/cikti", async function (req, res) {
+router.post("/ciktidetay", async function (req, res) {
     const yeni_cikti = req.body;
     let keys = Object.keys(yeni_cikti);
     let values = Object.values(yeni_cikti);
 
-    connection.query(`INSERT INTO Cikti (${keys.map(key => key)}) VALUES(${values.map(value => { if (typeof (value) == "string") return `"${value}"`; return value; })})`,
+    connection.query(`INSERT INTO CiktiDetay (${keys.map(key => key)}) VALUES(${values.map(value => { if (typeof (value) == "string") return `"${value}"`; return value; })})`,
         function (err, result) {
             if (err) {
                 console.log(err);
@@ -37,19 +38,20 @@ router.post("/cikti", async function (req, res) {
     );
 });
 
-router.route("/cikti/:cikti_id")
+router.route("/ciktidetay/:cikti_id")
     .get(function (req, res) {
         const cikti_id = req.params.cikti_id;
 
-        connection.query(`SELECT * FROM Cikti WHERE CiktiID = "${cikti_id}"`,
+        connection.query(`SELECT * FROM CiktiDetay WHERE CiktiID = "${cikti_id}"`,
             function (err, result) {
                 if (result.length > 0) {
                     if (err) {
                         console.log(err);
                         res.send(err);
-                    } else {
-                        const cikti = result[0];
-                        res.send(cikti);
+                    }
+                    else {
+                        const il = result[0];
+                        res.send(il);
                     }
                 }
             });
@@ -58,7 +60,7 @@ router.route("/cikti/:cikti_id")
         const yeni_cikti = req.body;
         const cikti_id = req.params.cikti_id;
 
-        const columns = ["AlanID", "SinifID", "CiktiID", "CiktiAdi"];
+        const columns = ["AlanID", "SinifID", "CiktiID", "BelirtecID", "Sira"];
         let update_values = [];
 
         for (var i = 0; i < columns.length; i++) {
@@ -69,7 +71,7 @@ router.route("/cikti/:cikti_id")
         }
 
         for (var j = 0; j < update_values.length; j++) {
-            connection.query(`UPDATE Cikti SET ${update_values[j].column} = "${update_values[j].value}" ` +
+            connection.query(`UPDATE CiktiDetay SET ${update_values[j].column} = "${update_values[j].value}" ` +
                 ` WHERE CiktiID = "${cikti_id}"`,
                 function (err, result) {
                     if (err) {
@@ -78,34 +80,32 @@ router.route("/cikti/:cikti_id")
                     }
                 });
         }
-
         res.send(yeni_cikti);
+
     })
     .delete(function (req, res) {
         const cikti_id = req.params.cikti_id;
 
-        connection.query(`DELETE FROM Cikti WHERE CiktiID = "${cikti_id}"`,
+        connection.query(`DELETE FROM CiktiDetay WHERE CiktiID = "${cikti_id}"`,
             function (err, result) {
-                if (result.length > 0) {
-                    if (err) {
-                        console.log(err);
-                        res.send(err);
-                    } else {
-                        const cikti = result[0];
-                        res.send(cikti);
-                    }
+                if (err) {
+                    console.log(err);
+                    res.send(err);
+                } else {
+                    const il = result[0];
+                    res.send(il);
                 }
             });
     });
 
 
-router.route("/cikti")
+router.route("/ciktidetay")
     .delete(function (req, res) {
         console.log("delete many");
         const cikti_ids = JSON.parse(req.query.filter).ids;
 
         for (var i = 0; i < cikti_ids.length; i++) {
-            connection.query(`DELETE FROM Cikti WHERE CiktiID = "${cikti_ids[i]}"`,
+            connection.query(`DELETE FROM CiktiDetay WHERE CiktiID = "${cikti_ids[i]}"`,
                 function (err, result) {
                     if (err) {
                         console.log(err);
