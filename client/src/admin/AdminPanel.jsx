@@ -56,6 +56,8 @@ import NotFound from './NotFound';
 import { useEffect } from 'react';
 import {ProblemMudahaleEkle, ProblemMudahaleDuzenle, ProblemMudahaleListe} from "./Problem/ProblemMudahale/ProblemMudahale";
 import {ProblemCiktiDuzenle, ProblemCiktiListe, ProblemCiktiEkle} from "./Problem/ProblemCikti/ProblemCikti";
+import {IlaveMudahaleDetayDuzenle, IlaveMudahaleDetayListe, IlaveMudahaleDetayEkle} from "./Problem/IlaveMudahaleDetay/IlaveMudahaleDetay";
+import {IlaveCiktiDetayEkle, IlaveCiktiDetayListe, IlaveCiktiDetayDuzenle} from "./Problem/IlaveCiktiDetay/IlaveCiktiDetay";
 
 const theme = {}
 const AdminPanel = props => {
@@ -98,6 +100,9 @@ const AdminPanel = props => {
             <Resource name="birimler" options={{ label: "Birimler" }} list={BirimlerListe} create={BirimlerEkle} edit={BirimlerDuzenle} />
             <Resource name="problemmudahale" options={{ label: "Problem Mudahale" }} list={ProblemMudahaleListe} create={ProblemMudahaleEkle} edit={ProblemMudahaleDuzenle} />
             <Resource name="problemcikti" options={{ label: "Problem Çıktı" }} list={ProblemCiktiListe} create={ProblemCiktiEkle} edit={ProblemCiktiDuzenle} />
+            <Resource name="ilavemudahaledetay" options={{ label: "İlave Mudahale Detay" }} list={IlaveMudahaleDetayListe} create={IlaveMudahaleDetayEkle} edit={IlaveMudahaleDetayDuzenle} />
+            <Resource name="kullanicilar" options={{ label: "Kullanıcılar" }} show={KullaniciShow} list={KullaniciListe} edit={KullaniciDuzenle} create={KullaniciEkle} />
+            <Resource name="ilaveciktidetay" options={{ label: "İlave Çıktı Detay" }} list={IlaveCiktiDetayListe} create={IlaveCiktiDetayEkle} edit={IlaveCiktiDetayDuzenle} />
 
         </Admin>
     };

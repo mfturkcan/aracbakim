@@ -20,6 +20,7 @@ export default function useMenuIcons(){
     let [alanOpen, setAlanOpen] = useState(false);
     let [ilOpen, setIlOpen] = useState(false);
     let [ciktiOpen, setCiktiOpen] = useState(false);
+    let [detayOpen, setDetayOpen] = useState(false);
 
     const yoneticiList = [
         {
@@ -200,6 +201,7 @@ export default function useMenuIcons(){
                     primaryText: "Çıktı",
                     leftIcon: <ExitToAppIcon />
                 },
+
                 {
                     link: "/problemcikti",
                     primaryText: "Problem Çıktı",
@@ -207,6 +209,24 @@ export default function useMenuIcons(){
                 },
             ],
         },
+         {
+             listIcon: <ExitToAppIcon />,
+             listName: "İlave Detay",
+             state: detayOpen,
+             stateMethod: setDetayOpen,
+             menuItems: [
+                 {
+                     link: "/ilavemudahaledetay",
+                     primaryText: "İlave Mudahale Detay",
+                     leftIcon: <ExitToAppIcon />
+                 },
+                 {
+                     link: "/ilaveciktidetay",
+                     primaryText: "İlave Çıktı Detay",
+                     leftIcon: <ExitToAppIcon />
+                 },
+             ],
+         },
     ]
 
     return {yoneticiList, mudurList};

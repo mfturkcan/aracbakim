@@ -18,13 +18,15 @@ const list_routes = [
     require("./routes/problem/alanlar"),
     require("./routes/cikti/cikti"),
     require("./routes/cikti/ciktidetay"),
-    require("./routes/problem/mudahale"),
-    require("./routes/problem/mudahaledetay"),
+    require("./routes/mudahale/mudahale"),
+    require("./routes/mudahale/mudahaledetay"),
     require("./routes/problem/problembirim"),
     require("./routes/problem/siniflar"),
     require("./routes/problem/belirtecler"),
-    require("./routes/problem/problemmudahale"),
-    require("./routes/cikti/problemcikti")
+    require("./routes/mudahale/problemmudahale"),
+    require("./routes/cikti/problemcikti"),
+    require("./routes/mudahale/ilavemudahaledetay"),
+    require("./routes/cikti/ilaveciktidetay"),
 ]
 
 
