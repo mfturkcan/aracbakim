@@ -49,6 +49,9 @@ export function getMany(json, resource) {
             case "problemmudahale":
                 return { id: field["MudahaleID"], ...field }
                 break;
+            case "problemcikti":
+                return { id: field["CiktiID"], ...field }
+                break;
         }
     });
 }
@@ -102,6 +105,9 @@ export function getOne(json, resource) {
             break;
         case "problemmudahale":
             return { data: { ...json, id: json["MudahaleID"] }, }
+            break;
+        case "problemcikti":
+            return { data: { ...json, id: json["CiktiID"] }, }
             break;
     }
 }

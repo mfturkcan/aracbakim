@@ -1,8 +1,8 @@
 const router = require("express").Router();
 const connection = require("../../config/database");
 
-router.get("/siniflar", function (req, res) {
-    connection.query(`SELECT * FROM Siniflar`,
+router.get("/problemcikti", function (req, res) {
+    connection.query(`SELECT * FROM ProblemCikti`,
         function (err, result) {
             if (err) {
                 console.log(err);
@@ -18,29 +18,29 @@ router.get("/siniflar", function (req, res) {
         });
 });
 
-router.post("/siniflar", async function (req, res) {
-    const yeni_sinif = req.body;
-    let keys = Object.keys(yeni_sinif);
-    let values = Object.values(yeni_sinif);
+router.post("/problemcikti", async function (req, res) {
+    const yeni_cikti = req.body;
+    let keys = Object.keys(yeni_cikti);
+    let values = Object.values(yeni_cikti);
 
-    connection.query(`INSERT INTO Siniflar  (${keys.map(key => key)}) VALUES(${values.map(value => { if (typeof (value) == "string") return `"${value}"`; return value; })})`,
+    connection.query(`INSERT INTO ProblemCikti (${keys.map(key => key)}) VALUES(${values.map(value => { if (typeof (value) == "string") return `"${value}"`; return value; })})`,
         function (err, result) {
             if (err) {
                 console.log(err);
                 res.send(err);
             } else {
                 console.log(result);
-                res.send(yeni_sinif);
+                res.send(yeni_cikti);
             }
         }
     );
 });
 
-router.route("/siniflar/:sinif_id")
+router.route("/problemcikti/:cikti_id")
     .get(function (req, res) {
-        const sinif_id = req.params.sinif_id;
+        const cikti_id = req.params.cikti_id;
 
-        connection.query(`SELECT * FROM Siniflar WHERE SinifID = "${sinif_id}"`,
+        connection.query(`SELECT * FROM ProblemCikti WHERE CiktiID = "${cikti_id}"`,
             function (err, result) {
                 if (result.length > 0) {
                     if (err) {
@@ -48,31 +48,28 @@ router.route("/siniflar/:sinif_id")
                         res.send(err);
                     }
                     else {
-                        const sinif = result[0];
-                        res.send(sinif);
+                        const cikti = result[0];
+                        res.send(cikti);
                     }
                 }
             });
     })
     .put(function (req, res) {
-        const yeni_sinif = req.body;
-        const sinif_id = req.params.sinif_id;
-
-        const columns = ["SinifID", "SinifAdi", "AlanTipi"];
+        const yeni_cikti = req.body;
+        const cikti_id = req.params.cikti_id;
+        const columns = ["AlanID", "SinifID", "CiktiID", "ProblemID"];
         let update_values = [];
 
         for (var i = 0; i < columns.length; i++) {
             update_values.push({
-                value: yeni_sinif[columns[i]],
+                value: yeni_cikti[columns[i]],
                 column: columns[i],
             })
         }
 
         for (var j = 0; j < update_values.length; j++) {
-            let value = update_values[j].column == "AlanTipi" ? (update_values[j].value) : `"${update_values[j].value}"`;
-
-            connection.query(`UPDATE Siniflar SET ${update_values[j].column} = ${value} ` +
-                ` WHERE SinifID = "${sinif_id}"`,
+            connection.query(`UPDATE ProblemCikti SET ${update_values[j].column} = "${update_values[j].value}" ` +
+                ` WHERE CiktiID = "${cikti_id}"`,
                 function (err, result) {
                     if (err) {
                         console.log(err);
@@ -80,31 +77,30 @@ router.route("/siniflar/:sinif_id")
                     }
                 });
         }
-        res.send(yeni_sinif);
+        res.send(yeni_cikti);
     })
     .delete(function (req, res) {
-        const sinif_id = req.params.sinif_id;
+        const cikti_id = req.params.cikti_id;
 
-        connection.query(`DELETE FROM Siniflar WHERE SinifID = "${sinif_id}"`,
+        connection.query(`DELETE FROM ProblemCikti WHERE CiktiID = "${cikti_id}"`,
             function (err, result) {
                 if (err) {
                     console.log(err);
                     res.send(err);
                 } else {
-                    const sinif = result[0];
-                    res.send(sinif);
+                    const cikti = result[0];
+                    res.send(cikti);
                 }
             });
     });
 
 
-router.route("/siniflar")
+router.route("/problemcikti")
     .delete(function (req, res) {
-        console.log("delete many");
-        const sinif_ids = JSON.parse(req.query.filter).ids;
+        const cikti_ids = JSON.parse(req.query.filter).ids;
 
-        for (var i = 0; i < sinif_ids.length; i++) {
-            connection.query(`DELETE FROM Siniflar WHERE SinifID = "${sinif_ids[i]}"`,
+        for (var i = 0; i < cikti_ids.length; i++) {
+            connection.query(`DELETE FROM ProblemCikti WHERE CiktiID = "${cikti_ids[i]}"`,
                 function (err, result) {
                     if (err) {
                         console.log(err);
@@ -112,7 +108,7 @@ router.route("/siniflar")
                     }
                 });
         }
-        res.send(sinif_ids);
+        res.send(cikti_ids);
     });
 
 

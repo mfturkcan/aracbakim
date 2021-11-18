@@ -55,6 +55,7 @@ import { useHistory } from "react-router";
 import NotFound from './NotFound';
 import { useEffect } from 'react';
 import {ProblemMudahaleEkle, ProblemMudahaleDuzenle, ProblemMudahaleListe} from "./Problem/ProblemMudahale/ProblemMudahale";
+import {ProblemCiktiDuzenle, ProblemCiktiListe, ProblemCiktiEkle} from "./Problem/ProblemCikti/ProblemCikti";
 
 const theme = {}
 const AdminPanel = props => {
@@ -96,6 +97,8 @@ const AdminPanel = props => {
             <Resource name="problembirim" options={{ label: "Problem Birim" }} list={ProblemBirimListe} create={ProblemBirimEkle} edit={ProblemBirimDuzenle} />
             <Resource name="birimler" options={{ label: "Birimler" }} list={BirimlerListe} create={BirimlerEkle} edit={BirimlerDuzenle} />
             <Resource name="problemmudahale" options={{ label: "Problem Mudahale" }} list={ProblemMudahaleListe} create={ProblemMudahaleEkle} edit={ProblemMudahaleDuzenle} />
+            <Resource name="problemcikti" options={{ label: "Problem Çıktı" }} list={ProblemCiktiListe} create={ProblemCiktiEkle} edit={ProblemCiktiDuzenle} />
+
         </Admin>
     };
 

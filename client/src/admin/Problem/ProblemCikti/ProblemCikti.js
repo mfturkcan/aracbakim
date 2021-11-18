@@ -9,26 +9,26 @@ import {
 import { required } from "ra-core";
 import CustomEmptyPage from "../../CustomEmptyPage";
 
-export const ProblemMudahaleListe = props => {
+export const ProblemCiktiListe = props => {
     return (
-        <List id="MudahaleID" {...props} empty={<CustomEmptyPage Adi="Problem Mudahale" />}>
+        <List id="ProblemID" {...props} empty={<CustomEmptyPage Adi="Problem Cikti" />}>
             <Datagrid rowClick="edit">
                 <NumberField source="AlanID" label="AlanID" />
                 <NumberField source="SinifID" label="SinifID" />
-                <NumberField source="MudahaleID" label="MudahaleID" />
+                <NumberField source="CiktiID" label="CiktiID" />
                 <NumberField source="ProblemID" label="ProblemID"/>
             </Datagrid>
         </List>
     );
 }
 
-export const ProblemMudahaleEkle = props => {
+export const ProblemCiktiEkle = props => {
     return (
         <Create id="MudahaleID" {...props}>
             <SimpleForm>
-                <ReferenceInput validate={required()} source="MudahaleID" reference="mudahale" label="MudahaleID">
+                <ReferenceInput validate={required()} source="CiktiID" reference="cikti" label="CiktiID">
                     <SelectInput optionText={(src)=>{
-                        return `${src["MudahaleID"]} - ${src["MudahaleAdi"]}`
+                        return `${src["CiktiID"]} - ${src["CiktiAdi"]}`
                     }} />
                 </ReferenceInput>
                 <ReferenceInput validate={required()} source="AlanID" reference="alanlar" label="AlanID">
@@ -50,13 +50,13 @@ export const ProblemMudahaleEkle = props => {
     );
 }
 
-export const ProblemMudahaleDuzenle = props => {
+export const ProblemCiktiDuzenle = props => {
     return (
         <Edit id="MudahaleID" {...props}>
             <SimpleForm>
-                <ReferenceInput validate={required()} source="MudahaleID" reference="mudahale" label="MudahaleID">
+                <ReferenceInput validate={required()} source="CiktiID" reference="cikti" label="CiktiID">
                     <SelectInput optionText={(src)=>{
-                        return `${src["MudahaleID"]} - ${src["MudahaleAdi"]}`
+                        return `${src["CiktiID"]} - ${src["CiktiAdi"]}`
                     }} />
                 </ReferenceInput>
                 <ReferenceInput validate={required()} source="AlanID" reference="alanlar" label="AlanID">

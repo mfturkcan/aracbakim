@@ -23,7 +23,8 @@ const list_routes = [
     require("./routes/problem/problembirim"),
     require("./routes/problem/siniflar"),
     require("./routes/problem/belirtecler"),
-    require("./routes/problem/problemmudahale")
+    require("./routes/problem/problemmudahale"),
+    require("./routes/cikti/problemcikti")
 ]
 
 

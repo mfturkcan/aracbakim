@@ -200,6 +200,11 @@ export default function useMenuIcons(){
                     primaryText: "Çıktı",
                     leftIcon: <ExitToAppIcon />
                 },
+                {
+                    link: "/problemcikti",
+                    primaryText: "Problem Çıktı",
+                    leftIcon: <ExitToAppIcon />
+                },
             ],
         },
     ]
