@@ -50,22 +50,25 @@ export function getMany(json, resource) {
                 return { id: `${field["AlanID"]}+${field["SinifID"]}+${field["MudahaleID"]}+${field["ProblemID"]}`, ...field }
                 break;
             case "problemcikti":
-                return { id: field["CiktiID"], ...field }
+                return { id: `${field["AlanID"]}*${field["SinifID"]}*${field["CiktiID"]}*${field["ProblemID"]}`, ...field }
                 break;
             case "ilavemudahaledetay":
-                return { id: field["AktiviteID"], ...field }
+                return { id: `${field["ProblemID"]}=${field["AlanID"]}=${field["SinifID"]}=${field["MudahaleID"]}=${field["AktiviteID"]}`, ...field }
                 break;
             case "ilaveciktidetay":
-                return { id: field["BelirtecID"], ...field }
+                return { id: `${field["ProblemID"]}--${field["AlanID"]}--${field["SinifID"]}--${field["MudahaleID"]}--${field["BelirtecID"]}`, ...field }
                 break;
             case "personelproblem":
-                return { id: field["KullaniciAdi"], ...field }
+                return { id: `${field["ProblemID"]}##${field["KullaniciAdi"]}`, ...field }
                 break;
             case "problemciktidegerlendirme":
-                return { id: field["BelirtecID"], ...field }
+                return { id: `${field["ProblemID"]}&&${field["BelirtecID"]}`, ...field }
                 break;
             case "problemdurumdegerlendirme":
-                return { id: field["ProblemID"], ...field }
+                return { id: `${field["ProblemID"]}~${field["YeniProblemID"]}`, ...field }
+                break;
+            case "calisanproblem":
+                return { id: `${field["ProblemID"]}~~${field["KullaniciAdi"]}~~${field["AlanID"]}~~${field["SinifID"]}~~${field["MudahaleID"]}~~${field["AktiviteID"]}`, ...field }
                 break;
         }
     });
@@ -122,22 +125,25 @@ export function getOne(json, resource) {
             return { data: { ...json, id: `${json["AlanID"]}+${json["SinifID"]}+${json["MudahaleID"]}+${json["ProblemID"]}` }, }
             break;
         case "problemcikti":
-            return { data: { ...json, id: json["CiktiID"] }, }
+            return { data: { ...json, id: `${json["AlanID"]}*${json["SinifID"]}*${json["CiktiID"]}*${json["ProblemID"]}` }, }
             break;
         case "ilavemudahaledetay":
-            return { data: { ...json, id: json["AktiviteID"] }, }
+            return { data: { ...json, id: `${json["ProblemID"]}=${json["AlanID"]}=${json["SinifID"]}=${json["MudahaleID"]}=${json["AktiviteID"]}` }, }
             break;
         case "ilaveciktidetay":
-            return { data: { ...json, id: json["BelirtecID"] }, }
+            return { data: { ...json, id:  `${json["ProblemID"]}--${json["AlanID"]}--${json["SinifID"]}--${json["MudahaleID"]}--${json["BelirtecID"]}` }, }
             break;
         case "personelproblem":
-            return { data: { ...json, id: json["KullaniciAdi"] }, }
+            return { data: { ...json, id: `${json["ProblemID"]}##${json["KullaniciAdi"]}` }, }
             break;
         case "problemciktidegerlendirme":
-            return { data: { ...json, id: json["BelirtecID"] }, }
+            return { data: { ...json, id: `${json["ProblemID"]}&&${json["BelirtecID"]}`}, }
             break;
         case "problemdurumdegerlendirme":
-            return { data: { ...json, id: json["ProblemID"] }, }
+            return { data: { ...json, id: `${json["ProblemID"]}~${json["YeniProblemID"]}` }, }
+            break;
+        case "calisanproblem":
+            return { data: { ...json, id: `${json["ProblemID"]}~~${json["KullaniciAdi"]}~~${json["AlanID"]}~~${json["SinifID"]}~~${json["MudahaleID"]}~~${json["AktiviteID"]}` }, }
             break;
     }
 }

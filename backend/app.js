@@ -29,7 +29,8 @@ const list_routes = [
     require("./routes/cikti/ilaveciktidetay"),
     require("./routes/problem/personelproblem"),
     require("./routes/problemdegerlendirme/problemciktidegerlendirme"),
-    require("./routes/problemdegerlendirme/problemdurumdegerlendirme")
+    require("./routes/problemdegerlendirme/problemdurumdegerlendirme"),
+    require("./routes/problem/calisanproblem")
 ]
 
 var options = {

@@ -46,6 +46,11 @@ export default function useMenuIcons(){
                     primaryText: "Personel Problem",
                     leftIcon: <ErrorIcon />
                 },
+                {
+                    link: "/calisanproblem",
+                    primaryText: "Çalışan Problem",
+                    leftIcon: <ErrorIcon />
+                },
             ],
         },
         {
@@ -176,6 +181,11 @@ export default function useMenuIcons(){
                     link: "/problemmudahale",
                     primaryText: "Problem Mudahale",
                     leftIcon: <HomeRepairServiceIcon />
+                },
+                {
+                    link: "/calisanproblem",
+                    primaryText: "Çalışan Problem",
+                    leftIcon: <ErrorIcon />
                 },
             ],
         },

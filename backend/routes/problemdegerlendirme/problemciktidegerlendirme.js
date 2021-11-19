@@ -1,31 +1,33 @@
 const router = require("express").Router();
-const {getList, create, getOne, updateOne, deleteOne,deleteMany} = require("../routeHandler");
+const {getList, create, getOnePk, updateOnePk, deleteOnePk, deleteManyPk} = require("../routeHandler");
 
-router.get("/problemciktidegerlendirme", function(req,res){
-    return getList("BelirtecID","ProblemCiktiDegerlendirme", req, res);
+const ids = ["ProblemID", "BelirtecID"];
+const seperate_mark = "&&";
+
+router.get("/problemciktidegerlendirme", function (req, res) {
+    return getList("BelirtecID","ProblemCiktiDegerlendirme",req,res);
 });
 
-router.post("/problemciktidegerlendirme",  function (req, res) {
+router.post("/problemciktidegerlendirme", async function (req, res) {
     return create("ProblemCiktiDegerlendirme",req,res);
 });
 
 router.route("/problemciktidegerlendirme/:belirtec_id")
     .get(function (req, res) {
-        return getOne("ProblemCiktiDegerlendirme","BelirtecID","belirtec_id",req,res);
+        return getOnePk("ProblemCiktiDegerlendirme",ids,"belirtec_id",seperate_mark,req,res);
     })
     .put(function (req, res) {
-        const columns = ["BelirtecID","ProblemID", "Skor", "SkorTarihi"];
+        return updateOnePk("ProblemCiktiDegerlendirme",ids,"belirtec_id",["ProblemID", "BelirtecID", "Skor" , "SkorTarihi"],seperate_mark,req,res);
 
-        return updateOne("ProblemCiktiDegerlendirme","BelirtecID","belirtec_id",columns,req,res);
     })
     .delete(function (req, res) {
-        return deleteOne("ProblemCiktiDegerlendirme","BelirtecID","belirtec_id",req,res);
+        return deleteOnePk("ProblemCiktiDegerlendirme", ids, "belirtec_id",seperate_mark,req,res);
     });
 
 
 router.route("/problemciktidegerlendirme")
     .delete(function (req, res) {
-        return deleteMany("ProblemCiktiDegerlendirme","BelirtecID",req,res);
+        return deleteManyPk("ProblemCiktiDegerlendirme",ids,seperate_mark,req,res);
     });
 
 
