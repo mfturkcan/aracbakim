@@ -60,7 +60,7 @@ export const IlaveCiktiDetayEkle = props => {
                 <ReferenceInput validate={required()} source="EkleyenKullaniciAdi" reference="kullanicilar" label="EkleyenKullaniciAdi">
                     <SelectInput optionText="KullaniciAdi" />
                 </ReferenceInput>
-                <DateInput source="EklenmeTarihi" label="EklenmeTarihi"/>
+                <DateInput source="EklenmeTarihi" label="EklenmeTarihi" validate={required()}/>
             </SimpleForm>
         </Create>
     );
@@ -100,7 +100,7 @@ export const IlaveCiktiDetayDuzenle = props => {
                 <ReferenceInput validate={required()} source="EkleyenKullaniciAdi" reference="kullanicilar" label="EkleyenKullaniciAdi">
                     <SelectInput optionText="KullaniciAdi" />
                 </ReferenceInput>
-                <DateInput source="EklenmeTarihi" label="EklenmeTarihi"/>
+                <DateInput source="EklenmeTarihi" label="EklenmeTarihi" validate={required()}/>
             </SimpleForm>
         </Edit>
     );

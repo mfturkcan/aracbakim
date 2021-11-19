@@ -1,4 +1,4 @@
-import { Admin, Resource, ListGuesser, EditGuesser } from "react-admin";
+import {Admin, Resource, ListGuesser, EditGuesser, ResourceContext} from "react-admin";
 import DataProvider from "./DataProvider";
 import IlcelerDuzenle from "./Ilceler/IlcelerDuzenle";
 import IlcelerEkle from "./Ilceler/IlcelerEkle";
@@ -121,6 +121,10 @@ const AdminPanel = props => {
             <Resource name="ilaveciktidetay" options={{ label: "İlave Çıktı Detay" }} list={IlaveCiktiDetayListe} create={IlaveCiktiDetayEkle} edit={IlaveCiktiDetayDuzenle} />
             <Resource name="personelproblem" options={{ label: "Personel Problem" }} list={PersonelProblemListe} edit={PersonelProblemDuzenle} create={PersonelProblemEkle} />
             <Resource name="calisanproblem" options={{ label: "Çalışan Problem" }} list={CalisanProblemListe} edit={CalisanProblemDuzenle} create={CalisanProblemEkle} />
+            <Resource name="problemciktidegerlendirme" options={{ label: "Problem Çıktı Değerlendirme" }} list={ProblemCiktiDegerlendirmeListe} create={ProblemCiktiDegerlendirmeEkle} edit={ProblemCiktiDegerlendirmeDuzenle} />
+            <Resource name="problemdurumdegerlendirme" options={{ label: "Problem Durum Değerlendirme" }} list={ProblemDurumDegerlendirmeListe} create={ProblemDurumDegerlendirmeEkle} edit={ProblemDurumDegerlendirmeDuzenle} />
+            <Resource name="mudahaledetay" options={{ label: "Müdahale Detay" }} list={MudahaleDetayListe} create={MudahaleDetayEkle} edit={MudahaleDetayDuzenle} />
+            <Resource name="ciktidetay" options={{ label: "Çıktı Detay" }} list={CiktiDetayListe} create={CiktiDetayEkle} edit={CiktiDetayDuzenle} />
 
         </Admin>
     };
@@ -145,15 +149,20 @@ const AdminPanel = props => {
             <Resource name="problemciktidegerlendirme" options={{ label: "Problem Çıktı Değerlendirme" }} list={ProblemCiktiDegerlendirmeListe} create={ProblemCiktiDegerlendirmeEkle} edit={ProblemCiktiDegerlendirmeDuzenle} />
             <Resource name="problemdurumdegerlendirme" options={{ label: "Problem Durum Değerlendirme" }} list={ProblemDurumDegerlendirmeListe} create={ProblemDurumDegerlendirmeEkle} edit={ProblemDurumDegerlendirmeDuzenle} />
             <Resource name="calisanproblem" options={{ label: "Çalışan Problem" }} list={CalisanProblemListe} edit={CalisanProblemDuzenle} create={CalisanProblemEkle} />
+            <Resource name="problembirim" options={{ label: "Problem Birim" }} list={ProblemBirimListe} create={ProblemBirimEkle} edit={ProblemBirimDuzenle} />
+            <Resource name="problemmudahale" options={{ label: "Problem Mudahale" }} list={ProblemMudahaleListe} create={ProblemMudahaleEkle} edit={ProblemMudahaleDuzenle} />
+            <Resource name="problemcikti" options={{ label: "Problem Çıktı" }} list={ProblemCiktiListe} create={ProblemCiktiEkle} edit={ProblemCiktiDuzenle} />
+            <Resource name="ilavemudahaledetay" options={{ label: "İlave Mudahale Detay" }} list={IlaveMudahaleDetayListe} create={IlaveMudahaleDetayEkle} edit={IlaveMudahaleDetayDuzenle} />
+            <Resource name="ilaveciktidetay" options={{ label: "İlave Çıktı Detay" }} list={IlaveCiktiDetayListe} create={IlaveCiktiDetayEkle} edit={IlaveCiktiDetayDuzenle} />
 
         </Admin>
     }
 
 
     return (
-        user.role != "" ? user.role == "Yönetici" ? YoneticiPanel() : MudurPanel() : <Admin dataProvider={DataProvider} loginPage={false} authProvider={authProvider}>
+        user.role == "" ? <Admin dataProvider={DataProvider} loginPage={false} authProvider={authProvider}>
             <Resource name="kullanicilar" options={{ label: "Kullanıcılar" }} list={KullaniciListe} />
-        </Admin>
+        </Admin> :user.role == "Yönetici" ? <YoneticiPanel /> : <MudurPanel />
     );
 }
 

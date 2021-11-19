@@ -11,6 +11,9 @@ import RoomIcon from "@mui/icons-material/Room";
 import LocationCityIcon from "@mui/icons-material/LocationCity";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import HomeRepairServiceIcon from "@mui/icons-material/HomeRepairService";
+import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
+import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
+import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import {useState} from "react";
 
 export default function useMenuIcons(){
@@ -24,35 +27,7 @@ export default function useMenuIcons(){
     let [degerlendirmeOpen, setDegerlendirmeOpen] = useState(false);
 
 
-    const yoneticiList = [
-        {
-            listIcon: <ReportProblemIcon />,
-            listName: "Birim - Problem",
-            state: birimOpen,
-            stateMethod: setBirimOpen,
-            menuItems: [
-                {
-                    link: "/birimler",
-                    primaryText: "Birimler",
-                    leftIcon: <GroupWorkIcon />
-                },
-                {
-                    link: "/problem",
-                    primaryText: "Problemler",
-                    leftIcon: <ErrorIcon />
-                },
-                {
-                    link: "/personelproblem",
-                    primaryText: "Personel Problem",
-                    leftIcon: <ErrorIcon />
-                },
-                {
-                    link: "/calisanproblem",
-                    primaryText: "Çalışan Problem",
-                    leftIcon: <ErrorIcon />
-                },
-            ],
-        },
+    const combine = [
         {
             listIcon: <MiscellaneousServicesIcon />,
             listName: "Mudahale",
@@ -100,24 +75,6 @@ export default function useMenuIcons(){
             ],
         },
         {
-            listIcon: <RoomIcon />,
-            listName: "İller - İlçeler",
-            state: ilOpen,
-            stateMethod: setIlOpen,
-            menuItems: [
-                {
-                    link: "/iller",
-                    primaryText: "İller",
-                    leftIcon: <LocationCityIcon />
-                },
-                {
-                    link: "/ilceler",
-                    primaryText: "İlçeler",
-                    leftIcon: <LocationCityIcon />
-                },
-            ],
-        },
-        {
             listIcon: <ExitToAppIcon />,
             listName: "Çıktı- ÇıktıDetay",
             state: ciktiOpen,
@@ -136,7 +93,7 @@ export default function useMenuIcons(){
             ],
         },
         {
-            listIcon: <ExitToAppIcon />,
+            listIcon: <QueryStatsIcon />,
             listName: "Degerlendirme",
             state: degerlendirmeOpen,
             stateMethod: setDegerlendirmeOpen,
@@ -144,15 +101,94 @@ export default function useMenuIcons(){
                 {
                     link: "/problemciktidegerlendirme",
                     primaryText: "Problem Çıktı Değerlendirme",
-                    leftIcon: <ExitToAppIcon />
+                    leftIcon: <QueryStatsIcon />
                 },
                 {
                     link: "/problemdurumdegerlendirme",
                     primaryText: "Problem Durum Değerlendirme",
+                    leftIcon: <QueryStatsIcon />
+                },
+            ],
+        },
+        {
+            listIcon: <DetailsIcon />,
+            listName: "İlave Detay",
+            state: detayOpen,
+            stateMethod: setDetayOpen,
+            menuItems: [
+                {
+                    link: "/ilavemudahaledetay",
+                    primaryText: "İlave Mudahale Detay",
+                    leftIcon: <DetailsIcon />
+                },
+                {
+                    link: "/ilaveciktidetay",
+                    primaryText: "İlave Çıktı Detay",
+                    leftIcon: <DetailsIcon />
+                },
+            ],
+        },
+    ]
+
+    const yoneticiList = [
+        {
+            listIcon: <ReportProblemIcon />,
+            listName: "Birim - Problem",
+            state: birimOpen,
+            stateMethod: setBirimOpen,
+            menuItems: [
+                {
+                    link: "/birimler",
+                    primaryText: "Birimler",
+                    leftIcon: <GroupWorkIcon />
+                },
+                {
+                    link: "/problem",
+                    primaryText: "Problemler",
+                    leftIcon: <ErrorIcon />
+                },
+                {
+                    link: "/personelproblem",
+                    primaryText: "Personel Problem",
+                    leftIcon: <EmojiPeopleIcon />
+                },
+                {
+                    link: "/problembirim",
+                    primaryText: "Problem Birim",
+                    leftIcon: <SupervisedUserCircleIcon />
+                },
+                {
+                    link: "/problemmudahale",
+                    primaryText: "Problem Mudahale",
+                    leftIcon: <HomeRepairServiceIcon />
+                },
+                {
+                    link: "/problemcikti",
+                    primaryText: "Problem Çıktı",
                     leftIcon: <ExitToAppIcon />
                 },
             ],
         },
+
+        {
+            listIcon: <RoomIcon />,
+            listName: "İller - İlçeler",
+            state: ilOpen,
+            stateMethod: setIlOpen,
+            menuItems: [
+                {
+                    link: "/iller",
+                    primaryText: "İller",
+                    leftIcon: <LocationCityIcon />
+                },
+                {
+                    link: "/ilceler",
+                    primaryText: "İlçeler",
+                    leftIcon: <LocationCityIcon />
+                },
+            ],
+        },
+        ...combine,
     ]
 
      const mudurList = [
@@ -170,12 +206,12 @@ export default function useMenuIcons(){
                 {
                     link: "/personelproblem",
                     primaryText: "Personel Problem",
-                    leftIcon: <ErrorIcon />
+                    leftIcon: <EmojiPeopleIcon />
                 },
                 {
                     link: "/problembirim",
                     primaryText: "Problem Birim",
-                    leftIcon: <HomeRepairServiceIcon />
+                    leftIcon: <SupervisedUserCircleIcon />
                 },
                 {
                     link: "/problemmudahale",
@@ -183,90 +219,13 @@ export default function useMenuIcons(){
                     leftIcon: <HomeRepairServiceIcon />
                 },
                 {
-                    link: "/calisanproblem",
-                    primaryText: "Çalışan Problem",
-                    leftIcon: <ErrorIcon />
-                },
-            ],
-        },
-        {
-            listIcon: <MiscellaneousServicesIcon />,
-            listName: "Mudahale",
-            state: mudahaleOpen,
-            stateMethod: setMudahaleOpen,
-            menuItems: [
-                {
-                    link: "/mudahale",
-                    primaryText: "Mudahale",
-                    leftIcon: <CarRepairIcon />
-                },
-                {
-                    link: "/aktiviteler",
-                    primaryText: "Aktivite",
-                    leftIcon: <CleaningServicesIcon />
-                },
-            ],
-        },
-        {
-            listIcon: <AccountTreeIcon />,
-            listName: "Alanlar - Sınıflar",
-            state: alanOpen,
-            stateMethod: setAlanOpen,
-            menuItems: [
-                {
-                    link: "/alanlar",
-                    primaryText: "Alanlar",
-                    leftIcon: <AccountTreeIcon />
-                },
-                {
-                    link: "/siniflar",
-                    primaryText: "Sınıf",
-                    leftIcon: <AccountTreeIcon />
-                },
-                {
-                    link: "/belirtecler",
-                    primaryText: "Belirteç",
-                    leftIcon: <CallToActionIcon />
-                },
-            ],
-        },
-        {
-            listIcon: <ExitToAppIcon />,
-            listName: "Çıktı",
-            state: ciktiOpen,
-            stateMethod: setCiktiOpen,
-            menuItems: [
-                {
-                    link: "/cikti",
-                    primaryText: "Çıktı",
-                    leftIcon: <ExitToAppIcon />
-                },
-
-                {
                     link: "/problemcikti",
                     primaryText: "Problem Çıktı",
                     leftIcon: <ExitToAppIcon />
                 },
             ],
         },
-         {
-             listIcon: <ExitToAppIcon />,
-             listName: "İlave Detay",
-             state: detayOpen,
-             stateMethod: setDetayOpen,
-             menuItems: [
-                 {
-                     link: "/ilavemudahaledetay",
-                     primaryText: "İlave Mudahale Detay",
-                     leftIcon: <ExitToAppIcon />
-                 },
-                 {
-                     link: "/ilaveciktidetay",
-                     primaryText: "İlave Çıktı Detay",
-                     leftIcon: <ExitToAppIcon />
-                 },
-             ],
-         },
+         ...combine,
     ]
 
     return {yoneticiList, mudurList};
