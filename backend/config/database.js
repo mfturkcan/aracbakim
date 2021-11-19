@@ -138,8 +138,8 @@ connection.query("CREATE DATABASE IF NOT EXISTS db; USE db;", function (err, res
             function (err, result) {
                 if (err) console.log(err);
             });
-        connection.query("CREATE TABLE IF NOT EXISTS ProblemMudahale (MudahaleID int PRIMARY KEY NOT NULL, AlanID int NOT NULL, ProblemID int NOT NULL, SinifID int NOT NULL,"
-            +" FOREIGN KEY(MudahaleID) REFERENCES Mudahale(MudahaleID), FOREIGN KEY(AlanID) REFERENCES Alanlar(AlanID),FOREIGN KEY(ProblemID) REFERENCES Problem(ProblemTipiID), FOREIGN KEY(SinifID) REFERENCES Siniflar(SinifID))",
+        connection.query("CREATE TABLE IF NOT EXISTS ProblemMudahale (MudahaleID VARCHAR(255) NOT NULL, AlanID int NOT NULL, ProblemID int NOT NULL, SinifID int NOT NULL,"
+            +" FOREIGN KEY(AlanID) REFERENCES Alanlar(AlanID),FOREIGN KEY(ProblemID) REFERENCES Problem(ProblemTipiID), FOREIGN KEY(SinifID) REFERENCES Siniflar(SinifID), PRIMARY KEY(AlanID, SinifID, MudahaleID, ProblemID))",
             function(err, result){
                 if(err) console.log(err);
             });
@@ -166,8 +166,8 @@ connection.query("CREATE DATABASE IF NOT EXISTS db; USE db;", function (err, res
                 if (err) console.log(err);
             });
 
-        connection.query("CREATE TABLE IF NOT EXISTS PersonelProblem (KullaniciAdi VARCHAR(150) PRIMARY KEY NOT NULL," +
-            " ProblemID int NOT NULL, FOREIGN KEY(KullaniciAdi) REFERENCES Personel(KullaniciAdi),FOREIGN KEY(ProblemID) REFERENCES Problem(ProblemTipiID) )",
+        connection.query("CREATE TABLE IF NOT EXISTS PersonelProblem (KullaniciAdi VARCHAR(150) NOT NULL," +
+            " ProblemID int NOT NULL, FOREIGN KEY(KullaniciAdi) REFERENCES Personel(KullaniciAdi),FOREIGN KEY(ProblemID) REFERENCES Problem(ProblemTipiID), PRIMARY KEY(KullaniciAdi, ProblemID) )",
             function (err, result) {
                 if (err) console.log(err);
             });

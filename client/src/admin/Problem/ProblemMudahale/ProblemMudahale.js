@@ -4,7 +4,7 @@ import {
     SimpleForm,
     List,
     Datagrid,
-    ReferenceInput, SelectInput, NumberField
+    ReferenceInput, SelectInput, NumberField, TextField
 } from "ra-ui-materialui";
 import { required } from "ra-core";
 import CustomEmptyPage from "../../CustomEmptyPage";
@@ -15,7 +15,7 @@ export const ProblemMudahaleListe = props => {
             <Datagrid rowClick="edit">
                 <NumberField source="AlanID" label="AlanID" />
                 <NumberField source="SinifID" label="SinifID" />
-                <NumberField source="MudahaleID" label="MudahaleID" />
+                <TextField source="MudahaleID" label="MudahaleID" />
                 <NumberField source="ProblemID" label="ProblemID"/>
             </Datagrid>
         </List>
