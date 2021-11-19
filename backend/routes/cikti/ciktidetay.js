@@ -40,9 +40,14 @@ router.post("/ciktidetay", async function (req, res) {
 
 router.route("/ciktidetay/:cikti_id")
     .get(function (req, res) {
-        const cikti_id = req.params.cikti_id;
+        console.log(req.params.cikti_id)
+        const cikti_id = req.params.cikti_id.split("_")[1];
+        const alan_id = req.params.cikti_id.split("_")[0];
+        const sinif_id = req.params.cikti_id.split("_")[2];
+        const belirtec_id = req.params.cikti_id.split("_")[3];
+        const sira = req.params.cikti_id.split("_")[4];
 
-        connection.query(`SELECT * FROM CiktiDetay WHERE CiktiID = "${cikti_id}"`,
+        connection.query(`SELECT * FROM CiktiDetay WHERE CiktiID = "${cikti_id}" AND AlanID = "${alan_id}" AND SinifID = "${sinif_id}" AND BelirtecID = "${belirtec_id}" AND Sira = "${sira}"`,
             function (err, result) {
                 if (result.length > 0) {
                     if (err) {
@@ -57,8 +62,13 @@ router.route("/ciktidetay/:cikti_id")
             });
     })
     .put(function (req, res) {
+        console.log(req.params.cikti_id)
         const yeni_cikti = req.body;
-        const cikti_id = req.params.cikti_id;
+        const cikti_id = req.params.cikti_id.split("_")[1];
+        const alan_id = req.params.cikti_id.split("_")[0];
+        const sinif_id = req.params.cikti_id.split("_")[2];
+        const belirtec_id = req.params.cikti_id.split("_")[3];
+        const sira = req.params.cikti_id.split("_")[4];
 
         const columns = ["AlanID", "SinifID", "CiktiID", "BelirtecID", "Sira"];
         let update_values = [];
@@ -72,7 +82,7 @@ router.route("/ciktidetay/:cikti_id")
 
         for (var j = 0; j < update_values.length; j++) {
             connection.query(`UPDATE CiktiDetay SET ${update_values[j].column} = "${update_values[j].value}" ` +
-                ` WHERE CiktiID = "${cikti_id}"`,
+                ` WHERE CiktiID = "${cikti_id}" AND AlanID = "${alan_id}" AND SinifID = "${sinif_id}" AND BelirtecID = "${belirtec_id}" AND Sira = "${sira}"`,
                 function (err, result) {
                     if (err) {
                         console.log(err);
@@ -81,12 +91,15 @@ router.route("/ciktidetay/:cikti_id")
                 });
         }
         res.send(yeni_cikti);
-
     })
     .delete(function (req, res) {
-        const cikti_id = req.params.cikti_id;
+        const cikti_id = req.params.cikti_id.split("_")[1];
+        const alan_id = req.params.cikti_id.split("_")[0];
+        const sinif_id = req.params.cikti_id.split("_")[2];
+        const belirtec_id = req.params.cikti_id.split("_")[3];
+        const sira = req.params.cikti_id.split("_")[4];
 
-        connection.query(`DELETE FROM CiktiDetay WHERE CiktiID = "${cikti_id}"`,
+        connection.query(`DELETE FROM CiktiDetay WHERE CiktiID = "${cikti_id}" AND AlanID = "${alan_id}" AND SinifID = "${sinif_id}" AND BelirtecID = "${belirtec_id}" AND Sira = "${sira}"`,
             function (err, result) {
                 if (err) {
                     console.log(err);
@@ -105,7 +118,12 @@ router.route("/ciktidetay")
         const cikti_ids = JSON.parse(req.query.filter).ids;
 
         for (var i = 0; i < cikti_ids.length; i++) {
-            connection.query(`DELETE FROM CiktiDetay WHERE CiktiID = "${cikti_ids[i]}"`,
+            let cikti_id = cikti_ids[i].split("_")[1];
+            let alan_id = cikti_ids[i].split("_")[0];
+            let sinif_id = cikti_ids[i].split("_")[2];
+            let belirtec_id = cikti_ids[i].split("_")[3];
+            let sira = cikti_ids[i].split("_")[4];
+            connection.query(`DELETE FROM CiktiDetay WHERE CiktiID = "${cikti_id}" AND AlanID = "${alan_id}" AND SinifID = "${sinif_id}" AND BelirtecID = "${belirtec_id}" AND Sira = "${sira}"`,
                 function (err, result) {
                     if (err) {
                         console.log(err);

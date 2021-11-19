@@ -126,15 +126,15 @@ connection.query("CREATE DATABASE IF NOT EXISTS db; USE db;", function (err, res
 
             });
 
-        connection.query("CREATE TABLE IF NOT EXISTS CiktiDetay (CiktiID int PRIMARY KEY NOT NULL, AlanID int NOT NULL,SinifID int NOT NULL, BelirtecID int NOT NULL," +
-            " Sira VARCHAR(100) NOT NULL, FOREIGN KEY(AlanID) REFERENCES Alanlar(AlanID), FOREIGN KEY(SinifID) REFERENCES Siniflar(SinifID), FOREIGN KEY(BelirtecID) REFERENCES Belirtecler(BelirtecID))",
+        connection.query("CREATE TABLE IF NOT EXISTS CiktiDetay (CiktiID int NOT NULL, AlanID int NOT NULL,SinifID int NOT NULL, BelirtecID int NOT NULL," +
+            " Sira VARCHAR(100) NOT NULL, FOREIGN KEY(AlanID) REFERENCES Alanlar(AlanID), FOREIGN KEY(SinifID) REFERENCES Siniflar(SinifID), FOREIGN KEY(BelirtecID) REFERENCES Belirtecler(BelirtecID), PRIMARY KEY(AlanID,CiktiID,SinifID,BelirtecID,Sira))",
             function (err, result) {
-                if (err) console.log(err);
+                if (err) console.log(err)
 
             });
 
         connection.query("CREATE TABLE IF NOT EXISTS ProblemBirim (ProblemID int NOT NULL, BirimID int NOT NULL," +
-            " EslesmeTarihi DATETIME NOT NULL , FOREIGN KEY(ProblemID) REFERENCES Problem(ProblemTipiID) , FOREIGN KEY(BirimID) REFERENCES Birimler(BirimKodu))",
+            " EslesmeTarihi DATETIME NOT NULL , FOREIGN KEY(ProblemID) REFERENCES Problem(ProblemTipiID) , FOREIGN KEY(BirimID) REFERENCES Birimler(BirimKodu), PRIMARY KEY(ProblemID, BirimID))",
             function (err, result) {
                 if (err) console.log(err);
             });

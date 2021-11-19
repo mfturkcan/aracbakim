@@ -32,13 +32,13 @@ export function getMany(json, resource) {
                 return { id: `${field["AlanID"]}'${field["CiktiID"]}'${field["SinifID"]}`, ...field }
                 break;
             case "ciktidetay":
-                return { id: field["CiktiID"], ...field }
+                return { id: `${field["AlanID"]}_${field["CiktiID"]}_${field["SinifID"]}_${field["BelirtecID"]}_${field["Sira"]}`, ...field }
                 break;
             case "mudahaledetay":
                 return { id: `${field["AlanID"]},${field["MudahaleID"]},${field["SinifID"]},${field["AktiviteID"]}`, ...field }
                 break;
             case "problembirim":
-                return { id: field["ProblemID"], ...field }
+                return { id: `${field["ProblemID"]}&${field["BirimID"]}`, ...field }
                 break;
             case "siniflar":
                 return { id: field["SinifID"], ...field }
@@ -104,13 +104,13 @@ export function getOne(json, resource) {
             return { data: { ...json, id: `${json["AlanID"]}'${json["CiktiID"]}'${json["SinifID"]}` }, }
             break;
         case "ciktidetay":
-            return { data: { ...json, id: json["CiktiID"] }, }
+            return { data: { ...json, id: `${json["AlanID"]}_${json["CiktiID"]}_${json["SinifID"]}_${json["BelirtecID"]}_${json["Sira"]}` }, }
             break;
         case "mudahaledetay":
             return { data: { ...json, id: `${json["AlanID"]},${json["MudahaleID"]},${json["SinifID"]},${json["AktiviteID"]}` }, }
             break;
         case "problembirim":
-            return { data: { ...json, id: json["ProblemID"] }, }
+            return { data: { ...json, id: `${json["ProblemID"]}&${json["BirimID"]}` }, }
             break;
         case "siniflar":
             return { data: { ...json, id: json["SinifID"] }, }

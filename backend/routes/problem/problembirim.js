@@ -40,9 +40,11 @@ router.post("/problembirim", async function (req, res) {
 
 router.route("/problembirim/:problem_id")
     .get(function (req, res) {
-        const problem_id = req.params.problem_id;
+        console.log(req.params.problem_id)
+        const problem_id = req.params.problem_id.split("&")[0];
+        const birim_id = req.params.problem_id.split("&")[1];
 
-        connection.query(`SELECT * FROM ProblemBirim WHERE ProblemID = "${problem_id}"`,
+        connection.query(`SELECT * FROM ProblemBirim WHERE ProblemID = "${problem_id}" AND BirimID = "${birim_id}"`,
             function (err, result) {
                 if (result.length > 0) {
                     if (err) {
@@ -58,7 +60,8 @@ router.route("/problembirim/:problem_id")
     })
     .put(function (req, res) {
         const yeni_problem_birim = req.body;
-        const problem_id = req.params.problem_id;
+        const problem_id = req.params.problem_id.split("&")[0];
+        const birim_id = req.params.problem_id.split("&")[1];
         console.log(yeni_problem_birim)
 
         const columns = ["ProblemID", "BirimID", "EslesmeTarihi"];
@@ -73,7 +76,7 @@ router.route("/problembirim/:problem_id")
 
         for (var j = 0; j < update_values.length; j++) {
             connection.query(`UPDATE ProblemBirim SET ${update_values[j].column} = "${update_values[j].value}" ` +
-                ` WHERE ProblemID = "${problem_id}"`,
+                ` WHERE ProblemID = "${problem_id}" AND BirimID = "${birim_id}"`,
                 function (err, result) {
                     if (err) {
                         console.log(err);
@@ -84,9 +87,10 @@ router.route("/problembirim/:problem_id")
         res.send(yeni_problem_birim);
     })
     .delete(function (req, res) {
-        const problem_id = req.params.problem_id;
+        const problem_id = req.params.problem_id.split("&")[0];
+        const birim_id = req.params.problem_id.split("&")[1];
 
-        connection.query(`DELETE FROM ProblemBirim WHERE ProblemID = "${problem_id}"`,
+        connection.query(`DELETE FROM ProblemBirim WHERE ProblemID = "${problem_id}" AND BirimID = "${birim_id}"`,
             function (err, result) {
                 if (err) {
                     console.log(err);
@@ -105,7 +109,9 @@ router.route("/problembirim")
         const problem_ids = JSON.parse(req.query.filter).ids;
 
         for (var i = 0; i < problem_ids.length; i++) {
-            connection.query(`DELETE FROM ProblemBirim WHERE ProblemID = "${problem_ids[i]}"`,
+            let problem_id = problem_ids[i].split("&")[0];
+            let birim_id = problem_ids[i].split("&")[1];
+            connection.query(`DELETE FROM ProblemBirim WHERE ProblemID = "${problem_id}" AND BirimID = "${birim_id}"`,
                 function (err, result) {
                     if (err) {
                         console.log(err);
