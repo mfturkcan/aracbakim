@@ -21,6 +21,8 @@ export default function useMenuIcons(){
     let [ilOpen, setIlOpen] = useState(false);
     let [ciktiOpen, setCiktiOpen] = useState(false);
     let [detayOpen, setDetayOpen] = useState(false);
+    let [degerlendirmeOpen, setDegerlendirmeOpen] = useState(false);
+
 
     const yoneticiList = [
         {
@@ -37,6 +39,11 @@ export default function useMenuIcons(){
                 {
                     link: "/problem",
                     primaryText: "Problemler",
+                    leftIcon: <ErrorIcon />
+                },
+                {
+                    link: "/personelproblem",
+                    primaryText: "Personel Problem",
                     leftIcon: <ErrorIcon />
                 },
             ],
@@ -123,6 +130,19 @@ export default function useMenuIcons(){
                 },
             ],
         },
+        {
+            listIcon: <ExitToAppIcon />,
+            listName: "Degerlendirme",
+            state: degerlendirmeOpen,
+            stateMethod: setDegerlendirmeOpen,
+            menuItems: [
+                {
+                    link: "/problemciktidegerlendirme",
+                    primaryText: "Problem Çıktı Değerlendirme",
+                    leftIcon: <ExitToAppIcon />
+                },
+            ],
+        },
     ]
 
      const mudurList = [
@@ -135,6 +155,11 @@ export default function useMenuIcons(){
                 {
                     link: "/problem",
                     primaryText: "Problemler",
+                    leftIcon: <ErrorIcon />
+                },
+                {
+                    link: "/personelproblem",
+                    primaryText: "Personel Problem",
                     leftIcon: <ErrorIcon />
                 },
                 {

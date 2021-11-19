@@ -58,6 +58,12 @@ export function getMany(json, resource) {
             case "ilaveciktidetay":
                 return { id: field["BelirtecID"], ...field }
                 break;
+            case "personelproblem":
+                return { id: field["KullaniciAdi"], ...field }
+                break;
+            case "problemciktidegerlendirme":
+                return { id: field["BelirtecID"], ...field }
+                break;
         }
     });
 }
@@ -119,6 +125,12 @@ export function getOne(json, resource) {
             return { data: { ...json, id: json["AktiviteID"] }, }
             break;
         case "ilaveciktidetay":
+            return { data: { ...json, id: json["BelirtecID"] }, }
+            break;
+        case "personelproblem":
+            return { data: { ...json, id: json["KullaniciAdi"] }, }
+            break;
+        case "problemciktidegerlendirme":
             return { data: { ...json, id: json["BelirtecID"] }, }
             break;
     }

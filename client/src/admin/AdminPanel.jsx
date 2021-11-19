@@ -28,24 +28,24 @@ import AktiviteDuzenle from './Problem/Aktivite/AktiviteDuzenle';
 import AlanlarListe from './Problem/Alanlar/AlanListe';
 import AlanlarEkle from './Problem/Alanlar/AlanEkle';
 import AlanlarDuzenle from './Problem/Alanlar/AlanDuzenle';
-import MudahaleListe from './Problem/Mudahale/MudahaleList';
-import MudahaleEkle from './Problem/Mudahale/MudahaleEkle';
-import MudahaleDuzenle from './Problem/Mudahale/MudahaleDuzenle';
+import MudahaleListe from './Mudahale/Mudahale/MudahaleList';
+import MudahaleEkle from './Mudahale/Mudahale/MudahaleEkle';
+import MudahaleDuzenle from './Mudahale/Mudahale/MudahaleDuzenle';
 import SinifListe from './Problem/Siniflar/SinifListe';
 import SinifEkle from './Problem/Siniflar/SinifEkle';
 import SinifDuzenle from './Problem/Siniflar/SinifDuzenle';
 import BelirtecListe from './Problem/Belirtecler/BelirtecListe';
 import BelirtecEkle from './Problem/Belirtecler/BelirtecEkle';
 import BelirtecDuzenle from './Problem/Belirtecler/BelirtecDuzenle';
-import CiktiListe from './Problem/Cikti/CiktiListe';
-import CiktiEkle from './Problem/Cikti/CiktiEkle';
-import CiktiDuzenle from './Problem/Cikti/CiktiDuzenle';
-import CiktiDetayListe from './Problem/CiktiDetay/CiktiDetayListe';
-import CiktiDetayEkle from './Problem/CiktiDetay/CiktiDetayEkle';
-import CiktiDetayDuzenle from './Problem/CiktiDetay/CiktiDetayDuzenle';
-import MudahaleDetayListe from './Problem/MudahaleDetay/MudahaleDetayListe';
-import MudahaleDetayDuzenle from './Problem/MudahaleDetay/MudahaleDetayDuzenle';
-import MudahaleDetayEkle from './Problem/MudahaleDetay/MudahaleDetayEkle';
+import CiktiListe from './Cikti/Cikti/CiktiListe';
+import CiktiEkle from './Cikti/Cikti/CiktiEkle';
+import CiktiDuzenle from './Cikti/Cikti/CiktiDuzenle';
+import CiktiDetayListe from './Cikti/CiktiDetay/CiktiDetayListe';
+import CiktiDetayEkle from './Cikti/CiktiDetay/CiktiDetayEkle';
+import CiktiDetayDuzenle from './Cikti/CiktiDetay/CiktiDetayDuzenle';
+import MudahaleDetayListe from './Mudahale/MudahaleDetay/MudahaleDetayListe';
+import MudahaleDetayDuzenle from './Mudahale/MudahaleDetay/MudahaleDetayDuzenle';
+import MudahaleDetayEkle from './Mudahale/MudahaleDetay/MudahaleDetayEkle';
 import ProblemBirimListe from './Problem/ProblemBirim/ProblemBirimListe';
 import ProblemBirimEkle from './Problem/ProblemBirim/ProblemBirimEkle';
 import ProblemBirimDuzenle from './Problem/ProblemBirim/ProblemBirimDuzenle';
@@ -56,8 +56,18 @@ import NotFound from './NotFound';
 import { useEffect } from 'react';
 import {ProblemMudahaleEkle, ProblemMudahaleDuzenle, ProblemMudahaleListe} from "./Problem/ProblemMudahale/ProblemMudahale";
 import {ProblemCiktiDuzenle, ProblemCiktiListe, ProblemCiktiEkle} from "./Problem/ProblemCikti/ProblemCikti";
-import {IlaveMudahaleDetayDuzenle, IlaveMudahaleDetayListe, IlaveMudahaleDetayEkle} from "./Problem/IlaveMudahaleDetay/IlaveMudahaleDetay";
-import {IlaveCiktiDetayEkle, IlaveCiktiDetayListe, IlaveCiktiDetayDuzenle} from "./Problem/IlaveCiktiDetay/IlaveCiktiDetay";
+import {IlaveMudahaleDetayDuzenle, IlaveMudahaleDetayListe, IlaveMudahaleDetayEkle} from "./IlaveDetay/IlaveMudahaleDetay/IlaveMudahaleDetay";
+import {IlaveCiktiDetayEkle, IlaveCiktiDetayListe, IlaveCiktiDetayDuzenle} from "./IlaveDetay/IlaveCiktiDetay/IlaveCiktiDetay";
+import {
+    PersonelProblemDuzenle,
+    PersonelProblemEkle,
+    PersonelProblemListe
+} from "./Problem/PersonelProblem/PersonelProblem";
+import {
+    ProblemCiktiDegerlendirmeDuzenle,
+    ProblemCiktiDegerlendirmeEkle,
+    ProblemCiktiDegerlendirmeListe
+} from "./ProblemDegerlendirme/ProblemCiktiDegerlendirme";
 
 const theme = {}
 const AdminPanel = props => {
@@ -123,6 +133,9 @@ const AdminPanel = props => {
             <Resource name="cikti" options={{ label: "Çıktılar" }} list={CiktiListe} create={CiktiEkle} edit={CiktiDuzenle} />
             <Resource name="ciktidetay" options={{ label: "Çıktı Detay" }} list={CiktiDetayListe} create={CiktiDetayEkle} edit={CiktiDetayDuzenle} />
             <Resource name="mudahaledetay" options={{ label: "Müdahale Detay" }} list={MudahaleDetayListe} create={MudahaleDetayEkle} edit={MudahaleDetayDuzenle} />
+            <Resource name="personelproblem" options={{ label: "Personel Problem" }} list={PersonelProblemListe} create={PersonelProblemEkle} edit={PersonelProblemDuzenle} />
+            <Resource name="problemciktidegerlendirme" options={{ label: "Problem Çıktı Değerlendirme" }} list={ProblemCiktiDegerlendirmeListe} create={ProblemCiktiDegerlendirmeEkle} edit={ProblemCiktiDegerlendirmeDuzenle} />
+
         </Admin>
     }
 

@@ -27,9 +27,9 @@ const list_routes = [
     require("./routes/cikti/problemcikti"),
     require("./routes/mudahale/ilavemudahaledetay"),
     require("./routes/cikti/ilaveciktidetay"),
+    require("./routes/problem/personelproblem"),
+    require("./routes/problemdegerlendirme/problemciktidegerlendirme")
 ]
-
-
 
 var options = {
     host: 'localhost',
