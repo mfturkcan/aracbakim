@@ -49,7 +49,7 @@ export const ProblemCiktiDegerlendirmeEkle = props => {
                 </ReferenceInput>
 
                 <SelectInput source="Skor" choices={choices}/>
-                <DateInput source="SkorTarihi"/>
+                <DateInput source="SkorTarihi" validate={required()}/>
             </SimpleForm>
         </Create>
     );
@@ -67,7 +67,7 @@ export const ProblemCiktiDegerlendirmeDuzenle = props => {
                     <SelectInput optionText="ProblemTipiID" />
                 </ReferenceInput>
                 <SelectInput source="Skor" choices={choices}/>
-                <DateInput source="SkorTarihi"/>
+                <DateInput source="SkorTarihi" validate={required()}/>
             </SimpleForm>
         </Edit>
     );

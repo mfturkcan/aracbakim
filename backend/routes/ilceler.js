@@ -1,13 +1,7 @@
 const router = require("express").Router();
 const connection = require("../config/database");
-// getList : /iller 
-// getOne : /iller/id -ok
-// getmany : /iller/ids - ok
-// update - updatemany : put /iller/id -ids -ok
-// delete - deletemany /id /ids -ok
 
 router.get("/ilceler", function (req, res) {
-    console.log("ilceler get");
     connection.query(`SELECT * FROM Ilceler`,
         function (err, result) {
             if (err) {
@@ -43,10 +37,12 @@ router.post("/ilceler", async function (req, res) {
 
 router.route("/ilceler/:ilce_kodu")
     .get(function (req, res) {
-        const ilce_kodu = req.params.ilce_kodu;
+        const ilce_kodu = req.params.ilce_kodu.split("!")[0];
+        const il_kodu = req.params.ilce_kodu.split("!")[1];
         console.log(ilce_kodu)
+        console.log("get one")
 
-        connection.query(`SELECT * FROM Ilceler WHERE IlceKodu = "${ilce_kodu}" `,
+        connection.query(`SELECT * FROM Ilceler WHERE IlceKodu = "${ilce_kodu}" AND IlKodu = "${il_kodu}"`,
             function (err, result) {
                 if (err) {
                     console.log(err);
@@ -60,27 +56,27 @@ router.route("/ilceler/:ilce_kodu")
     })
     .put(function (req, res) {
         const yeni_ilce = req.body;
-        const ilce_kodu = req.params.ilce_kodu;
+        const ilce_kodu = req.params.ilce_kodu.split("!")[0];
+        const il_kodu = req.params.ilce_kodu.split("!")[1];
 
         connection.query(`UPDATE Ilceler SET IlceKodu = "${yeni_ilce.IlceKodu}", IlKodu = "${yeni_ilce.IlKodu}", IlceAdi = "${yeni_ilce.IlceAdi}" ` +
-            ` WHERE IlceKodu = "${ilce_kodu}"`,
+            ` WHERE IlceKodu = "${ilce_kodu}" and IlKodu = "${il_kodu}"`,
             function (err, result) {
-                if (result.length > 0) {
-                    if (err) {
-                        console.log(err);
-                        res.send(err);
-                    }
-                    else {
-                        const ilce = result[0];
-                        res.send(ilce);
-                    }
+                if (err) {
+                    console.log(err);
+                    res.send(err);
+                }
+                else {
+                    const ilce = result[0];
+                    res.send(ilce);
                 }
             });
     })
     .delete(function (req, res) {
-        const ilce_kodu = req.params.ilce_kodu;
+        const ilce_kodu = req.params.ilce_kodu.split("!")[0];
+        const il_kodu = req.params.ilce_kodu.split("!")[1];
 
-        connection.query(`DELETE FROM Iller WHERE IlceKodu = "${ilce_kodu}"`,
+        connection.query(`DELETE FROM Iller WHERE IlceKodu = "${ilce_kodu}" and IlKodu = "${il_kodu}"`,
             function (err, result) {
                 if (err) {
                     console.log(err);
@@ -99,7 +95,9 @@ router.route("/ilceler")
         const ilcekodlari = JSON.parse(req.query.filter).ids;
 
         for (var i = 0; i < ilcekodlari.length; i++) {
-            connection.query(`DELETE FROM Ilceler WHERE IlceKodu = "${ilcekodlari[i]}"`,
+            let ilce_kodu = ilcekodlari[i].split("!")[0];
+            let il_kodu = ilcekodlari[i].split("!")[1];
+            connection.query(`DELETE FROM Ilceler WHERE IlceKodu = "${ilce_kodu}" and IlKodu = "${il_kodu}"`,
                 function (err, result) {
                     if (err) {
                         console.log(err);

@@ -14,7 +14,7 @@ export function getMany(json, resource) {
                 return { id: field["IlKodu"], ...field }
                 break;
             case "ilceler":
-                return { id: field["IlceKodu"], ...field }
+                return { id: `${field["IlceKodu"]}!${field["IlKodu"]}`, ...field }
                 break;
             case "problem":
                 return { id: field["ProblemTipiID"], ...field }
@@ -26,16 +26,16 @@ export function getMany(json, resource) {
                 return { id: field["BelirtecID"], ...field }
                 break;
             case "mudahale":
-                return { id: field["MudahaleID"], ...field }
+                return { id:`${field["AlanID"]}-${field["MudahaleID"]}-${field["SinifID"]}` , ...field }
                 break;
             case "cikti":
-                return { id: field["CiktiID"], ...field }
+                return { id: `${field["AlanID"]}'${field["CiktiID"]}'${field["SinifID"]}`, ...field }
                 break;
             case "ciktidetay":
                 return { id: field["CiktiID"], ...field }
                 break;
             case "mudahaledetay":
-                return { id: field["AktiviteID"], ...field }
+                return { id: `${field["AlanID"]},${field["MudahaleID"]},${field["SinifID"]},${field["AktiviteID"]}`, ...field }
                 break;
             case "problembirim":
                 return { id: field["ProblemID"], ...field }
@@ -64,6 +64,9 @@ export function getMany(json, resource) {
             case "problemciktidegerlendirme":
                 return { id: field["BelirtecID"], ...field }
                 break;
+            case "problemdurumdegerlendirme":
+                return { id: field["ProblemID"], ...field }
+                break;
         }
     });
 }
@@ -83,7 +86,7 @@ export function getOne(json, resource) {
             return { data: { ...json, id: json["IlKodu"] }, }
             break;
         case "ilceler":
-            return { data: { ...json, id: json["IlceKodu"] }, }
+            return { data: { ...json, id: `${json["IlceKodu"]}!${json["IlKodu"]}`}, }
             break;
         case "problem":
             return { data: { ...json, id: json["ProblemTipiID"] }, }
@@ -95,16 +98,16 @@ export function getOne(json, resource) {
             return { data: { ...json, id: json["BelirtecID"] }, }
             break;
         case "mudahale":
-            return { data: { ...json, id: json["MudahaleID"] }, }
+            return { data: { ...json, id: `${json["AlanID"]}-${json["MudahaleID"]}-${json["SinifID"]}`}, }
             break;
         case "cikti":
-            return { data: { ...json, id: json["CiktiID"] }, }
+            return { data: { ...json, id: `${json["AlanID"]}'${json["CiktiID"]}'${json["SinifID"]}` }, }
             break;
         case "ciktidetay":
             return { data: { ...json, id: json["CiktiID"] }, }
             break;
         case "mudahaledetay":
-            return { data: { ...json, id: json["AktiviteID"] }, }
+            return { data: { ...json, id: `${json["AlanID"]},${json["MudahaleID"]},${json["SinifID"]},${json["AktiviteID"]}` }, }
             break;
         case "problembirim":
             return { data: { ...json, id: json["ProblemID"] }, }
@@ -132,6 +135,9 @@ export function getOne(json, resource) {
             break;
         case "problemciktidegerlendirme":
             return { data: { ...json, id: json["BelirtecID"] }, }
+            break;
+        case "problemdurumdegerlendirme":
+            return { data: { ...json, id: json["ProblemID"] }, }
             break;
     }
 }

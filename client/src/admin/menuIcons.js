@@ -141,6 +141,11 @@ export default function useMenuIcons(){
                     primaryText: "Problem Çıktı Değerlendirme",
                     leftIcon: <ExitToAppIcon />
                 },
+                {
+                    link: "/problemdurumdegerlendirme",
+                    primaryText: "Problem Durum Değerlendirme",
+                    leftIcon: <ExitToAppIcon />
+                },
             ],
         },
     ]

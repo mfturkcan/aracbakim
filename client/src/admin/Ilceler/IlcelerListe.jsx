@@ -12,7 +12,3 @@ const IlcelerListe = props => {
     );
 }
 export default IlcelerListe;
-
-{/* <ReferenceField label="IlAdı" source="IlKodu" reference="iller">
-    <TextField source="IlAdi" />
-</ReferenceField> */}

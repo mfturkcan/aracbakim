@@ -38,9 +38,11 @@ router.post("/mudahale", async function (req, res) {
 
 router.route("/mudahale/:mudahale_id")
     .get(function (req, res) {
-        const mudahale_id = req.params.mudahale_id;
+        const mudahale_id = req.params.mudahale_id.split("-")[1];
+        const alan_id = req.params.mudahale_id.split("-")[0];
+        const sinif_id = req.params.mudahale_id.split("-")[2];
 
-        connection.query(`SELECT * FROM mudahale WHERE MudahaleID = "${mudahale_id}"`,
+        connection.query(`SELECT * FROM mudahale WHERE MudahaleID = "${mudahale_id}" AND AlanID = "${alan_id}" AND SinifID = "${sinif_id}"`,
             function (err, result) {
                 if (result.length > 0) {
                     if (err) {
@@ -56,7 +58,9 @@ router.route("/mudahale/:mudahale_id")
     })
     .put(function (req, res) {
         const yeni_mudahale = req.body;
-        const mudahale_id = req.params.mudahale_id;
+        const mudahale_id = req.params.mudahale_id.split("-")[1];
+        const alan_id = req.params.mudahale_id.split("-")[0];
+        const sinif_id = req.params.mudahale_id.split("-")[2];
         console.log(yeni_mudahale)
         const columns = ["AlanID", "SinifID", "MudahaleID", "MudahaleAdi"];
         let update_values = [];
@@ -70,7 +74,7 @@ router.route("/mudahale/:mudahale_id")
 
         for (var j = 0; j < update_values.length; j++) {
             connection.query(`UPDATE Mudahale SET ${update_values[j].column} = "${update_values[j].value}" ` +
-                ` WHERE MudahaleID = "${mudahale_id}"`,
+                ` WHERE MudahaleID = "${mudahale_id}" AND AlanID = "${alan_id}" AND SinifID = "${sinif_id}"`,
                 function (err, result) {
                     if (err) {
                         console.log(err);
@@ -81,9 +85,11 @@ router.route("/mudahale/:mudahale_id")
         res.send(yeni_mudahale);
     })
     .delete(function (req, res) {
-        const mudahale_id = req.params.mudahale_id;
+        const mudahale_id = req.params.mudahale_id.split("-")[1];
+        const alan_id = req.params.mudahale_id.split("-")[0];
+        const sinif_id = req.params.mudahale_id.split("-")[2];
 
-        connection.query(`DELETE FROM Mudahale WHERE MudahaleID = "${mudahale_id}"`,
+        connection.query(`DELETE FROM Mudahale WHERE MudahaleID = "${mudahale_id}" AND AlanID = "${alan_id}" AND SinifID = "${sinif_id}"`,
             function (err, result) {
                 if (err) {
                     console.log(err);
@@ -102,7 +108,10 @@ router.route("/mudahale")
         const mudahale_ids = JSON.parse(req.query.filter).ids;
 
         for (var i = 0; i < mudahale_ids.length; i++) {
-            connection.query(`DELETE FROM Mudahale WHERE MudahaleID = "${mudahale_ids[i]}"`,
+            let mudahale_id = mudahale_ids[i].split("-")[1];
+            let alan_id = mudahale_ids[i].split("-")[0];
+            let sinif_id = mudahale_ids[i].split("-")[2];
+            connection.query(`DELETE FROM Mudahale WHERE MudahaleID = "${mudahale_id}" AND AlanID = "${alan_id}" AND SinifID = "${sinif_id}"`,
                 function (err, result) {
                     if (err) {
                         console.log(err);

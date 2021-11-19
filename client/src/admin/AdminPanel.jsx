@@ -68,6 +68,11 @@ import {
     ProblemCiktiDegerlendirmeEkle,
     ProblemCiktiDegerlendirmeListe
 } from "./ProblemDegerlendirme/ProblemCiktiDegerlendirme";
+import {
+    ProblemDurumDegerlendirmeDuzenle,
+    ProblemDurumDegerlendirmeEkle,
+    ProblemDurumDegerlendirmeListe
+} from "./ProblemDegerlendirme/ProblemDurumDegerlendirme";
 
 const theme = {}
 const AdminPanel = props => {
@@ -135,6 +140,7 @@ const AdminPanel = props => {
             <Resource name="mudahaledetay" options={{ label: "Müdahale Detay" }} list={MudahaleDetayListe} create={MudahaleDetayEkle} edit={MudahaleDetayDuzenle} />
             <Resource name="personelproblem" options={{ label: "Personel Problem" }} list={PersonelProblemListe} create={PersonelProblemEkle} edit={PersonelProblemDuzenle} />
             <Resource name="problemciktidegerlendirme" options={{ label: "Problem Çıktı Değerlendirme" }} list={ProblemCiktiDegerlendirmeListe} create={ProblemCiktiDegerlendirmeEkle} edit={ProblemCiktiDegerlendirmeDuzenle} />
+            <Resource name="problemdurumdegerlendirme" options={{ label: "Problem Durum Değerlendirme" }} list={ProblemDurumDegerlendirmeListe} create={ProblemDurumDegerlendirmeEkle} edit={ProblemDurumDegerlendirmeDuzenle} />
 
         </Admin>
     }

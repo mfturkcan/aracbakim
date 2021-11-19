@@ -14,7 +14,6 @@ router.get("/cikti", function (req, res) {
                 res.set('X-Total-Count', 10);
                 res.send(result);
             }
-
         });
 });
 
@@ -38,9 +37,11 @@ router.post("/cikti", async function (req, res) {
 
 router.route("/cikti/:cikti_id")
     .get(function (req, res) {
-        const cikti_id = req.params.cikti_id;
+        const cikti_id = req.params.cikti_id.split("'")[1];
+        const alan_id = req.params.cikti_id.split("'")[0];
+        const sinif_id = req.params.cikti_id.split("'")[2];
 
-        connection.query(`SELECT * FROM Cikti WHERE CiktiID = "${cikti_id}"`,
+        connection.query(`SELECT * FROM Cikti WHERE CiktiID = "${cikti_id}" AND SinifID = "${sinif_id}" AND AlanID = "${alan_id}"`,
             function (err, result) {
                 if (result.length > 0) {
                     if (err) {
@@ -55,7 +56,9 @@ router.route("/cikti/:cikti_id")
     })
     .put(function (req, res) {
         const yeni_cikti = req.body;
-        const cikti_id = req.params.cikti_id;
+        const cikti_id = req.params.cikti_id.split("'")[1];
+        const alan_id = req.params.cikti_id.split("'")[0];
+        const sinif_id = req.params.cikti_id.split("'")[2];
 
         const columns = ["AlanID", "SinifID", "CiktiID", "CiktiAdi"];
         let update_values = [];
@@ -69,7 +72,7 @@ router.route("/cikti/:cikti_id")
 
         for (var j = 0; j < update_values.length; j++) {
             connection.query(`UPDATE Cikti SET ${update_values[j].column} = "${update_values[j].value}" ` +
-                ` WHERE CiktiID = "${cikti_id}"`,
+                ` WHERE CiktiID = "${cikti_id}" AND SinifID = "${sinif_id}" AND AlanID = "${alan_id}"`,
                 function (err, result) {
                     if (err) {
                         console.log(err);
@@ -81,9 +84,11 @@ router.route("/cikti/:cikti_id")
         res.send(yeni_cikti);
     })
     .delete(function (req, res) {
-        const cikti_id = req.params.cikti_id;
+        const cikti_id = req.params.cikti_id.split("'")[1];
+        const alan_id = req.params.cikti_id.split("'")[0];
+        const sinif_id = req.params.cikti_id.split("'")[2];
 
-        connection.query(`DELETE FROM Cikti WHERE CiktiID = "${cikti_id}"`,
+        connection.query(`DELETE FROM Cikti WHERE CiktiID = "${cikti_id}" AND SinifID = "${sinif_id}" AND AlanID = "${alan_id}"`,
             function (err, result) {
                 if (err) {
                     console.log(err);
@@ -102,7 +107,10 @@ router.route("/cikti")
         const cikti_ids = JSON.parse(req.query.filter).ids;
 
         for (var i = 0; i < cikti_ids.length; i++) {
-            connection.query(`DELETE FROM Cikti WHERE CiktiID = "${cikti_ids[i]}"`,
+            let cikti_id = cikti_ids[i].split("'")[1];
+            let alan_id = cikti_ids[i].split("'")[0];
+            let sinif_id = cikti_ids[i].split("'")[2];
+            connection.query(`DELETE FROM Cikti WHERE CiktiID = "${cikti_id}" AND SinifID = "${sinif_id}" AND AlanID = "${alan_id}"`,
                 function (err, result) {
                     if (err) {
                         console.log(err);

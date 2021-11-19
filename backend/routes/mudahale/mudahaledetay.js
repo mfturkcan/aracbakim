@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const connection = require("../../config/database");
+const Console = require("console");
 
 router.get("/mudahaledetay", function (req, res) {
     connection.query(`SELECT * FROM MudahaleDetay`,
@@ -38,9 +39,15 @@ router.post("/mudahaledetay", async function (req, res) {
 
 router.route("/mudahaledetay/:aktivite_id")
     .get(function (req, res) {
-        const aktivite_id = req.params.aktivite_id;
+        console.log(req.params.aktivite_id)
+        const aktivite_id = req.params.aktivite_id.split(",")[3];
+        const mudahale_id = req.params.aktivite_id.split(",")[1];
+        const alan_id = req.params.aktivite_id.split(",")[0];
+        const sinif_id = req.params.aktivite_id.split(",")[2];
 
-        connection.query(`SELECT * FROM mudahaledetay WHERE AktiviteID = "${aktivite_id}"`,
+        console.log(mudahale_id)
+
+        connection.query(`SELECT * FROM mudahaledetay WHERE MudahaleID = "${mudahale_id}" AND AlanID = "${alan_id}" AND SinifID = "${sinif_id}" AND AktiviteID = "${aktivite_id}"`,
             function (err, result) {
                 if (result.length > 0) {
                     if (err) {
@@ -56,7 +63,10 @@ router.route("/mudahaledetay/:aktivite_id")
     })
     .put(function (req, res) {
         const yeni_mudahale = req.body;
-        const aktivite_id = req.params.aktivite_id;
+        const aktivite_id = req.params.aktivite_id.split(",")[3];
+        const mudahale_id = req.params.aktivite_id.split(",")[1];
+        const alan_id = req.params.aktivite_id.split(",")[0];
+        const sinif_id = req.params.aktivite_id.split(",")[2];
 
         const columns = ["AlanID", "SinifID", "MudahaleID", "AktiviteID", "Sira"];
         let update_values = [];
@@ -70,7 +80,7 @@ router.route("/mudahaledetay/:aktivite_id")
 
         for (var j = 0; j < update_values.length; j++) {
             connection.query(`UPDATE MudahaleDetay SET ${update_values[j].column} = "${update_values[j].value}" ` +
-                ` WHERE AktiviteID = "${aktivite_id}"`,
+                ` WHERE MudahaleID = "${mudahale_id}" AND AlanID = "${alan_id}" AND SinifID = "${sinif_id}" AND AktiviteID = "${aktivite_id}"`,
                 function (err, result) {
                     if (err) {
                         console.log(err);
@@ -81,9 +91,12 @@ router.route("/mudahaledetay/:aktivite_id")
         res.send(yeni_mudahale);
     })
     .delete(function (req, res) {
-        const aktivite_id = req.params.aktivite_id;
+        const aktivite_id = req.params.aktivite_id.split(",")[3];
+        const mudahale_id = req.params.aktivite_id.split(",")[1];
+        const alan_id = req.params.aktivite_id.split(",")[0];
+        const sinif_id = req.params.aktivite_id.split(",")[2];
 
-        connection.query(`DELETE FROM MudahaleDetay WHERE AktiviteID = "${aktivite_id}"`,
+        connection.query(`DELETE FROM MudahaleDetay WHERE MudahaleID = "${mudahale_id}" AND AlanID = "${alan_id}" AND SinifID = "${sinif_id}" AND AktiviteID = "${aktivite_id}"`,
             function (err, result) {
                 if (err) {
                     console.log(err);
@@ -102,7 +115,12 @@ router.route("/mudahaledetay")
         const aktivite_ids = JSON.parse(req.query.filter).ids;
 
         for (var i = 0; i < aktivite_ids.length; i++) {
-            connection.query(`DELETE FROM MudahaleDetay WHERE AktiviteID = "${aktivite_ids[i]}"`,
+
+            let aktivite_id = aktivite_ids[i].split(",")[3];
+            let mudahale_id = aktivite_ids[i].split(",")[1];
+            let alan_id = aktivite_ids[i].split(",")[0];
+            let sinif_id = aktivite_ids[i].split(",")[2];
+            connection.query(`DELETE FROM MudahaleDetay WHERE MudahaleID = "${mudahale_id}" AND AlanID = "${alan_id}" AND SinifID = "${sinif_id}" AND AktiviteID = "${aktivite_id}"`,
                 function (err, result) {
                     if (err) {
                         console.log(err);

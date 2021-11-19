@@ -28,7 +28,8 @@ const list_routes = [
     require("./routes/mudahale/ilavemudahaledetay"),
     require("./routes/cikti/ilaveciktidetay"),
     require("./routes/problem/personelproblem"),
-    require("./routes/problemdegerlendirme/problemciktidegerlendirme")
+    require("./routes/problemdegerlendirme/problemciktidegerlendirme"),
+    require("./routes/problemdegerlendirme/problemdurumdegerlendirme")
 ]
 
 var options = {
