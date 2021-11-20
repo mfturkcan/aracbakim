@@ -1,13 +1,9 @@
 const router = require("express").Router();
 const connection = require("../config/database");
-// getList : /iller 
-// getOne : /iller/id -ok
-// getmany : /iller/ids - ok
-// update - updatemany : put /iller/id -ids -ok
-// delete - deletemany /id /ids -ok
+
 
 router.get("/personel", function (req, res) {
-    let sort = JSON.parse(req.query.sort);
+    let sort = req.query.sort != null ? JSON.parse(req.query.sort): null;
     let type = "KullaniciAdi";
     let order = "ASC";
     if (sort) {
@@ -69,7 +65,7 @@ router.route("/personel/:kullanici_adi")
         const yeni_personel = req.body;
         const kullanici_adi = req.params.kullanici_adi;
 
-        connection.query(`UPDATE Personel SET KullaniciAdi = "${yeni_personel["KullaniciAdi"]}", Email = "${yeni_personel["Email"]}", Ad = "${yeni_personel["Ad"]}",Soyad = "${yeni_personel["Soyad"]}", SicilNo = "${yeni_personel["SicilNo"]}", Cep = "${yeni_personel["Cep"]}", EvAdresi ="${yeni_personel["EvAdresi"]}", IlKodu = ${yeni_personel["IlKodu"]}, IlceKodu = ${yeni_personel["IlceKodu"]}` +
+        connection.query(`UPDATE Personel SET KullaniciAdi = "${yeni_personel["KullaniciAdi"]}", Email = "${yeni_personel["Email"]}", Ad = "${yeni_personel["Ad"]}",Soyad = "${yeni_personel["Soyad"]}", SicilNo = "${yeni_personel["SicilNo"]}", Cep = "${yeni_personel["Cep"]}", EvAdresi ="${yeni_personel["EvAdresi"]}", IlKodu = ${yeni_personel["IlKodu"]}, IlceKodu = "${yeni_personel["IlceKodu"]}"` +
             `,PostaKodu = ${yeni_personel["PostaKodu"]}, UstKullaniciAdi = "${yeni_personel["UstKullaniciAdi"] ?? ""}", CalistigiBirimKodu = ${yeni_personel["CalistigiBirimKodu"] ?? 0} ` +
             ` WHERE KullaniciAdi = "${kullanici_adi}"`,
             function (err, result) {

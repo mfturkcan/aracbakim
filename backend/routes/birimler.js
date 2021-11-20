@@ -1,14 +1,9 @@
 const router = require("express").Router();
 const connection = require("../config/database");
-// getList : /iller 
-// getOne : /iller/id -ok
-// getmany : /iller/ids - ok
-// update - updatemany : put /iller/id -ids -ok
-// delete - deletemany /id /ids -ok
 
 router.get("/birimler", function (req, res) {
 
-    let sort = JSON.parse(req.query.sort);
+    let sort = req.query.sort != null ? JSON.parse(req.query.sort): null;
     let type = "BirimKodu";
     let order = "ASC";
     if (sort) {
@@ -73,7 +68,7 @@ router.route("/birimler/:birim_kodu")
         console.log(yeni_birim["UstBirimKodu"])
 
         connection.query(`UPDATE Birimler SET BirimKodu = ${yeni_birim["BirimKodu"]}, BirimAdi = "${yeni_birim["BirimAdi"]}",UstBirimKodu = "${yeni_birim["UstBirimKodu"] ?? 0}", BulunduguAdres = "${yeni_birim["BulunduguAdres"]}", IlKodu = ${yeni_birim["IlKodu"]}, ` +
-            `IlceKodu = ${yeni_birim["IlceKodu"]}, PostaKodu = ${yeni_birim["PostaKodu"]}, BirimMudurKullaniciAdi = "${yeni_birim["BirimMudurKullaniciAdi"]}" ` +
+            `IlceKodu = "${yeni_birim["IlceKodu"]}", PostaKodu = ${yeni_birim["PostaKodu"]}, BirimMudurKullaniciAdi = "${yeni_birim["BirimMudurKullaniciAdi"]}" ` +
             ` WHERE BirimKodu = ${birim_kodu}`,
             function (err, result) {
                 if (err) {
@@ -116,7 +111,7 @@ router.route("/birimler")
                     }
                 });
         }
-        res.send(ilce_kodlari);
+        res.send(birim_kodlari);
     });
 
 

@@ -1,7 +1,7 @@
 const connection = require("../config/database");
 
 module.exports.getList = ( id, tableName, req, res) => {
-    let sort = JSON.parse(req.query.sort);
+    let sort = req.query.sort != null ? JSON.parse(req.query.sort): null;
     let type = id;
     let order = "ASC";
     if (sort) {

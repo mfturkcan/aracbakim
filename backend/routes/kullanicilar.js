@@ -5,7 +5,7 @@ const decryptPassword = require("../lib/password").decryptPassword;
 
 router.get("/kullanicilar", function (req, res) {
     console.log("get kullanicilar");
-    let sort = JSON.parse(req.query.sort);
+    let sort = req.query.sort != null ? JSON.parse(req.query.sort): null;
     let type = "KullaniciAdi";
     let order = "ASC";
     if (sort) {
@@ -44,7 +44,7 @@ router.post("/kullanicilar", async function (req, res) {
             if (yeni_kullanici["BirimKodu"] != null) {
                 connection.query(`INSERT INTO Birimler (BirimKodu, BirimAdi, BulunduguAdres, IlKodu, IlceKodu, PostaKodu)` +
                     ` VALUES (${yeni_kullanici["BirimKodu"]}, "${yeni_kullanici["BirimAdi"]}", "${yeni_kullanici["BulunduguAdres"]}", ${yeni_kullanici["IlKodu"]}` +
-                    `, ${yeni_kullanici["IlceKodu"]}, ${yeni_kullanici["PostaKodu"]} )`,
+                    `, "${yeni_kullanici["IlceKodu"]}", ${yeni_kullanici["PostaKodu"]} )`,
                     function (err, result) {
                         if (err) {
                             console.log(err);
@@ -60,7 +60,7 @@ router.post("/kullanicilar", async function (req, res) {
                                 });
                         }
                         connection.query(`INSERT INTO Personel (KullaniciAdi, Email, Ad, Soyad, SicilNo, Cep, EvAdresi, IlKodu, IlceKodu, PostaKodu ,CalistigiBirimKodu)` +
-                            ` VALUES ("${yeni_kullanici["KullaniciAdi"]}", "${yeni_kullanici["Email"]}", "${yeni_kullanici["Ad"]}","${yeni_kullanici["Soyad"]}", "${yeni_kullanici["SicilNo"]}", "${yeni_kullanici["Cep"]}","${yeni_kullanici["EvAdresi"]}", ${yeni_kullanici["IlKodu"]}, ${yeni_kullanici["IlceKodu"]}` +
+                            ` VALUES ("${yeni_kullanici["KullaniciAdi"]}", "${yeni_kullanici["Email"]}", "${yeni_kullanici["Ad"]}","${yeni_kullanici["Soyad"]}", "${yeni_kullanici["SicilNo"]}", "${yeni_kullanici["Cep"]}","${yeni_kullanici["EvAdresi"]}", ${yeni_kullanici["IlKodu"]}, "${yeni_kullanici["IlceKodu"]}"` +
                             `,${yeni_kullanici["PostaKodu"]}, ${yeni_kullanici["CalistigiBirimKodu"]} )`,
                             function (err, result) {
                                 if (err) {
@@ -89,10 +89,6 @@ router.post("/kullanicilar", async function (req, res) {
             }
         }
     );
-
-
-
-
 
     res.send(yeni_kullanici);
 })

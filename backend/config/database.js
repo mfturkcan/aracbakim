@@ -40,14 +40,14 @@ connection.query("CREATE DATABASE IF NOT EXISTS db; USE db;", function (err, res
         const personel_query = "CREATE TABLE IF NOT EXISTS Personel(KullaniciAdi VARCHAR(150) PRIMARY KEY NOT NULL, Email VARCHAR(255) NOT NULL" +
             ", Ad VARCHAR(255) NOT NULL, Soyad VARCHAR(255) NOT NULL, SicilNo VARCHAR(50) NOT NULL," +
             " Cep VARCHAR(15) NOT NULL, EvAdresi VARCHAR(255) NOT NULL, IlKodu int NOT NULL," +
-            " IlceKodu int NOT NULL, PostaKodu int NOT NULL, UstKullaniciAdi VARCHAR(150)," +
+            " IlceKodu VARCHAR(250) NOT NULL, PostaKodu int NOT NULL, UstKullaniciAdi VARCHAR(150)," +
             " CalistigiBirimKodu int, FOREIGN KEY(IlKodu) REFERENCES Iller(IlKodu), " +
-            "FOREIGN KEY(IlceKodu) REFERENCES Ilceler(IlceKodu), UNIQUE(Email), UNIQUE(SicilNo))";
+            " UNIQUE(Email), UNIQUE(SicilNo))";
 
         const birim_query = "CREATE TABLE IF NOT EXISTS Birimler(BirimKodu int PRIMARY KEY NOT NULL, " +
             "BirimAdi VARCHAR(255) NOT NULL, UstBirimKodu int, BulunduguAdres VARCHAR(255) NOT NULL," +
-            " IlKodu int NOT NULL, IlceKodu int NOT NULL, PostaKodu int NOT NULL, BirimMudurKullaniciAdi VARCHAR(150)," +
-            "FOREIGN KEY(IlKodu) REFERENCES Iller(IlKodu), FOREIGN KEY(IlceKodu) REFERENCES Ilceler(IlceKodu), FOREIGN KEY(BirimMudurKullaniciAdi) REFERENCES Personel(KullaniciAdi)," +
+            " IlKodu int NOT NULL, IlceKodu VARCHAR(250) NOT NULL, PostaKodu int NOT NULL, BirimMudurKullaniciAdi VARCHAR(150)," +
+            "FOREIGN KEY(IlKodu) REFERENCES Iller(IlKodu), FOREIGN KEY(BirimMudurKullaniciAdi) REFERENCES Personel(KullaniciAdi)," +
             " FOREIGN KEY(UstBirimKodu) REFERENCES Birimler(BirimKodu))";
 
         connection.query(personel_query,
