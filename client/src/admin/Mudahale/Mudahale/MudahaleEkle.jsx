@@ -7,10 +7,14 @@ const MudahaleEkle = props => {
             <SimpleForm rowClick="edit">
                 <NumberInput source="MudahaleID" label="MudahaleID" validate={required()} />
                 <ReferenceInput validate={required()} source="AlanID" reference="alanlar" label="AlanID">
-                    <SelectInput optionText="AlanID" />
+                    <SelectInput optionText={(src)=>{
+                        return `${src["AlanID"]} - ${src["AlanAdi"]}`
+                    }} />
                 </ReferenceInput>
                 <ReferenceInput validate={required()} source="SinifID" reference="siniflar" label="SinifID">
-                    <SelectInput optionText="SinifID" />
+                    <SelectInput optionText={(src)=>{
+                        return `${src["SinifID"]} - ${src["SinifAdi"]}`
+                    }} />
                 </ReferenceInput>
 
                 <TextInput source="MudahaleAdi" validate={required()} />
