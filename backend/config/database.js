@@ -126,10 +126,10 @@ connection.query("CREATE DATABASE IF NOT EXISTS db; USE db;", function (err, res
 
             });
 
-        connection.query("CREATE TABLE IF NOT EXISTS CiktiDetay (CiktiID int NOT NULL, AlanID int NOT NULL,SinifID int NOT NULL, BelirtecID int NOT NULL," +
+        connection.query("CREATE TABLE IF NOT EXISTS CiktiDetay (CiktiID VARCHAR(255) NOT NULL, AlanID int NOT NULL,SinifID int NOT NULL, BelirtecID int NOT NULL," +
             " Sira VARCHAR(100) NOT NULL, FOREIGN KEY(AlanID) REFERENCES Alanlar(AlanID), FOREIGN KEY(SinifID) REFERENCES Siniflar(SinifID), FOREIGN KEY(BelirtecID) REFERENCES Belirtecler(BelirtecID), PRIMARY KEY(AlanID,CiktiID,SinifID,BelirtecID,Sira))",
             function (err, result) {
-                if (err) console.log(err)
+                if (err) console.log(err);
 
             });
 

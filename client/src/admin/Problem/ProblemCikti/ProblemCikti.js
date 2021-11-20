@@ -43,7 +43,9 @@ export const ProblemCiktiEkle = props => {
                 </ReferenceInput>
 
                 <ReferenceInput validate={required()} source="ProblemID" reference="problem" label="ProblemID">
-                    <SelectInput optionText="ProblemTipiID" />
+                    <SelectInput optionText={(src)=>{
+                        return `${src["ProblemTipiID"]} - ${src["ProblemTanimi"]}`
+                    }} />
                 </ReferenceInput>
             </SimpleForm>
         </Create>
@@ -71,7 +73,9 @@ export const ProblemCiktiDuzenle = props => {
                 </ReferenceInput>
 
                 <ReferenceInput validate={required()} source="ProblemID" reference="problem" label="ProblemID">
-                    <SelectInput optionText="ProblemTipiID" />
+                    <SelectInput optionText={(src)=>{
+                        return `${src["ProblemTipiID"]} - ${src["ProblemTanimi"]}`
+                    }} />
                 </ReferenceInput>
             </SimpleForm>
         </Edit>

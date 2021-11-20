@@ -45,7 +45,9 @@ export const ProblemDurumDegerlendirmeEkle = props => {
         <Create id="ProblemID" {...props}>
             <SimpleForm>
                 <ReferenceInput validate={required()} source="ProblemID" reference="problem" label="ProblemID">
-                    <SelectInput optionText="ProblemTipiID" />
+                    <SelectInput optionText={(src)=>{
+                        return `${src["ProblemTipiID"]} - ${src["ProblemTanimi"]}`
+                    }} />
                 </ReferenceInput>
                 <ReferenceInput validate={required()} source="YeniProblemID" reference="problem" label="YeniProblemID">
                     <SelectInput optionText="ProblemTipiID" />
@@ -69,7 +71,9 @@ export const ProblemDurumDegerlendirmeDuzenle = props => {
         <Edit id="ProblemID" {...props}>
             <SimpleForm>
                 <ReferenceInput validate={required()} source="ProblemID" reference="problem" label="ProblemID">
-                    <SelectInput optionText="ProblemTipiID" />
+                    <SelectInput optionText={(src)=>{
+                        return `${src["ProblemTipiID"]} - ${src["ProblemTanimi"]}`
+                    }} />
                 </ReferenceInput>
                 <ReferenceInput validate={required()} source="YeniProblemID" reference="problem" label="YeniProblemID">
                     <SelectInput optionText="ProblemTipiID" />

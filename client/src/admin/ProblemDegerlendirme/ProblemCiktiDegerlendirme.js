@@ -41,11 +41,15 @@ export const ProblemCiktiDegerlendirmeEkle = props => {
         <Create id="BelirtecID" {...props}>
             <SimpleForm>
                 <ReferenceInput validate={required()} source="BelirtecID" reference="belirtecler" label="BelirtecID">
-                    <SelectInput optionText="BelirtecID" />
+                    <SelectInput optionText={(src)=>{
+                        return `${src["BelirtecID"]} - ${src["BelirtecTanimi"]}`
+                    }} />
                 </ReferenceInput>
 
                 <ReferenceInput validate={required()} source="ProblemID" reference="problem" label="ProblemID">
-                    <SelectInput optionText="ProblemTipiID" />
+                    <SelectInput optionText={(src)=>{
+                        return `${src["ProblemTipiID"]} - ${src["ProblemTanimi"]}`
+                    }} />
                 </ReferenceInput>
 
                 <SelectInput source="Skor" choices={choices}/>
@@ -60,11 +64,15 @@ export const ProblemCiktiDegerlendirmeDuzenle = props => {
         <Edit id="BelirtecID" {...props}>
             <SimpleForm>
                 <ReferenceInput validate={required()} source="BelirtecID" reference="belirtecler" label="BelirtecID">
-                    <SelectInput optionText="BelirtecID" />
+                    <SelectInput optionText={(src)=>{
+                        return `${src["BelirtecID"]} - ${src["BelirtecTanimi"]}`
+                    }} />
                 </ReferenceInput>
 
                 <ReferenceInput validate={required()} source="ProblemID" reference="problem" label="ProblemID">
-                    <SelectInput optionText="ProblemTipiID" />
+                    <SelectInput optionText={(src)=>{
+                        return `${src["ProblemTipiID"]} - ${src["ProblemTanimi"]}`
+                    }} />
                 </ReferenceInput>
                 <SelectInput source="Skor" choices={choices}/>
                 <DateInput source="SkorTarihi" validate={required()}/>

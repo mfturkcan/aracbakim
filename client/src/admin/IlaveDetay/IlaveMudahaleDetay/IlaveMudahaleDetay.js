@@ -53,7 +53,9 @@ export const IlaveMudahaleDetayEkle = props => {
                 </ReferenceInput>
 
                 <ReferenceInput validate={required()} source="ProblemID" reference="problem" label="ProblemID">
-                    <SelectInput optionText="ProblemTipiID" />
+                    <SelectInput optionText={(src)=>{
+                        return `${src["ProblemTipiID"]} - ${src["ProblemTanimi"]}`
+                    }} />
                 </ReferenceInput>
 
                 <NumberInput source="Sira" label="Sira" validate={required()}/>
@@ -93,7 +95,9 @@ export const IlaveMudahaleDetayDuzenle = props => {
                 </ReferenceInput>
 
                 <ReferenceInput validate={required()} source="ProblemID" reference="problem" label="ProblemID">
-                    <SelectInput optionText="ProblemTipiID" />
+                    <SelectInput optionText={(src)=>{
+                        return `${src["ProblemTipiID"]} - ${src["ProblemTanimi"]}`
+                    }} />
                 </ReferenceInput>
 
                 <NumberInput source="Sira" label="Sira" validate={required()}/>
