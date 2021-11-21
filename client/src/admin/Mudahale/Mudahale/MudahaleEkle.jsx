@@ -17,6 +17,7 @@ const MudahaleEkle = props => {
                     }} />
                 </ReferenceInput>
 
+
                 <TextInput source="MudahaleAdi" validate={required()} />
             </SimpleForm>
         </Create>

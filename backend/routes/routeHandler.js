@@ -151,18 +151,15 @@ module.exports.updateOnePk = (tableName, ids, parameter_name, column_list, seper
     const new_data = req.body;
     const parameters = req.params[parameter_name].split(seperate_mark);
     let condition = [];
-
     for(let i = 0; i < parameters.length; i++){
         condition.push({
             p: parameters[i],
             id: ids[i]
         });
     }
-
     let condition_string = condition.map((c) => {
         return `${c.id} = "${c.p}"`;
     }).toString().replaceAll(",", " AND ");
-
 
     const columns = column_list;
     let update_values = [];
@@ -175,8 +172,6 @@ module.exports.updateOnePk = (tableName, ids, parameter_name, column_list, seper
     }
 
     for (var j = 0; j < update_values.length; j++) {
-        console.log(`UPDATE ${tableName} SET ${update_values[j].column} = "${update_values[j].value}" ` +
-            ` WHERE ${condition_string}`);
         connection.query(`UPDATE ${tableName} SET ${update_values[j].column} = "${update_values[j].value}" ` +
             ` WHERE ${condition_string}`,
             function (err, result) {

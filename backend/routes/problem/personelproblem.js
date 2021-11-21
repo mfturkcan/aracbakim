@@ -2,7 +2,7 @@ const router = require("express").Router();
 const {getList, create, getOnePk, updateOnePk, deleteOnePk, deleteManyPk} = require("../routeHandler");
 
 const ids = ["ProblemID", "KullaniciAdi"];
-const seperate_mark = "##";
+const seperate_mark = "&&";
 
 router.get("/personelproblem", function (req, res) {
     return getList("KullaniciAdi","PersonelProblem",req,res);

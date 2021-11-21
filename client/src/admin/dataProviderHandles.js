@@ -59,7 +59,7 @@ export function getMany(json, resource) {
                 return { id: `${field["ProblemID"]}--${field["AlanID"]}--${field["SinifID"]}--${field["MudahaleID"]}--${field["BelirtecID"]}`, ...field }
                 break;
             case "personelproblem":
-                return { id: `${field["ProblemID"]}##${field["KullaniciAdi"]}`, ...field }
+                return { id: `${field["ProblemID"]}&&${field["KullaniciAdi"]}`, ...field }
                 break;
             case "problemciktidegerlendirme":
                 return { id: `${field["ProblemID"]}&&${field["BelirtecID"]}`, ...field }
@@ -134,7 +134,7 @@ export function getOne(json, resource) {
             return { data: { ...json, id:  `${json["ProblemID"]}--${json["AlanID"]}--${json["SinifID"]}--${json["MudahaleID"]}--${json["BelirtecID"]}` }, }
             break;
         case "personelproblem":
-            return { data: { ...json, id: `${json["ProblemID"]}##${json["KullaniciAdi"]}` }, }
+            return { data: { ...json, id: `${json["ProblemID"]}&&${json["KullaniciAdi"]}` }, }
             break;
         case "problemciktidegerlendirme":
             return { data: { ...json, id: `${json["ProblemID"]}&&${json["BelirtecID"]}`}, }
